@@ -1,0 +1,69 @@
+<div *ngIf="isLoadingResults" class="loader_container">
+  <div class="spinner">
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+	</div>
+</div>
+
+<section>
+
+
+  <div class="header py-3 d-flex justify-content-between align-items-center my-3 bg-white">
+    <p class="px-4 lead">Loan Setting</p>
+    <div class="action d-flex justify-content-end">
+      <button (click)="discardChange()"  class="btn accion_stone text-white">Discard changes</button>
+      <button (click)="saveSettingsConfig()" class="btn accion text-white">Save changes</button>
+    </div>
+  </div>
+
+  <div class="bg-white py-5 px-4 ml-4 mr-2">
+   <form [formGroup]="loanSettingsForm">
+    <div class="row">
+      <div class="col-12 col-md-4">
+        <label class="font-weight-bold" for="interestRate">Interest Rate</label>
+        <div class="input-group mb-3">
+          <input formControlName="interestRate" [readonly]="editInterestRate" type="text" class="form-control" aria-label="Percent (to the nearest decimal)">
+          <div class="input-group-append ">
+            <span class="input-group-text accion text-white">%</span>
+          </div>
+          <button (click)="handleButtonEdit('interest')" class="ml-3 btn accion_sand text-white">{{editInterestRate ? 'Edit' : 'Disable'}}</button>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <label class="font-weight-bold" for="adminFee">Administrative Charges</label>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text accion text-white" id="adminFee">N</span>
+          </div>
+          <input [readonly]="editAdminFee"  formControlName="adminFee" type="text" class="form-control" aria-label="Amount (to the nearest naira)">
+          <button (click)="handleButtonEdit('admin')" class="ml-3 btn accion_sand text-white">{{editAdminFee ? 'Edit' : 'Disable'}}</button>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <label class="font-weight-bold" for="insuranceFee">Insurance Charges</label>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text accion text-white" id="insuranceFee">N</span>
+          </div>
+          <input [readonly]="editInsuranceFee"  formControlName="insuranceFee"  type="text" class="form-control" aria-label="Amount (to the nearest naira)">
+          <button (click)="handleButtonEdit('insurance')" class="ml-3 btn accion_sand text-white">{{editInsuranceFee ? 'Edit' : 'Disable'}}</button>
+        </div>
+      </div>
+
+    </div>
+
+   </form>
+
+  </div>
+
+
+  
+
+
+</section>
+

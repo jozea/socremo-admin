@@ -1,0 +1,94 @@
+<body class="inventory-body">
+  <div id="login" class="d-flex justify-content-center align-items-center">
+    <mat-card class="example-card" >
+      <button class="float-right " mat-button (click)="useLanguage('en')">en</button><p class="float-right ">|</p>
+      <button class="float-right " mat-button (click)="useLanguage('pt')">pt</button>
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <!-- <mat-card-title>Shiba Inu</mat-card-title>
+        <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="loginForm">
+          <div class="logo_container">
+            <img id="logo" src="../../../../assets/img/socremo.jpeg" alt="accion">
+          </div>
+          <div class="d-flex flex-column">
+            <mat-form-field appearance="legacy">
+              <mat-label>{{ 'login.id' | translate }}</mat-label>
+              <input matInput placeholder="" formControlName="id" required>
+            </mat-form-field>
+            <mat-form-field *ngIf="!showForgotPassword" appearance="legacy">
+              <mat-label>{{ 'login.password' | translate }}</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text' " formControlName="password" autocomplete="on"
+                required>
+              <button mat-icon-button matSuffix (mouseup)="hide = !hide" (mousedown)="hide = !hide"
+                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+            <mat-form-field *ngIf="showOTP && !showForgotPassword" appearance="legacy">
+              <mat-label>{{ 'login.otp' | translate }}</mat-label>
+              <input matInput placeholder="" formControlName="otp">
+            </mat-form-field>
+
+
+            <mat-form-field *ngIf="showForgotPassword" appearance="legacy">
+              <mat-label>{{ 'login.newPassword' | translate }}</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text' " formControlName="newPassword" autocomplete="on"
+                required>
+              <button mat-icon-button matSuffix (mouseup)="hide = !hide" (mousedown)="hide = !hide"
+                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+            <mat-form-field *ngIf="showForgotPassword" appearance="legacy">
+              <mat-label>{{ 'login.confirmPassword' | translate }}</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text' " formControlName="confirmPassword" autocomplete="on"
+                required>
+              <button mat-icon-button matSuffix (mouseup)="hide = !hide" (mousedown)="hide = !hide"
+                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+            <span *ngIf="showForgotPassword">What is ur nickname?</span>
+            <mat-form-field *ngIf="showForgotPassword" appearance="legacy">
+              <mat-label>{{ 'login.securityAnswer' | translate }}</mat-label>
+              <input matInput placeholder="" formControlName="securityAnswer" required>
+            </mat-form-field>
+          </div>
+          <div *ngIf="!showForgotPassword"
+            class="d-flex flex-column flex-md-row flex-lg-row justify-content-between align-items-center mt-3">
+            <mat-slide-toggle color="primary" class="mt-2">{{ 'login.rememberMe' | translate }}</mat-slide-toggle>
+            <!-- <a  [routerLink]="['/auth','password']" class="mt-2" >Forgot your password?</a> -->
+          </div>
+          <div *ngIf="!showForgotPassword" class="d-flex justify-content-center container-login100-form-btn">
+            <button value="Submit" (click)="login()" class="btn text-white px-4 py-1 btn-sm my-4 accion_sand"
+              (keyup.enter)="login()">{{ 'login.login' | translate }}</button>
+          </div>
+
+          <div *ngIf="!showForgotPassword" class="d-flex justify-content-center container-login100-form-btn">
+            <span class="link-font" (click)="forgotPassword()">{{ 'login.forgotPassword' | translate }} </span>
+            <!-- <span class="link-font" routerLink="/register">{{ 'login.createProfile' | translate }}</span> -->
+          </div>
+          <div *ngIf="showForgotPassword" class="d-flex justify-content-center container-login100-form-btn">
+            <span class="link-font" (click)="rememberPassword()">{{ 'login.rp' | translate }}</span>&nbsp;
+          </div>
+
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+
+    <div *ngIf="loading" class="loader_container">
+      <div class="spinner">
+        <div class="spinner-item"></div>
+        <div class="spinner-item"></div>
+        <div class="spinner-item"></div>
+        <div class="spinner-item"></div>
+        <div class="spinner-item"></div>
+      </div>
+    </div>
+
+  </div>
+</body>

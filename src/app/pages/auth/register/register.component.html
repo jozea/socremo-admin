@@ -1,0 +1,152 @@
+<body class="inventory-body">
+    <div class="register-page">
+        <div class=" px-4 d-flex justify-content-between align-items-center">
+            
+            
+          </div> 
+        <div id="register" style="background-color: rgb(168, 168, 224);" class="d-flex justify-content-center align-items-center">
+    
+            <mat-card class="example-card">
+                <button class="float-right " mat-button (click)="useLanguage('en')">en</button><p class="float-right ">|</p>
+                <button class="float-right " mat-button (click)="useLanguage('pt')">pt</button>
+                <mat-card-header class="justify-content-center">
+                    <!-- <div mat-card-avatar class="example-header-image"></div> -->
+                    <mat-card-title style="color: #006891;">{{ 'register.header' | translate }}</mat-card-title> 
+                    <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
+                </mat-card-header>
+                <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+                <mat-card-content>
+                    <form [formGroup]="registerForm">
+                        <div class="d-flex flex-column">
+                            <div class="row">
+                                <mat-form-field class="col-md-4" appearance="outline">
+                                    <mat-label>{{ 'register.firstName' | translate }}</mat-label>
+                                    <input matInput placeholder="" formControlName="firstName" required>
+                                </mat-form-field>
+                                <mat-form-field class="col-md-4" appearance="outline">
+                                    <mat-label>{{ 'register.middleName' | translate }}</mat-label>
+                                    <input matInput placeholder="" formControlName="middleName" required>
+                                </mat-form-field>
+                                <mat-form-field class="col-md-4" appearance="outline">
+                                    <mat-label>{{ 'register.lastName' | translate }}</mat-label>
+                                    <input matInput placeholder="" formControlName="lastName" required>
+                                </mat-form-field>
+                            </div>
+                
+                            <div class="row">
+                                <mat-form-field class="col-md-4" appearance="outline">
+                                    <mat-label>{{ 'register.gender' | translate }}</mat-label>
+                                    <input matInput placeholder="" formControlName="gender" required>
+                                </mat-form-field>
+                                <mat-form-field class="col-md-4" appearance="outline">
+                                    <mat-label>{{ 'register.dob' | translate }}</mat-label>
+                                    <input matInput placeholder="" formControlName="dob" required>
+                                </mat-form-field>
+                                <mat-form-field class="col-md-4" appearance="outline">
+                                    <mat-label>{{ 'register.mobileNumber' | translate }}</mat-label>
+                                    <input matInput placeholder="" formControlName="mobileNumber" required>
+                                </mat-form-field>
+                            </div>
+        
+                            <mat-form-field appearance="outline">
+                                <mat-label>{{ 'register.address' | translate }}</mat-label>
+                                <input matInput placeholder="" formControlName="address" required>
+                            </mat-form-field>
+        
+                            <div class="row">
+                                <mat-form-field class="col-md-6" appearance="outline">
+                                    <mat-label>{{ 'register.id' | translate }}</mat-label>
+                                    <input matInput placeholder="" formControlName="id" required>
+                                </mat-form-field>
+                                <mat-form-field class="col-md-6" appearance="outline">
+                                    <mat-label>{{ 'register.designation' | translate }}</mat-label>
+                                    <input matInput placeholder="" formControlName="designation" required>
+                                </mat-form-field>
+                            </div>
+                    
+                            <div class="row">
+                                <mat-form-field class="col-md-6" appearance="outline">
+                                    <mat-label>{{ 'register.password' | translate }}</mat-label>
+                                    <input matInput [type]="hide ? 'password' : 'text' " formControlName="password" autocomplete="on"
+                                        required>
+                                    <button mat-icon-button matSuffix (mouseup)="hide = !hide" (mousedown)="hide = !hide"
+                                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                    </button>
+                                </mat-form-field>
+                                <mat-form-field class="col-md-6" appearance="outline">
+                                    <mat-label>{{ 'register.confirmPassword' | translate }}</mat-label>
+                                    <input matInput [type]="hide ? 'password' : 'text' " formControlName="confirmPassword" autocomplete="on"
+                                        required>
+                                    <button mat-icon-button matSuffix (mouseup)="hide = !hide" (mousedown)="hide = !hide"
+                                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                    </button>
+                                </mat-form-field>
+                            </div>
+                    
+                            <div class="row">
+                                <mat-form-field class="col-md-6" appearance="outline">
+                                    <mat-label>{{ 'register.pin' | translate }}</mat-label>
+                                    <input matInput [type]="hide ? 'password' : 'text' " formControlName="pin" autocomplete="on"
+                                        required>
+                                    <button mat-icon-button matSuffix (mouseup)="hide = !hide" (mousedown)="hide = !hide"
+                                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                    </button>
+                                </mat-form-field>
+                                <mat-form-field class="col-md-6" appearance="outline">
+                                    <mat-label>{{ 'register.confirmPin' | translate }}</mat-label>
+                                    <input matInput [type]="hide ? 'password' : 'text' " formControlName="confirmPin" autocomplete="on"
+                                        required>
+                                    <button mat-icon-button matSuffix (mouseup)="hide = !hide" (mousedown)="hide = !hide"
+                                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                    </button>
+                                </mat-form-field>
+                            </div>
+                    
+                            <div class="row">
+                                <mat-form-field class="col-md-6" appearance="outline">
+                                    <mat-label>{{ 'register.securityQuestion' | translate }}</mat-label>
+                                    <input matInput placeholder="" formControlName="securityQuestion" required>
+                                </mat-form-field>
+                                <mat-form-field class="col-md-6" appearance="outline">
+                                    <mat-label>{{ 'register.securityAnswer' | translate }}</mat-label>
+                                    <input matInput placeholder="" formControlName="securityAnswer" required>
+                                </mat-form-field>
+                            </div>
+                        </div>
+        
+                        
+                        <!-- <div class="d-flex justify-content-center container-login100-form-btn">
+                            <button value="Submit" (click)="login()" class="btn text-white px-4 py-1 btn-sm my-4 accion_sand"
+                                (keyup.enter)="login()">Login</button>
+                        </div> -->
+                
+                        <!-- <div class="d-flex justify-content-center container-login100-form-btn">
+                            <span class="link-font" routerLink="/auth">Back</span>
+                        </div> -->             
+                    </form>
+                
+                </mat-card-content>
+                <mat-card-actions class="">
+                    <button style="background-color: #006891;" mat-button value="Submit" class="text-white" >{{ 'register.register' | translate }}</button>
+                    <!-- <button class="float-right text-white accion_sand" mat-button routerLink="/auth">{{ 'register.back' | translate }}</button> -->
+                </mat-card-actions>
+            </mat-card>
+              
+        </div>
+    </div>
+</body>
+
+<!-- translation with parameters: translation pipe -->
+<!-- <p>{{ 'register.greeting' | translate:{'name':'Andreas'} }}</p> -->
+
+<!-- translation: directive (key as attribute) -->
+<!-- <p [translate]="'register.greeting'" [translateParams]="{name: 'Andreas'}"></p> -->
+
+<!-- translation: directive (key as content of element)-->
+<!-- <p translate [translateParams]="{name: 'Andreas'}">register.greeting</p> -->
+<!-- <button (click)="useLanguage('en')">en</button>
+<button (click)="useLanguage('pt')">pt</button>  -->

@@ -1,0 +1,71 @@
+.text-small {
+    font-size: 10px;
+}
+
+.success-color {
+    color: #1cff1f;
+}
+.new-color:hover{
+  color: #0000EE;
+  cursor: pointer;
+}
+
+
+.pending-color {
+    color: #d1d40e;
+}
+
+.failed-color {
+    color: #ff2100;
+}
+
+#dashboard {
+overflow-x: hidden;
+}
+.mat-form-field {
+    width: 150px;
+    margin-left: 15px;
+    max-height: 25px !important;
+}
+
+
+
+mat-list-item p {
+    font-size: 13px;
+}
+
+.mousepointer {
+    cursor: pointer;
+  
+}
+.mousepointer:hover {
+    color: #0000EE;
+}
+
+.example-month-picker .mat-calendar-period-button {
+    pointer-events: none;
+  }
+  
+  .example-month-picker .mat-calendar-arrow {
+    display: none;
+  }
+
+  table {
+    text-align: center;
+    // table-layout: fixed;
+    width: 100%;
+  }
+
+  th, td {
+    text-align: center !important;
+    text-transform: capitalize;
+    padding: 10px !important;
+  }
+
+  .fetch_btn {
+      max-height: 30px;
+  }
+
+  .card {
+      min-width: 110px;
+  }

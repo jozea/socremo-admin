@@ -1,0 +1,71 @@
+
+<mat-dialog-content>
+    <br>
+    <h2 *ngIf="isApproved" style="font-weight: bold; color: rgb(64, 87, 29);" class="text-center">Approved Representative</h2>
+    <h2 *ngIf="!isApproved" style="font-weight: bold;" class="text-center text_accion">Approve Representative</h2>
+    <button *ngIf="!isApproved" style="color: white; background-color: rgb(31, 182, 31);" mat-raised-button type="button" (click)="approveRepresentative()" >Approve</button>&nbsp;
+    <div *ngIf="isLoading" class="col-12 d-flex justify-content-center p-5" >
+        <mat-spinner [diameter]="25" ></mat-spinner>
+    </div>
+    <div class="card mx-4 mb-3 rounded-0 mt-3">
+        <mat-list>
+            <div mat-subheader class="text_orange">Account Information</div>
+            <mat-divider></mat-divider>
+    
+            <div class="row px-4 my-3 flex-wrap">
+                <div class="col-4 px-2">
+                    <p class="font-weight-bold">Account Number</p>
+                    <p class="text_blue">{{corporateInfo.accountNumber}}</p>
+                </div>
+                <div class="col-4 px-2">
+                    <p class="font-weight-bold">Account First Name</p>
+                    <p class="text_blue">{{corporateInfo.accountFirstName}}</p>
+                </div>
+                <div class="col-4 px-2">
+                    <p class="font-weight-bold">Account Last Name</p>
+                    <p class="text_blue">{{corporateInfo.accountLastName}}</p>
+                </div>
+    
+                <div class="col-4 px-2"> 
+                    <p class="font-weight-bold">Account Address</p>
+                    <p class="text_blue">{{corporateInfo.accountAddress}}</p>
+                </div>
+                <div class="col-4 px-2">
+                    <p class="font-weight-bold">Account Mobile Number</p>
+                    <p class="text_blue">{{corporateInfo.accountMobileNumber}}</p>
+                </div>
+                <div class="col-4 px-2">
+                    <p class="font-weight-bold">Account Email</p>
+                    <p class="text_blue">{{corporateInfo.accountEmail}}</p>
+                </div>
+            </div>
+        </mat-list>
+    </div>
+
+    <div class="card mx-4 mb-3 rounded-0 mt-3" >
+        <mat-list>
+            <div mat-subheader class="text_orange">Representative Information</div>
+            <mat-divider></mat-divider>
+    
+            <div *ngFor="let g of arr" class="row px-4 my-3 flex-wrap">
+                <div class="col-4 px-2">
+                    <p class="font-weight-bold">First Name</p>
+                    <p class="text_blue">{{g.firstName}}</p>
+                </div>
+                <div class="col-4 px-2">
+                    <p class="font-weight-bold">Last Name</p>
+                    <p class="text_blue">{{g.lastName}}</p>
+                </div>
+    
+                <div class="col-4 px-2">
+                    <p class="font-weight-bold">Email</p>
+                    <p class="text_blue">{{g.email}}</p>
+                </div>
+                <div class="col-4 px-2">
+                    <p class="font-weight-bold">Mobile Number</p>
+                    <p class="text_blue">{{g.mobileNumber}}</p>
+                </div>
+            </div>
+        </mat-list>
+    </div>
+</mat-dialog-content>

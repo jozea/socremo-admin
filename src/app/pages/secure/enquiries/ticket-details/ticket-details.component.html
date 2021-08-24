@@ -1,0 +1,52 @@
+<div *ngIf="isLoadingResults" class="loader_container">
+	<div class="spinner">
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+	</div>
+</div>
+<!-- <mat-spinner *ngIf="isLoadingResultss"></mat-spinner> -->
+
+
+<h2 mat-dialog-title class="text_accion_stone"> Ticket Details </h2>
+<mat-dialog-content class="app_version mat-typography">
+	<form  [formGroup]="settingsForm" class="row w-100 px-5 py-2">
+
+        <!-- <mat-form-field class="col-12" appearance="outline">
+            <mat-label>Security Question</mat-label>
+            <mat-select formControlName="secQst">
+              <mat-option *ngFor="let item of securityQuestions" [value]="item.key">
+                {{item.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field> -->
+
+		<mat-form-field class="col-12" appearance="outline">
+			<mat-label>Comments</mat-label>
+			<input formControlName="secAns" matInput type="text">
+		</mat-form-field>
+
+        <mat-form-field class="col-12" appearance="outline">
+			<mat-label>Response</mat-label>
+			<input formControlName="secAns" matInput type="text">
+		</mat-form-field>
+
+		<mat-form-field class="col-12" appearance="outline">
+			<mat-label>Enter Pin</mat-label>
+			<input formControlName="pin" matInput type="number">
+		</mat-form-field>
+	</form>
+
+	<div *ngIf="isLoading" class="col-12 d-flex justify-content-center p-5" >
+		<mat-spinner [diameter]="25" ></mat-spinner>
+	</div>
+
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-content-between">
+	<div >
+		<button (click)="submit()" class="btn btn-sm text-white accion_stone">Submit</button>
+	</div>
+	<button mat-button mat-dialog-close (click)="close()">Cancel</button>
+</mat-dialog-actions>

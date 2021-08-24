@@ -1,0 +1,341 @@
+<div id="dashboard_page">
+  <div class="header mt-3 bg-white d-flex justify-content-between">
+    <p class="p-3 lead">{{ 'dashboard.headerText' | translate }}</p>
+    <div class="row mt-3 d-flex justify-content-between px-3 my-3">
+      <button class="float-right " mat-button (click)="useLanguage('en')">en</button><p class="float-right ">|</p>
+        <button class="float-right " mat-button (click)="useLanguage('pt')">pt</button>
+      <mat-form-field style="max-width: 150px;" class="col-sm-10 col-md mb-3">
+        <mat-label>{{ 'dashboard.rangeHeader' | translate }}</mat-label>
+        <mat-select (selectionChange)="handleDateRangeSelection($event)" [value]="dateRangeType">
+          <mat-option value="day">
+            {{ 'dashboard.dayRange' | translate }}
+          </mat-option>
+          <mat-option value="month">
+            {{ 'dashboard.monthRange' | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <form class="col d-flex justify-content-end" [formGroup]="dateForm">
+        <div>
+          <mat-form-field class="mr-4">
+            <mat-label>{{ 'dashboard.startDate' | translate }}</mat-label>
+            <input matInput [matDatepicker]="startDate" formControlName="startDate">
+            <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+            <mat-datepicker #startDate></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'dashboard.endDate' | translate }}</mat-label>
+            <input matInput [matDatepicker]="endDate" formControlName="endDate">
+            <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+            <mat-datepicker #endDate></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <button class="btn btn-sm accion_stone p-0 m-0 px-2 mt-2 ml-3 text-white fetch_btn"
+          (click)="filterDataBasedOnDate()">
+          {{ 'dashboard.fetch' | translate }}
+        </button>
+        <button (click)="refreshPage()" class="btn btn-sm accion_sand p-0 m-0 px-2 mt-2 ml-3 text-white fetch_btn pt-1">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </form>
+    </div>
+  </div>
+  <div id="dashboard" class="mt-3 ml-5">
+    <div class="row mr-2">
+      <div class="dashboardTab col-xs-12 col-sm-6 col-md-5 col-lg-3 pl-0 mb-2" *ngFor="let key of Object.keys(dashboardTabs)">
+        <div class="bg-white d-flex flex-row">
+          <div
+          class="icon_container accion">
+           <div>
+            <mat-icon>{{dashboardTabs[key].icon}}</mat-icon>
+           </div>
+          </div>
+          <div class="text_container">
+            <h3 class="font-weight-bolder p-0 m-0 text_accion_stone"> {{dashboardTabs[key].title}}</h3>
+            <p class="text_accion p-0 m-0"> {{ dashboardTabs[key].title.includes('Value') || dashboardTabs[key].title.includes('Wallet') || dashboardTabs[key].title.includes('Revenue') ? '₦' + (dashboardTabs[key].volume | number) :  (dashboardTabs[key].volume | number)}}</p>
+            <div>
+              <small *ngFor="let item of dashboardTabs[key].breakdown" class="text_accion"> {{item.title}}  {{ dashboardTabs[key].title.includes('Value') ? '₦' +(item.count | number) : (item.count | number)}} </small>
+            </div>
+            <div *ngIf="dashboardTabs[key].accountTiers">
+              <p *ngFor="let item of dashboardTabs[key].accountTiers" class="text_accion p-0 m-0"> {{item.title}} - {{item.count}} </p>
+            </div>
+            <a *ngIf="dashboardTabs[key].link" [routerLink]="dashboardTabs[key].link"> 
+              {{
+                dashboardTabs[key].title.includes('Wallet') ? '': 'View'
+              }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-4 graph_section">
+      <div class="col-sm-12 col-md-9 bg-white mt-3 mb-3">
+        <div class="col-12 pt-3 row justify-content-between pl-4">
+          <h3 class="text_accion font-weight-bold col-12 col-sm-6">{{ 'dashboard.transVol' | translate }}</h3>
+          <!-- <mat-form-field style="max-width: 150px;" class="col-12 col-sm-6 mb-3" *ngIf="!lineChartLoading">
+            <mat-label>Channel</mat-label>
+            <mat-select (selectionChange)="handleTransactionChannel($event)" [value]="selectedChannel">
+              <mat-option value="all">
+                All
+              </mat-option>
+              <mat-option value="web">
+                Web
+              </mat-option>
+              <mat-option value="mobile">
+                Mobile
+              </mat-option>
+            </mat-select>
+          </mat-form-field> -->
+          <mat-spinner *ngIf="lineChartLoading"  [diameter]="20"></mat-spinner>
+        </div>
+        
+        <div class="mb-4 mr-2">
+         
+          <!-- Chart is displayed here -->
+          <div *ngIf="!displayChart" class="d-flex justify-content-center mt-3 mb-4"
+            style="font-weight: bold; font-family: Roboto,serif; font-size: 20px;">
+            {{nodata}}
+          </div>
+          <div style="min-height: 400px; min-width: 320px" class="chart" *ngIf="displayChart">
+            <canvas  
+            baseChart 
+            [datasets]="barChartData" 
+            [labels]="barChartLabels" 
+            [options]="barChartOptions"
+            [plugins]="barChartPlugins" 
+            [legend]="barChartLegend" 
+            [colors]="barChartColors"
+            [chartType]="barChartType">
+            </canvas>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="col-sm-12 col-md-3 mb-3">
+        <div class="table-container mat-elevation-z8 bg-white mr-3 pt-4 mt-3 pl-3">
+          <p class="font-weight-bold text-center py-2 mb-0 text_accion w-100">{{ 'dashboard.recentLoanActivity' | translate }}</p>
+          <table mat-table [dataSource]="loanTransactionDataSource" class="">
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> {{ 'dashboard.name' | translate }} </th>
+              <td mat-cell *matCellDef="let element; let i = index;">
+                {{element.userRequest && element.userRequest.name ? element.userRequest.name.split(' ')[0] : element.mobileNumber ? element.mobileNumber : ''}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="amount">
+              <th disableClear mat-header-cell *matHeaderCellDef> {{ 'dashboard.amount' | translate }} </th>
+              <td mat-cell *matCellDef="let element">
+                {{element.recommended ?( element.recommended.recommendedAmount | number ): ''}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> {{ 'dashboard.status' | translate }} </th>
+              <td mat-cell *matCellDef="let element"> {{element.applicationStatus}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="loanTransactionColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: loanTransactionColumns;"></tr>
+
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4"> {{ 'dashboard.noData' | translate }}</td>
+            </tr>
+          </table>
+        </div>
+
+      </div>
+
+  
+
+      <div style="min-height: 200px;" class="col-sm-12 col-md-6 col-lg-4 mt-3 mb-3 px-0">
+        <div class="bg-white mr-3 pb-3 custom_table">
+          <h4 class="text_accion p-3 font-weight-bold">{{ 'dashboard.transactionTypes' | translate }}</h4>
+          <canvas 
+          baseChart 
+          [data]="pieChartData" 
+          [labels]="pieChartLabels" 
+          [chartType]="pieChartType" 
+          [options]="pieChartOptions" 
+          [colors]="pieChartColors" 
+          [legend]="pieChartLegend"> 
+          </canvas> 
+        </div> 
+      </div> 
+
+      <div style="min-height: 200px;" class="col-sm-12 col-md-6 col-lg-4 mt-3 mb-3 px-0">
+        <div class="bg-white mr-3 pb-3 custom_table">
+          <h4 class="text_accion p-3 font-weight-bold">{{ 'dashboard.transactionStatus' | translate }}</h4>
+          <canvas baseChart 
+          [data]="transactionStatusChartData" 
+          [labels]="transactionStatusChartLabels" 
+          [chartType]="transactionStatusChartType"
+          [options]="pieChartOptions" 
+          [colors]="transactionStatusChartColors" 
+          [legend]="pieChartLegend">
+          </canvas>
+        </div>
+      </div>
+
+      <div style="min-height: 200px;" class="col-sm-12 col-md-6 col-lg-4 mt-3 mb-3 px-0">
+        <div class="bg-white mr-3 pb-3">
+          <h4 class="text_accion p-3 font-weight-bold">{{ 'dashboard.noOfAccountOpened' | translate }} </h4>
+          <canvas  
+            baseChart 
+            [datasets]="accountOpenedChartData" 
+            [labels]="accountOpenedChartLabels" 
+            [options]="barChartOptions"
+            [plugins]="barChartPlugins" 
+            [legend]="barChartLegend" 
+            [colors]="barChartColors"
+            [chartType]="barChartType">
+            </canvas>
+        </div>
+      </div>
+
+      <!-- <div class="col-sm-12 col-md-6 col-lg-4 mb-3 mt-3 pl-0">
+        <div class="table-container mat-elevation-z8 bg-white mr-2">
+
+          <p class="font-weight-bold  p-3 mb-0 text_accion">Income Per Transaction Type</p>
+          <canvas  
+          baseChart 
+          [datasets]="incomePerTransactionTypeChartData" 
+          [labels]="incomePerTransactionTypeChartLabels" 
+          [options]="barChartOptions"
+          [plugins]="barChartPlugins" 
+          [legend]="barChartLegend" 
+          [colors]="barChartColors"
+          [chartType]="barChartType">
+          </canvas>          
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6 col-lg-4 mb-3 pl-sm-0 pl-md-0">
+        <div class="table-container mat-elevation-z8 bg-white mr-3 mt-3">
+
+          <p class="font-weight-bold  p-3 mb-0 text_accion">Income Per Channel</p>
+          <canvas  
+          baseChart 
+          [datasets]="incomePerChannelChartData" 
+          [labels]="incomePerChannelChartLabels" 
+          [options]="barChartOptions"
+          [plugins]="barChartPlugins" 
+          [legend]="barChartLegend" 
+          [colors]="barChartColors"
+          [chartType]="barChartType">
+          </canvas>
+         
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6 col-lg-4 mb-3 pl-0">
+        <div class="table-container mat-elevation-z8 bg-white mr-3 mt-3 custom_table">
+          <p class="font-weight-bold  p-3 mb-0 text_accion">Account Registration</p>
+          <canvas  
+          baseChart 
+          [datasets]="accountRegistrationChartData" 
+          [labels]="accountRegistrationChartLabels" 
+          [options]="barChartOptions"
+          [plugins]="barChartPlugins" 
+          [legend]="barChartLegend" 
+          [colors]="barChartColors"
+          [chartType]="barChartType">
+          </canvas>          
+        </div>
+      </div> -->
+
+      <div class="col-sm-12 col-md-6 col-lg-4 mb-3 pl-0">
+        <div class="table-container mat-elevation-z8 bg-white mr-3 mt-3 custom_table">
+         
+          <p class="font-weight-bold text-center mb-0 text_accion m-0 p-0 pt-4">{{ 'dashboard.loanSummary' | translate }}</p>
+          <table class="custom_table">
+            <tr>
+              <th>{{ 'dashboard.action' | translate }} </th>
+              <th> {{ 'dashboard.count' | translate }} </th>
+              <th> {{ 'dashboard.requestedAmount' | translate }} </th>
+              <th> {{ 'dashboard.recommendedAmount' | translate }} </th>
+            </tr>
+            <tr>
+              <td> {{loanCategories.total.title}} </td>
+              <td> {{loanCategories.total.count | number}} </td>
+              <td> {{loanCategories.total.requestedAmount | number}} </td>
+              <td> {{loanCategories.total.recommendedAmount | number}} </td>
+            </tr>
+            <tr>
+              <td> {{loanCategories.pending.title}} </td>
+              <td> {{loanCategories.pending.count | number}} </td>
+              <td> {{loanCategories.pending.requestedAmount | number}} </td>
+              <td> {{loanCategories.pending.recommendedAmount | number}} </td>
+            </tr>
+            <tr>
+              <td> {{loanCategories.accepted.title}} </td>
+              <td> {{loanCategories.accepted.count | number}} </td>
+              <td> {{loanCategories.accepted.requestedAmount | number}} </td>
+              <td> {{loanCategories.accepted.recommendedAmount | number}} </td>
+            </tr>
+            <tr>
+              <td> {{loanCategories.unapproved.title}} </td>
+              <td> {{loanCategories.unapproved.count | number}} </td>
+              <td> {{loanCategories.unapproved.requestedAmount | number}} </td>
+              <td> {{loanCategories.unapproved.recommendedAmount | number}} </td>
+            </tr>
+            <tr>
+              <td> {{loanCategories.rejected.title}} </td>
+              <td> {{loanCategories.rejected.count | number}} </td>
+              <td> {{loanCategories.rejected.requestedAmount | number}} </td>
+              <td> {{loanCategories.rejected.recommendedAmount | number}} </td>
+            </tr>
+          </table>
+
+        </div>
+      </div>
+
+
+      <!-- <div class="col-sm-12 col-md-6 col-lg-4 mb-3 pl-0">
+        <div class="table-container mat-elevation-z8 bg-white mr-3 mt-3 custom_table">
+
+          <p class="font-weight-bold text-center pb-2 mb-0 text_accion pt-4">Account Breakdown</p>
+          <table  class="custom_table">
+            <tr>
+              <th>Action </th>
+              <th> Count </th>
+            </tr>
+            <tr>
+              <td> {{accountCategories.total.title}} </td>
+              <td> {{accountCategories.total.count}} </td>
+            </tr>
+            <tr>
+              <td> {{accountCategories.account.title}} </td>
+              <td> {{accountCategories.account.count}} </td>
+            </tr>
+            <tr>
+              <td> {{accountCategories.wallet.title}} </td>
+              <td> {{accountCategories.wallet.count}} </td>
+            </tr>
+            <tr>
+              <td> {{accountCategories.tier1.title}} </td>
+              <td> {{accountCategories.tier1.count}} </td>
+            </tr>
+            <tr>
+              <td> {{accountCategories.tier2.title}} </td>
+              <td> {{accountCategories.tier2.count}} </td>
+            </tr>
+            <tr>
+              <td> {{accountCategories.tier3.title}} </td>
+              <td> {{accountCategories.tier3.count}} </td>
+            </tr>
+            <tr>
+              <td> {{accountCategories.referral.title}} </td>
+              <td> {{accountCategories.referral.count}} </td>
+            </tr>
+            <tr>
+              <td> {{accountCategories.organic.title}} </td>
+              <td> {{accountCategories.organic.count}} </td>
+            </tr>
+
+          </table>
+        </div>
+      </div> -->
+    </div>
+  </div>

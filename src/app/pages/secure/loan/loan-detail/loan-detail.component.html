@@ -1,0 +1,479 @@
+<h2 mat-dialog-title class="text_accion_stone">Loan Details</h2>
+<mat-dialog-content *ngIf="!loanDetail" class="mat-typography">
+  <mat-spinner [diameter]="100"></mat-spinner>
+</mat-dialog-content>
+<mat-dialog-content *ngIf="loanDetail" class="mat-typography">
+
+  <div class="row">
+    <div class="col-6">
+      <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Application Status</h5>
+        <p class="text-capitalize"> {{loanDetail.applicationStatus}}</p>
+      </div>
+      <div *ngIf="loanDetail.disburseId" class="d-flex">
+        <h5 class="font-weight-500 mr-3">Disbursed ID </h5>
+        <p class="text-capitalize"> 0000111111</p>
+      </div>
+      <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Requested </h5>
+        <p class="text-capitalize"> N{{loanDetail.requestedAmount}}</p>
+      </div>
+      <!-- <div *ngIf="loanDetail.recommended" class="d-flex">
+        <h5 class="font-weight-500 mr-3">Recommended</h5>
+        <p class="text-capitalize">
+          N{{loanDetail.recommended ?( loanDetail.recommended.recommendedAmount | number ): ''}}
+          {{loanDetail.recommended.recommendedTerm && 'for ' + loanDetail.recommended.recommendedTerm}}</p>
+      </div>
+      <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">System Reason</h5>
+        <p class="text-capitalize">{{loanDetail.reason}}</p>
+      </div> -->
+
+      <div  class="d-flex">
+        <h5 class="font-weight-500 mr-3">Amount Requested</h5>
+        <p class="text-capitalize">{{loanDetail.requestedAmount}}</p>
+      </div>
+
+      <!-- <div *ngIf="loanDetail.loanCompute && loanDetail.loanCompute.strategy" class="d-flex">
+        <h5 class="font-weight-500 mr-3">Strategy</h5>
+        <p class="text-capitalize">{{loanDetail.loanCompute.strategy | uppercase }}</p>
+      </div> -->
+
+      <!-- <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Channel</h5>
+        <p class="text-capitalize">{{loanDetail.channel }}</p>
+      </div> -->
+
+      <!-- <div *ngIf="loanDetail.actionBy === 'user'" class="d-flex">
+        <h5 class="font-weight-500 mr-3">User Rejection Reason</h5>
+        <p class="text-capitalize">{{loanDetail.rejectionReason ? loanDetail.rejectionReason : 'None'}}</p>
+      </div> -->
+      <div  class="d-flex">
+        <h5 class="font-weight-500 mr-3">Maker</h5>
+        <p class="text-capitalize"></p>
+      </div>
+      <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Checker/Authorizer</h5>
+        <p class="text-capitalize"></p>
+      </div>
+
+    </div>
+
+
+    <div class="col-6">
+      <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Loan ID</h5>
+        <p class="text-capitalize"></p>
+      </div>
+      <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Offer Accepted</h5>
+        <p class="text-capitalize"></p>
+      </div>
+      <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Action By</h5>
+        <p class="text-capitalize">{{loanDetail.action}}</p>
+      </div>
+      <!-- <div *ngIf="loanDetail.loanCompute && loanDetail.loanCompute.score" class="d-flex">
+        <h5 class="font-weight-500 mr-3">Score</h5>
+        <p class="text-capitalize">{{loanDetail.loanCompute.score | number }}</p>
+      </div> -->
+      <!-- <div *ngIf="loanDetail.loanCompute && loanDetail.loanCompute.scoreGrade" class="d-flex">
+        <h5 class="font-weight-500 mr-3">Score Grade</h5>
+        <p class="text-capitalize">{{loanDetail.loanCompute.scoreGrade | uppercase }}</p>
+      </div>
+      <div *ngIf="loanDetail.recommended" class="d-flex">
+        <h5 class="font-weight-500 mr-3">Process</h5>
+        <p class="text-capitalize">{{loanDetail.recommended ? loanDetail.recommended.process : ''}}
+          {{ loanDetail.recommended.recommendedTerm && 'for ' + loanDetail.recommended.recommendedTerm }}</p>
+      </div> -->
+      <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Date</h5>
+        <p class="text-capitalize">{{loanDetail.applicationDate | date :'medium'}}</p>
+      </div>
+    </div>
+  </div>
+
+
+
+  <h3 class="lead text_accion">Personal information</h3>
+  <table class="table table-bordered  table-sm">
+    <thead>
+      <tr>
+        <th scope="col">Customer Name</th>
+        <th scope="col">Mobile Number</th>
+        <th scope="col">Address</th>
+        <th scope="col">Area</th>
+        <!-- <th scope="col">Date of Birth</th> -->
+        <th scope="col">Age</th>
+        <th scope="col">Gender</th>
+        <th scope="col">Education Level</th>
+        <th scope="col">Marital Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <!-- <td>{{loanDetail.userRequest.dateOfBirth | date :'medium'}}</td> -->
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="table table-bordered table-sm">
+    <thead>
+      <tr>
+        <!-- <th scope="col">BVN</th> -->
+        <th scope="col">Household Expenses</th>
+        <th scope="col">Number of Dependent</th>
+        <th scope="col">Know AMFB</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <!-- <td></td> -->
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 class="text_accion">Business information</h3>
+  <table class="table table-bordered table-sm">
+    <thead>
+      <tr>
+        <th scope="col">Business Activity</th>
+        <th scope="col">Business Licence</th>
+        <th scope="col">Business Location</th>
+        <th scope="col">Economic Activity</th>
+        <th scope="col">Economic Sector</th>
+        <th scope="col">Rank of Sales</th>
+        <th scope="col">Duration at Current Location</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+        </td>
+        <td></td>
+        <td></td>
+        <td>
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="table table-bordered table-sm">
+    <thead>
+      <tr>
+        <th scope="col">Cost of Goods</th>
+        <th scope="col">Monthly Sales</th>
+        <th scope="col">Monthly Fixed Expenses</th>
+        <th scope="col">Monthly Variable Expenses</th>
+        <th scope="col">Other Financial Expenses</th>
+        <th scope="col">Other Income</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+  <h3 class="text_accion">Loan Computation</h3>
+  <div *ngFor="let schedule of loanDetail.schedule">
+    <h5 class="font-weight-500 text_accion_sand">Fee Information</h5>
+    <table class="table table-bordered table-sm">
+      <thead>
+        <tr>
+          <th scope="col">Admin Fee</th>
+          <th scope="col">Disburse Amount </th>
+          <th scope="col">Insurance Fee</th>
+          <th scope="col">Interest Rate</th>
+          <th scope="col">Total Interest Accruable</th>
+          <th scope="col">Total Repayment Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <h5 class="font-weight-500 text_accion_sand">Schedule</h5>
+    <table class="table table-bordered table-sm">
+      <thead>
+        <tr>
+          <th scope="col">S/N</th>
+          <th scope="col">Principal </th>
+          <th scope="col">Interest</th>
+          <th scope="col">Monthly Repayment</th>
+          <th scope="col">Outstanding Balance</th>
+          <th scope="col">Due Date</th>
+          <th scope="col">Payment Status</th>
+          <th scope="col">Card Payment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of schedule.loanSchedule">
+          <td>1</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+
+
+
+  </div>
+
+  <!-- <h5 *ngIf="loanDetail.loanCompute" class="font-weight-500 text_accion_sand">MSME Financial Assessment</h5>
+  <table *ngIf="loanDetail.loanCompute" class="table table-bordered table-sm">
+    <thead>
+      <tr>
+        <th class="text_start" scope="col">#</th>
+        <th scope="col">Class</th>
+        <th scope="col">Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="loanDetail.loanCompute.householdEamClass">
+        <td class="text_start" scope="row">Household Eam</td>
+        <td>{{loanDetail.loanCompute.householdEamClass.class}}</td>
+        <td>{{loanDetail.loanCompute.householdEamClass.score}}</td>
+      </tr>
+      <tr *ngIf="loanDetail.loanCompute.grossProfitEamClass">
+        <td class="text_start" scope="row">Gross Profit Eam</td>
+        <td>{{loanDetail.loanCompute.grossProfitEamClass.class}}</td>
+        <td>{{loanDetail.loanCompute.grossProfitEamClass.score}}</td>
+      </tr>
+      <tr *ngIf="loanDetail.loanCompute.netMarginEamClass">
+        <td class="text_start" scope="row">Net Profit Eam</td>
+        <td>{{loanDetail.loanCompute.netMarginEamClass.class}}</td>
+        <td>{{loanDetail.loanCompute.netMarginEamClass.score}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <h5 *ngIf="loanDetail.loanCompute" class="font-weight-500 text_accion_sand">Economic Activity Breakdown</h5>
+  <div *ngIf="loanDetail.loanCompute && loanDetail.loanCompute.ecoActivityLimits" class="d-flex">
+    <div class="d-flex mr-4">
+      <h5 class="font-weight-500 mr-3">Type</h5>
+      <p class="text-capitalize">{{loanDetail.loanCompute.ecoActivityLimits.economicActivity}}</p>
+    </div>
+    <div class="d-flex mr-4">
+      <h5 class="font-weight-500 mr-3">Limits Type</h5>
+      <p class="text-capitalize">{{loanDetail.loanCompute.ecoActivityLimits.limitsType}}</p>
+    </div>
+    <div class="d-flex">
+      <h5 class="font-weight-500 mr-3">Rank of Sales</h5>
+      <p class="text-capitalize">{{loanDetail.loanCompute.ecoActivityLimits.rankOfSales}}</p>
+    </div>
+  </div>
+  <table *ngIf="loanDetail.loanCompute" class="table table-bordered table-sm">
+    <thead>
+      <tr>
+        <th class="text_start" scope="col">#</th>
+        <th scope="col">Limit 1</th>
+        <th scope="col">Limit 2</th>
+        <th scope="col">Limit 3</th>
+        <th scope="col">Limit 4</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="loanDetail.loanCompute.ecoActivityLimits.grossMarginLimits">
+        <td class="text_start" scope="row"> Gross Margin Limits</td>
+        <td>{{loanDetail.loanCompute.ecoActivityLimits.grossMarginLimits.limit1}}</td>
+        <td>{{loanDetail.loanCompute.ecoActivityLimits.grossMarginLimits.limit2}}</td>
+        <td>{{loanDetail.loanCompute.ecoActivityLimits.grossMarginLimits.limit3}}</td>
+        <td>{{loanDetail.loanCompute.ecoActivityLimits.grossMarginLimits.limit4}}</td>
+      </tr>
+      <tr *ngIf="loanDetail.loanCompute.ecoActivityLimits.householdExpenseRatioLimits">
+        <td class="text_start" scope="row">Household Expense Ratio Limits</td>
+        <td>{{loanDetail.loanCompute.ecoActivityLimits.householdExpenseRatioLimits.limit1}}</td>
+        <td>{{loanDetail.loanCompute.ecoActivityLimits.householdExpenseRatioLimits.limit2}}</td>
+        <td>{{loanDetail.loanCompute.ecoActivityLimits.householdExpenseRatioLimits.limit3}}</td>
+        <td>{{loanDetail.loanCompute.ecoActivityLimits.householdExpenseRatioLimits.limit4}}</td>
+      </tr>
+      <tr *ngIf="loanDetail.loanCompute.ecoActivityLimits.netMarginLimits">
+        <td class="text_start" scope="row">Net Margin Limits</td>
+        <td>{{loanDetail.loanCompute.ecoActivityLimits.netMarginLimits.limit1}}</td>
+        <td>{{loanDetail.loanCompute.ecoActivityLimits.netMarginLimits.limit2}}</td>
+        <td>{{loanDetail.loanCompute.ecoActivityLimits.netMarginLimits.limit3}}</td>
+        <td>{{loanDetail.loanCompute.ecoActivityLimits.netMarginLimits.limit4}}</td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <h5 *ngIf="loanDetail.loanCompute" class="font-weight-500 text_accion_sand">Profit Information</h5>
+  <table *ngIf="loanDetail.loanCompute" class="table table-bordered table-sm">
+    <thead>
+      <tr>
+        <th scope="col">Gross Profit</th>
+        <th scope="col">Gross Profit Margin</th>
+        <th scope="col">Net Profit</th>
+        <th scope="col">Net Margin</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{loanDetail.loanCompute.grossProfit  | number}}</td>
+        <td>{{loanDetail.loanCompute.grossProfitMargin  | number}}</td>
+        <td>{{loanDetail.loanCompute.netProfit  | number}}</td>
+        <td>{{loanDetail.loanCompute.netMargin  | number}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <h5 *ngIf="loanDetail.loanCompute" class="font-weight-500 text_accion_sand">Score</h5>
+  <table *ngIf="loanDetail.loanCompute" class="table table-bordered table-sm">
+    <thead>
+      <tr>
+        <th scope="col">Age Score</th>
+        <th scope="col">Business Activity Score </th>
+        <th scope="col">Education Score</th>
+        <th scope="col">Establishment Score</th>
+        <th scope="col">Gender Score</th>
+        <th scope="col">Known AMFB Score</th>
+        <th scope="col">License Score</th>
+        <th scope="col">Marital Score</th>
+        <th scope="col">Time at location Score</th>
+        <th scope="col">MSME Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{loanDetail.loanCompute.ageScore }}</td>
+        <td>{{loanDetail.loanCompute.businessActivityScore }}</td>
+        <td>{{loanDetail.loanCompute.educationScore }}</td>
+        <td>{{loanDetail.loanCompute.establishmentScore }}</td>
+        <td>{{loanDetail.loanCompute.genderScore }}</td>
+        <td>{{loanDetail.loanCompute.knowAMFBScore }}</td>
+        <td>{{loanDetail.loanCompute.licenseScore }}</td>
+        <td>{{loanDetail.loanCompute.maritalScore }}</td>
+        <td>{{loanDetail.loanCompute.timeAtLocationScore }}</td>
+        <td>{{loanDetail.loanCompute.msmeScore }}</td>
+      </tr>
+    </tbody>
+  </table> -->
+
+
+
+  <!-- <h5 *ngIf="loanDetail.loanCompute" class="font-weight-500 text_accion_sand">Score</h5> -->
+  <!-- <table *ngIf="loanDetail.loanCompute" class="table table-bordered table-sm">
+    <thead>
+      <tr>
+        <th scope="col">Model</th>
+        <th scope="col">Operational Expense Ratio</th>
+        <th scope="col"> Probability </th>
+        <th scope="col">Total Operational Expenses</th>
+        <th scope="col">Constant</th>
+        <th scope="col">Monthly Household Surplus</th>
+        <th scope="col">Adjusted Monthly Household Surplus</th>
+        <th scope="col"> Household Expenses Ratio</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{loanDetail.loanCompute.model | number: '1.1-4' }}</td>
+        <td>{{loanDetail.loanCompute.operationExpenseRatio }}</td>
+        <td>{{loanDetail.loanCompute.probability | number: '1.1-4' }}</td>
+        <td>{{loanDetail.loanCompute.totalOpsExpenses }}</td>
+        <td>3.3756</td>
+        <td>{{loanDetail.loanCompute.monthlyHouseholdSurplus  | number }}</td>
+        <td>{{loanDetail.loanCompute.adjmonthlyHouseholdSurplus  | number }}</td>
+        <td>{{loanDetail.loanCompute.householdExpenseRatio}}</td>
+
+
+      </tr>
+    </tbody>
+  </table>
+
+  <h5 *ngIf="loanDetail.loanCompute" class="font-weight-500 text_accion_sand">CRC Report</h5>
+  <table *ngIf="loanDetail.loanCompute" class="table table-bordered table-sm">
+    <thead>
+      <tr>
+        <th scope="col">Address</th>
+        <th scope="col">Address Stability </th>
+        <th scope="col">Approved Amount</th>
+        <th scope="col">First Report Date</th>
+        <th scope="col">Max Overdue Days</th>
+        <th scope="col">Max Overdue Facility</th>
+        <th scope="col">Non performing Facility</th>
+        <th scope="col">Number of Dishonored Cheques</th>
+        <th scope="col">Number of Enquiries in Months</th>
+        <th scope="col">Overdue Amount</th>
+        <th scope="col">Suits Filed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{loanDetail.loanCompute.crcReport.address}}</td>
+        <td>{{loanDetail.loanCompute.crcReport.addressStability}}</td>
+        <td>{{loanDetail.loanCompute.crcReport.approvedAmount}}</td>
+        <td>{{loanDetail.loanCompute.crcReport.firstReportDate}}</td>
+        <td>{{loanDetail.loanCompute.crcReport.maxOverdueDays}}</td>
+        <td>{{loanDetail.loanCompute.crcReport.maxOverdueFacility}}</td>
+        <td>{{loanDetail.loanCompute.crcReport.nonPerformingFacility}}</td>
+        <td>{{loanDetail.loanCompute.crcReport.numberOfDishouredCheques}}</td>
+        <td>{{loanDetail.loanCompute.crcReport.numberOfEnquiriesL12Mnths}}</td>
+        <td>{{loanDetail.loanCompute.crcReport.overdueAmount}}</td>
+        <td>{{loanDetail.loanCompute.crcReport.suitsFiled}}</td>
+      </tr>
+    </tbody>
+  </table> -->
+  <div *ngIf="!loanDetail.loanCompute">
+    No data
+  </div>
+
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-content-between">
+  <!-- <div>
+    <button *ngIf="loanDetail.applicationStatus === 'pending' && loanDetail.manualLoanUpdate" (click)="loanAction('approve')" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">
+      Approve Request
+    </button>
+    <div *ngIf="loanDetail.recommended && loanDetail.applicationStatus === 'pending' && loanDetail.recommended.process !== 'automatic' && !loanDetail.manualLoanUpdate">
+      <span class="text_accion">
+        Change Status to
+      </span>
+      <button (click)="loanAction('disbursed')" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">
+        Disburse
+      </button>
+      <button (click)="loanAction('rejected')" type="button" class="btn btn-sm mx-2 text-white accion_sand my-1">
+        Reject
+      </button>
+    </div>
+  </div> -->
+  <button mat-button mat-dialog-close (click)="close()">Cancel</button>
+</mat-dialog-actions>

@@ -1,0 +1,42 @@
+<div *ngIf="isLoadingResults" class="loader_container">
+	<div class="spinner">
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+	</div>
+</div>
+
+<h2 mat-dialog-title class="text_accion_stone"> Kyc Tier </h2>
+<mat-dialog-content class="app_version mat-typography">
+
+	<form *ngIf="KycTier" [formGroup]="KycTierForm" class="row w-100 px-5 py-2">
+
+		<mat-form-field class="col-12" appearance="outline">
+			<mat-label>Current Tier</mat-label>
+			<input [value]="KycTier" matInput type="text" disabled>
+        </mat-form-field>
+        <br>
+
+		<mat-form-field class="col-12" appearance="outline">
+			<mat-label>Specify New Tier</mat-label>
+			<input [value]="this.KycTierForm.value.version" formControlName="version" matInput type="text">
+			<button mat-button *ngIf="this.KycTierForm.value.version" matSuffix mat-icon-button aria-label="Clear"
+				(click)="this.KycTierForm.value.version=''">
+				<mat-icon>close</mat-icon>
+			</button>
+		</mat-form-field>
+	</form>
+
+	<div *ngIf="!KycTier" class="col-12 d-flex justify-content-center p-5" >
+		<mat-spinner [diameter]="25" ></mat-spinner>
+	</div>
+
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-content-between">
+	<div >
+		<button *ngIf="KycTier" (click)="updateKycTier()" class="btn btn-sm text-white accion_stone">Update</button>
+	</div>
+	<button mat-button mat-dialog-close (click)="close()">Cancel</button>
+</mat-dialog-actions>

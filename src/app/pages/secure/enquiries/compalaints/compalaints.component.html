@@ -1,0 +1,9 @@
+<h2 mat-dialog-title class="text_accion_stone">Enter Complaint</h2>
+<mat-dialog-content>
+    <form [formGroup]="complaintForm" class="d-flex flex-column w-100 mx-3 px-5 py-2">
+        <mat-form-field class="w-100">
+            <mat-label>Enter Message Here</mat-label>
+            <textarea formControlName="message" matInput placeholder="Ex. This is to notify you ... AccionMFB"></textarea>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>

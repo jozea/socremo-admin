@@ -1,0 +1,89 @@
+<div *ngIf="isLoadingResults" class="loader_container">
+  <div class="spinner">
+    <div class="spinner-item"></div>
+    <div class="spinner-item"></div>
+    <div class="spinner-item"></div>
+    <div class="spinner-item"></div>
+    <div class="spinner-item"></div>
+  </div>
+</div>
+
+<h2 mat-dialog-title class="text_accion_stone">Create Branch</h2>
+<mat-dialog-content class="mat-typography">
+
+  <div class="row">
+    <form [formGroup]="branchCreationForm" class="d-flex flex-column w-100 mx-3 px-5 py-2">
+
+      <h3 class="text_accion">Branch Information</h3>
+      <div class="row">
+
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Branch Name</mat-label>
+          <input [value]="this.branchCreationForm.value.branchName" matInput type="text" formControlName="branchName">
+          <button mat-button *ngIf="this.branchCreationForm.value.branchName" matSuffix mat-icon-button aria-label="Clear"
+            (click)="this.branchCreationForm.value.branchName=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Branch Code</mat-label>
+          <input [value]="this.branchCreationForm.value.branchCode" matInput type="text" formControlName="branchCode">
+          <button mat-button *ngIf="this.branchCreationForm.value.branchCode" matSuffix mat-icon-button
+            aria-label="Clear" (click)="this.branchCreationForm.value.branchCode=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+      </div>
+
+      <h3 class="text_accion">Location</h3>
+      <div class="row">
+
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>State</mat-label>
+          <mat-select formControlName="state">
+            <mat-option *ngFor="let item of allStates" [value]="item.alias">
+              {{item.state}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Address</mat-label>
+          <input [value]="this.branchCreationForm.value.branchAddress" matInput type="text" formControlName="branchAddress">
+          <button mat-button *ngIf="this.branchCreationForm.value.branchAddress" matSuffix mat-icon-button aria-label="Clear"
+            (click)="this.branchCreationForm.value.branchAddress=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Latitude</mat-label>
+          <input [value]="this.branchCreationForm.value.latitude" matInput type="number" formControlName="latitude">
+          <button mat-button *ngIf="this.branchCreationForm.value.latitude" matSuffix mat-icon-button aria-label="Clear"
+            (click)="this.branchCreationForm.value.latitude=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Longitude</mat-label>
+          <input [value]="this.branchCreationForm.value.longitude" matInput type="number" formControlName="longitude">
+          <button mat-button *ngIf="this.branchCreationForm.value.longitude" matSuffix mat-icon-button aria-label="Clear"
+            (click)="this.branchCreationForm.value.longitude=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+
+
+      </div>
+
+    </form>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-content-between">
+  <button (click)="handleAddBranch()" class="btn btn-sm text-white accion_sand">Submit</button>
+  <button mat-button mat-dialog-close (click)="close()">Cancel</button>
+</mat-dialog-actions>

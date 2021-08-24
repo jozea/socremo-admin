@@ -1,0 +1,249 @@
+<div *ngIf="loading" class="loader_container">
+    <div class="spinner">
+          <div class="spinner-item"></div>
+          <div class="spinner-item"></div>
+          <div class="spinner-item"></div>
+          <div class="spinner-item"></div>
+          <div class="spinner-item"></div>
+      </div>
+  </div>
+  
+  <section>
+    <div class="header mt-3 bg-white">
+      <mat-tab-group 
+      (selectedTabChange)="tabClick($event)"
+      mat-align-tabs="center">
+        <mat-tab label="Active Investments"></mat-tab>
+        <mat-tab label="Completed Investments"></mat-tab>
+        <mat-tab label="Terminated Investments"></mat-tab>
+        <!-- <mat-tab label="Rejected Loans"></mat-tab>
+        <mat-tab label="Repaid Loans"></mat-tab>
+        <mat-tab label="Drop-off Loans"></mat-tab>
+        <mat-tab label="Expired Loans"></mat-tab> -->
+      </mat-tab-group>
+    </div> 
+  
+    <div class="header mt-3 bg-white">
+      <p class="p-3 px-4 lead">{{headingText}}</p>
+    </div>
+  
+    <form [formGroup]="loanFilterForm" class="filter mx-3">
+      <mat-card class="m-3 p-0 pt-3 px-3 pb-2">
+        <h5 class="font-weight-bold">Filter/Sort by</h5>
+        <div class="d-flex flex-wrap">
+          <mat-form-field appearance="outline">
+            <mat-label>Start Date</mat-label>
+            <input 
+            formControlName="startDate" 
+            matInput [max]="maxDate" 
+            [matDatepicker]="startDate">
+            <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+            <mat-datepicker #startDate></mat-datepicker>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>End date</mat-label>
+            <input formControlName="endDate" matInput [max]="maxDate" [matDatepicker]="picker">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+  
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Channel</mat-label>
+            <mat-select formControlName="channel">
+              <mat-option *ngFor="let item of channelSelection" [value]="item.value">
+                {{item.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <!-- <mat-form-field appearance="outline">
+            <mat-label>Action By</mat-label>
+            <mat-select formControlName="actionBy">
+              <mat-option *ngFor="let item of actionSelection" [value]="item.value">
+                {{item.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Process</mat-label>
+            <mat-select formControlName="process">
+              <mat-option *ngFor="let item of processSelection" [value]="item.value">
+                {{item.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Phone Number</mat-label>
+            <input [value]="this.loanFilterForm.value.mobileNumber" matInput type="tel" formControlName="mobileNumber">
+            <button mat-button *ngIf="this.loanFilterForm.value.mobileNumber" matSuffix mat-icon-button aria-label="Clear"
+              (click)="this.loanFilterForm.value.mobileNumber=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Minimum Amount</mat-label>
+            <input [value]="this.loanFilterForm.value.minAmount" matInput type="number" formControlName="minAmount">
+            <button mat-button *ngIf="this.loanFilterForm.value.minAmount" matSuffix mat-icon-button aria-label="Clear"
+              (click)="this.loanFilterForm.value.minAmount=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline">
+            <mat-label>Maximum Amount</mat-label>
+            <input [value]="this.loanFilterForm.value.maxAmount" matInput type="number" formControlName="maxAmount">
+            <button mat-button *ngIf="this.loanFilterForm.value.maxAmount" matSuffix mat-icon-button aria-label="Clear"
+              (click)="this.loanFilterForm.value.maxAmount=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field> -->
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Customer Name</mat-label>
+            <input [value]="this.loanFilterForm.value.customerName" matInput type="text" formControlName="customerName">
+            <button mat-button *ngIf="this.loanFilterForm.value.customerName" matSuffix mat-icon-button aria-label="Clear"
+              (click)="this.loanFilterForm.value.customerName=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+  
+          <!-- <mat-form-field appearance="outline">
+            <mat-label>Loan ID</mat-label>
+            <input [value]="this.loanFilterForm.value.loanID" matInput type="tel" formControlName="loanID">
+            <button mat-button *ngIf="this.loanFilterForm.value.loanID" matSuffix mat-icon-button aria-label="Clear"
+              (click)="this.loanFilterForm.value.loanID=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field> -->
+  
+          <button (click)="search()" class="btn btn-sm btn-primary filter_btn">Filter</button>
+        </div>
+  
+  
+      </mat-card>
+  
+    </form>
+    <div class="action mx-3">
+      <mat-card class="px-3 py-3 mx-3">
+        <h5 class="font-weight-bold">Action</h5>
+        <div class="d-flex flex-wrap">
+          <button (click)="exportTable('pdf')" type="button" class="btn btn-sm text-white accion_stone my-1">Export
+            PDF
+          </button>
+          <button (click)="exportTable('xlsx')" type="button" class="btn btn-sm mx-2 text-white accion_sand my-1">Export
+            Excel
+          </button>
+          <button (click)="exportTable('csv')" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">Export
+            CSV
+          </button>
+          <button (click)="exportTable('png')" type="button" class="btn btn-sm mx-2 text-white accion_sand my-1">
+            PNG
+          </button>
+          <!-- <button type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">Print</button> -->
+  
+        </div>
+      </mat-card>
+  
+  
+    </div>
+  
+    
+  
+    <div class="table_display mx-3">
+  
+      <div class=" mat-elevation-z8">
+        <div id="loan_table" class="table-container">
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  
+            <ng-container matColumnDef="position">
+              <th mat-header-cell *matHeaderCellDef> S/N </th>
+              <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="fullName">
+              <th disableClear mat-header-cell *matHeaderCellDef> Customer Name </th>
+              <td mat-cell *matCellDef="let element"> {{element.fullName }} </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="investmentType">
+              <th mat-header-cell *matHeaderCellDef> Investment Type </th>
+              <td mat-cell *matCellDef="let element"> {{element.investmentType}} </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="channel">
+              <th mat-header-cell *matHeaderCellDef> Channel </th>
+              <td mat-cell *matCellDef="let element"> {{element.channel}} </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="mobileNumber">
+              <th mat-header-cell *matHeaderCellDef> Mobile Number </th>
+              <td mat-cell *matCellDef="let element"> {{element.mobileNumber}} </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="noOfMonths">
+              <th mat-header-cell *matHeaderCellDef> Number of Months </th>
+              <td mat-cell *matCellDef="let element"> {{element.noOfMonths}} </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="principal">
+              <th mat-header-cell *matHeaderCellDef> Principal(₦) </th>
+              <td mat-cell *matCellDef="let element"> {{ element.principal | number}} </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="WHT10Percent">
+              <th mat-header-cell *matHeaderCellDef> WHT10Percent(₦) </th>
+              <td mat-cell *matCellDef="let element"> {{ element.WHT10Percent | number}} </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="expectedAmount">
+              <th mat-header-cell *matHeaderCellDef> Expected Amount(₦) </th>
+              <td mat-cell *matCellDef="let element"> {{element.expectedAmount | number}} </td>
+            </ng-container>
+  
+            <!-- <ng-container matColumnDef="termRecommended">
+              <th mat-header-cell *matHeaderCellDef> Recommended Tenure </th>
+              <td mat-cell *matCellDef="let element"> {{element.recommended ? element.recommended.recommendedTerm : ""}} </td>
+            </ng-container> -->
+  
+            <ng-container matColumnDef="createdAt">
+              <th mat-header-cell *matHeaderCellDef> Application Date </th>
+              <td mat-cell *matCellDef="let element"> {{utilService.formatDateString(element.createdAt)}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="updatedAt">
+              <th mat-header-cell *matHeaderCellDef> Updated Date </th>
+              <td mat-cell *matCellDef="let element"> {{utilService.formatDateString(element.updatedAt)}} </td>
+            </ng-container>
+  
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="cursor_pointer" (click)="openDialog(row)"></tr>
+            <!-- <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="cursor_pointer"></tr> -->
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">
+               No data</td>
+            </tr>
+          </table>
+        </div>
+        <div class="d-flex justify-content-end align-items-center">
+          <mat-paginator 
+          [pageSizeOptions]="[10, 25, 50, maxall]" 
+          [length] = "maxall"
+          (page)="onPageFired($event)"
+          showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  

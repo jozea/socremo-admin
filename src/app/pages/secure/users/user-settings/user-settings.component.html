@@ -1,0 +1,63 @@
+<div *ngIf="isLoadingResults" class="loader_container">
+	<div class="spinner">
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+	</div>
+</div>
+<!-- <mat-spinner *ngIf="isLoadingResultss"></mat-spinner> -->
+
+
+<h2 mat-dialog-title class="text_accion_stone"> Loan Details </h2>
+<mat-dialog-content class="app_version mat-typography">
+
+	<h1>All Loan details would be displayed here</h1>
+
+	<!-- <form  [formGroup]="settingsForm" class="row w-100 px-5 py-2">
+
+        <mat-form-field class="col-12" appearance="outline">
+            <mat-label>Date of Birth</mat-label>
+            <input formControlName="dob" matInput [max]="maxDate" [matDatepicker]="dob">
+            <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+            <mat-datepicker #dob></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="col-12" appearance="outline">
+            <mat-label>Security Question</mat-label>
+            <mat-select formControlName="secQst">
+              <mat-option *ngFor="let item of securityQuestions" [value]="item.key">
+                {{item.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+		<mat-form-field class="col-12" appearance="outline">
+			<mat-label>Security Answer</mat-label>
+			<input formControlName="secAns" matInput type="text">
+		</mat-form-field>
+
+        <span class="col-12" style="font-weight: bold;">Lock Account</span><br>
+		<mat-radio-group style="margin-left: 20px; margin-top: 5px;" aria-label="Select an option">
+			<mat-radio-button (change)="locckAccount($event)" [value]="yes">Yes</mat-radio-button>
+			<mat-radio-button (change)="locckAccount($event)" [value]="no">No</mat-radio-button>
+		</mat-radio-group>
+
+		<mat-form-field class="col-12" appearance="outline">
+			<mat-label>Enter Pin</mat-label>
+			<input formControlName="pin" matInput type="number">
+		</mat-form-field>
+	</form>
+
+	<div *ngIf="isLoading" class="col-12 d-flex justify-content-center p-5" >
+		<mat-spinner [diameter]="25" ></mat-spinner>
+	</div> -->
+
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-content-between">
+	<!-- <div >
+		<button (click)="submit()" class="btn btn-sm text-white accion_stone">Submit</button>
+	</div>
+	<button mat-button mat-dialog-close (click)="close()">Cancel</button> -->
+</mat-dialog-actions>

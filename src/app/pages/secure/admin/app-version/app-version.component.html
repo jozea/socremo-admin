@@ -1,0 +1,52 @@
+<div *ngIf="isLoadingResults" class="loader_container">
+	<div class="spinner">
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+	</div>
+</div>
+<!-- <mat-spinner *ngIf="isLoadingResultss"></mat-spinner> -->
+
+
+<h2 mat-dialog-title class="text_accion_stone"> Mobile App Version </h2>
+<mat-dialog-content class="app_version mat-typography">
+
+	<form *ngIf="appVersion" [formGroup]="appVersionForm" class="row w-100 px-5 py-2">
+
+		<mat-form-field class="col-12" appearance="outline">
+			<mat-label>Current App Version</mat-label>
+			<input [value]="appVersion" matInput type="text" disabled>
+		</mat-form-field>
+
+		<mat-form-field class="col-12" appearance="outline">
+			<mat-label>Specify New App Version</mat-label>
+			<input [value]="this.appVersionForm.value.version" formControlName="version" matInput type="text">
+			<button mat-button *ngIf="this.appVersionForm.value.version" matSuffix mat-icon-button aria-label="Clear"
+				(click)="this.appVersionForm.value.version=''">
+				<mat-icon>close</mat-icon>
+			</button>
+		</mat-form-field>
+
+		<span style="margin-left: 20px;">To force Update for all customers select Yes</span><br>
+		<mat-radio-group style="margin-left: 20px; margin-top: 5px;" aria-label="Select an option">
+			<mat-radio-button (change)="forceAppUpdate($event)" [value]="yes">Yes</mat-radio-button>
+			<mat-radio-button (change)="forceAppUpdate($event)" [value]="no">No</mat-radio-button>
+		</mat-radio-group>
+	</form>
+
+	<div *ngIf="!appVersion" class="col-12 d-flex justify-content-center p-5" >
+		<mat-spinner [diameter]="25" ></mat-spinner>
+	</div>
+	<div *ngIf="isLoading" class="col-12 d-flex justify-content-center p-5" >
+		<mat-spinner [diameter]="25" ></mat-spinner>
+	</div>
+
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-content-between">
+	<div >
+		<button *ngIf="appVersion" (click)="updateAppVersion()" class="btn btn-sm text-white accion_stone">Update</button>
+	</div>
+	<button mat-button mat-dialog-close (click)="close()">Cancel</button>
+</mat-dialog-actions>

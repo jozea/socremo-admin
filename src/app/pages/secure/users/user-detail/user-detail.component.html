@@ -1,0 +1,373 @@
+<div *ngIf="!userId" class="loader_container">
+  <div class="spinner">
+    <div class="spinner-item"></div>
+    <div class="spinner-item"></div>
+    <div class="spinner-item"></div>
+    <div class="spinner-item"></div>
+    <div class="spinner-item"></div>
+  </div>
+</div>
+<section class="pb-4">
+  <div class="header px-4 mt-3 d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center">
+      <mat-icon routerLink="/app/users" class="mt-1 mx-2 cursor_pointer text-white">arrow_back</mat-icon>
+      <p class="lead pt-3 text-white">Back{{userName}}</p>
+    </div>
+    <div>
+      <p class="lead pt-3 text-white">Joseph Jacob David{{userName}}</p>
+    </div>
+    <!-- <ol class="breadcrumb pt-3 pb-0 m-0">
+      <li class="breadcrumb-item"><a routerLink="/app/users">User Management</a></li>
+      <li class="breadcrumb-item active" aria-current="page">User Detail</li>
+    </ol> -->
+  </div>
+  <div class="card mx-4 mb-3 rounded-0 mt-3">
+    <mat-list>
+      <div class="d-flex justify-content-between ">
+        <div class="subHeader" mat-subheader>Personal Information</div>
+        <!-- <button (click)="openDialog(userData)" class="btn btn-sm btn-primary filter_btn mr-2 mb-3">Settings</button> -->
+      </div>
+      <mat-divider></mat-divider>
+
+      <div class="row px-4 my-3 flex-wrap">
+        <div class="col-4 px-2">
+          <p class="font-weight-bold">First Name</p>
+          <p class="text_accion_stone">Joseph</p>
+        </div>
+        <div class="col-4 px-2">
+          <p class="font-weight-bold">Middle Name</p>
+          <p class="text_accion_stone">Jacob</p>
+        </div>
+        <div class="col-4 px-2">
+          <p class="font-weight-bold">Last Name</p>
+          <p class="text_accion_stone">David</p>
+        </div>
+
+        <!-- <div class="col-4 px-2">
+          <p class="font-weight-bold">BVN</p>
+          <p class="text_accion_stone">{{userData.bvn ? userData.bvn : 'N/A'}}</p>
+        </div> -->
+        <div *ngIf="userData.personalInfo" class="col-4 px-2">
+          <p class="font-weight-bold">Marital Status</p>
+          <p class="text_accion_stone">Married</p>
+        </div>
+        <div *ngIf="userData.personalInfo" class="col-4 px-2">
+          <p class="font-weight-bold">Place of Birth</p>
+          <p class="text_accion_stone">Uk</p>
+        </div>
+        <div *ngIf="userData.personalInfo" class="col-4 px-2">
+          <p class="font-weight-bold">State of Origin</p>
+          <p class="text_accion_stone">London</p>
+        </div>
+        <!-- <div *ngIf="userData.personalInfo" class="col-4 px-2">
+          <p class="font-weight-bold">Mother Maiden Name</p>
+          <p class="text_accion_stone">{{userData.personalInfo.mothersmaidenName}}</p>
+        </div> -->
+        <div class="col-4 px-2">
+          <p class="font-weight-bold">Gender</p>
+          <p class="text_accion_stone">Male</p>
+        </div>
+
+        <div class="col-4 px-2">
+          <p class="font-weight-bold">Date of Birth</p>
+          <p class="text_accion_stone">1900-2-4</p>
+        </div>
+
+      
+        <div class="col-6 px-2">
+          <img [src]="userData.photoImage | authImage | async" alt="user profile picture">
+        </div>
+
+
+      </div>
+    </mat-list>
+  </div>
+
+  <div class="card mx-4 mb-3 rounded-0">
+    <mat-list>
+      <div class="subHeader" mat-subheader>Contact Information</div>
+      <mat-divider></mat-divider>
+
+      <div class="row px-4 mt-3 flex-wrap">
+
+      <div class="col-4 px-2">
+        <p class="font-weight-bold">Phone Number</p>
+        <p class="text_accion_stone">{{userData.mobileNumber}}</p>
+      </div>
+      <div *ngIf="userData.personalInfo && userData.personalInfo.secondaryPhoneNumber" class="col-4 px-2">
+        <p class="font-weight-bold">Secondary Phone Number </p>
+        <p class="text_accion_stone">{{userData.personalInfo.secondaryPhoneNumber}}</p>
+      </div>
+      <div class="col-4 px-2">
+        <p class="font-weight-bold">Email</p>
+        <p class="text_accion_stone">{{userData.emailAddress}}</p>
+      </div>
+      
+
+      <div class="col-4 px-2">
+        <p class="font-weight-bold">Address</p>
+        <p *ngIf="userData.street" class="text_accion_stone">{{userData.street + ' ' + userData.city + ' ' + userData.state | uppercase}}</p>
+      </div>
+
+      <div *ngIf="userData.contactInfo && userData.contactInfo.mailAddress" class="col-4 px-2">
+        <p class="font-weight-bold">Mailing Address</p>
+        <p class="text_accion_stone">
+          {{userData.contactInfo.mailAddress.streetNumber + ' ' + userData.contactInfo.mailAddress.streetName + ' ' + userData.contactInfo.mailAddress.city + ' ' + userData.contactInfo.mailAddress.lga + ' ' + userData.contactInfo.mailAddress.state | uppercase}}
+        </p>
+      </div>
+    </div>
+
+  </mat-list>
+  </div>
+
+
+
+  <div class="card mx-4 mb-3 rounded-0">
+    <mat-list>
+      <div class="subHeader" mat-subheader>Next of Kin Information</div>
+      <mat-divider></mat-divider>
+
+      <div class="row px-4 mt-3 flex-wrap">
+        <div class="col-4">
+          <p class="font-weight-bold">Name</p>
+          <p class="text_accion_stone">
+            <!-- {{userData.nextOfKinInfo.firstName + " " + userData.nextOfKinInfo.middleName + " " + userData.nextOfKinInfo.surName}} -->
+          </p>
+        </div>
+        <div class="col-4">
+          <p class="font-weight-bold">Gender</p>
+          <p class="text_accion_stone"></p>
+        </div>
+        <div class="col-4">
+          <p class="font-weight-bold">Relationship</p>
+          <p class="text_accion_stone"></p>
+        </div>
+        <div class="col-4">
+          <p class="font-weight-bold">Phone Number</p>
+          <p class="text_accion_stone"></p>
+        </div>
+        <div class="col-4">
+          <p class="font-weight-bold"> Email Address </p>
+          <p class="text_accion_stone">  </p>
+        </div>
+        <div  class="col-4">
+          <p class="font-weight-bold"> Home Address </p>
+          <p class="text_accion_stone"> </p>
+        </div>
+
+      </div>
+
+    </mat-list>
+  </div>
+
+
+
+  <div class="card mx-4 mb-3 rounded-0">
+    <mat-list>
+      <div class="subHeader" mat-subheader>Account Information</div>
+      <mat-divider></mat-divider>
+      <div class="row px-4 mt-3 flex-wrap">
+        <div class="col-4">
+          <p class="font-weight-bold">Account Type</p>
+          <p class="text_accion_stone"></p>
+        </div>
+        <div class="col-4">
+          <p class="font-weight-bold">Account Number</p>
+          <p class="text_accion_stone">{{userData.accountNumber ? userData.accountNumber[0] : '' }}</p>
+        </div>
+
+        <div *ngIf="!isAccountUser" class="col-4">
+          <p class="font-weight-bold"> Wallet Balance</p>
+          <p class="text_accion_stone">{{ userData.wallet ? userData.wallet.balance/100 : '' }}</p>
+        </div>
+        <div *ngIf="!isAccountUser" class="col-4">
+          <p class="font-weight-bold"> Wallet Ledger Balance</p>
+          <p class="text_accion_stone">{{ userData.wallet ? userData.wallet.ledgerBalance/100 : '' }}</p>
+        </div>
+        <div *ngIf="userData.transactionsData" class="col-4">
+          <p class="font-weight-bold">Last Transaction Date</p>
+          <p class="text_accion_stone">{{userData.transactionsData.date | date }}</p>
+        </div>
+      </div>
+    </mat-list>
+  </div>
+
+
+
+  <div class="card mx-4 mb-3 rounded-0">
+    <mat-list>
+      <div class="d-flex justify-content-between ">
+        <div class="subHeader" mat-subheader>Loans</div>
+        <button (click)="openDialog(userData)" class="btn btn-sm btn-primary filter_btn mr-2 mb-3">View Loan Details</button>
+      </div>
+      <mat-divider></mat-divider>
+      <p *ngIf="userLoanData.length > 0" class="p-3">Total Loans: {{userLoanData.length}}</p>
+      <div *ngFor="let item of userLoanData" class="row px-4 mt-3 flex-wrap">
+        <div class="col-4">
+          <p class="font-weight-bold">Loan Type</p>
+          <p class="text_accion_stone"> {{item.loanType}} </p>
+        </div>
+        <div class="col-4">
+          <p class="font-weight-bold">Loan Ref No</p>
+          <p class="text_accion_stone"> {{item.contractNumber}} </p>
+        </div>
+        <div class="col-4">
+          <p class="font-weight-bold">Loan Amount</p>
+          <p class="text_accion_stone"> {{item.amount | number}} </p>
+        </div>
+        <div class="col-4">
+          <p class="font-weight-bold">Approved Loan Amount</p>
+          <p class="text_accion_stone"> {{item.approvedLoanAmount | number}} </p>
+        </div>
+
+        <div class="col-4">
+          <p class="font-weight-bold">Loan Category</p>
+          <p class="text_accion_stone"> {{item.category}} </p>
+        </div>
+        <div class="col-4">
+          <p class="font-weight-bold">Customer ID</p>
+          <p class="text_accion_stone"> {{item.customerId}}  </p>
+        </div>
+        <div class="col-4">
+          <p class="font-weight-bold">Loan Start Date</p>
+          <p class="text_accion_stone">{{ item.valueDate ? formatDate(item.maturityDate) : ""}} </p>
+        </div>
+        <div class="col-4">
+          <p class="font-weight-bold">Due Date</p>
+          <p class="text_accion_stone">{{ item.maturityDate ? formatDate(item.maturityDate) : ""}} </p>
+        </div>
+
+    
+        <div class="col-4">
+          <p class="font-weight-bold">Draw Down Account</p>
+          <p class="text_accion_stone"> {{item.drawDownAccount}} </p>
+        </div>
+
+        <div class="col-4">
+          <p class="font-weight-bold">Loan Balance</p>
+          <p class="text_accion_stone"> {{item.loanBalance}} </p>
+        </div>
+
+        <mat-divider class="w-100"></mat-divider>
+
+      </div>
+      <div *ngIf="userLoanData.length === 0" class="p-4">
+        No Loan Application
+      </div>
+    </mat-list>
+  </div>
+
+
+  <div  class="card mx-4 mb-3 rounded-0">
+    <mat-list>
+      <div class="subHeader" mat-subheader>Employment Information</div>
+      <mat-divider></mat-divider>
+
+      <div class="row px-4 mt-3 flex-wrap">
+
+        <div class="col-4">
+          <p class="font-weight-bold">Place of Work</p>
+          <p class="text_accion_stone"></p>
+        </div>
+        <div class="col-4">
+          <p class="font-weight-bold">Employment Status</p>
+          <p class="text_accion_stone"></p>
+        </div>
+        <div class="col-4">
+          <p class="font-weight-bold">Address of Place of Work</p>
+          <p  class="text_accion_stone">
+          </p>
+        </div>
+      </div>
+
+    </mat-list>
+  </div>
+
+  <div  class="card mx-4 mb-3 rounded-0">
+    <mat-list>
+      <div class="subHeader" mat-subheader>KYC Document</div>
+      <mat-divider></mat-divider>
+
+      <div class="row px-4 mt-3 flex-wrap">
+        <div class="col-4">
+          <p class="font-weight-bold">Address Verification Status</p>
+          <p class="text_accion_stone"></p>
+        </div>
+
+        <div class="col-4">
+          <p class="font-weight-bold">Address Verification Initiated</p>
+          <p class="text_accion_stone"></p>
+        </div>
+
+        <div class="col-4">
+          <p class="font-weight-bold">Driver License Verified</p>
+          <p class="text_accion_stone"></p>
+        </div>
+
+        <!-- <div class="col-4">
+          <p class="font-weight-bold">NIN Verified</p>
+          <p class="text_accion_stone"></p>
+        </div> -->
+
+        <div  class="col-12 row">
+          <h3 class="col-12 mt-5 font-weight-bold"> Proof of Address</h3>
+          <div class="col-3 px-2">
+            <p class="font-weight-bold">Bill Type</p>
+            <p class="text_accion_stone"></p>
+          </div>
+          <div class="col-3 px-2">
+            <p class="font-weight-bold">Reference Number</p>
+            <p class="text_accion_stone"></p>
+          </div>
+          <div class="col-6 px-2">
+            <!-- <img [src]="userData.proofOfAddress.url | authImage | async" alt="address proof"> -->
+          </div>
+        </div>
+
+
+      </div>
+
+    </mat-list>
+  </div>
+
+  <div class="card mx-4 mb-3 rounded-0">
+    <mat-list>
+      <div class="subHeader" mat-subheader>Settings</div>
+      <mat-divider></mat-divider>
+      <div class="row px-4 mt-3 flex-wrap">
+        <div class="col-4">
+          <p class="font-weight-bold">Registration Date</p>
+          <p class="text_accion_stone">{{userData.createdAt |  date :'medium'  }}</p>
+        </div>
+        <!-- <div class="col-4">
+          <p class="font-weight-bold">Channel Registered</p>
+          <p class="text_accion_stone">{{ userData.channel }}</p>
+        </div>
+
+        <div class="col-4">
+          <p class="font-weight-bold">Role</p>
+          <p class="text_accion_stone">{{userData.role}}</p>
+        </div> -->
+
+
+        <div class="col-4 px-2">
+          <p class="font-weight-bold">Last login</p>
+          <p class="text_accion_stone">{{userData.lastLogin | date :'medium'}}</p>
+        </div>
+
+        <!-- <div class="col-4 px-2">
+          <p class="font-weight-bold">Device Name</p>
+          <p class="text_accion_stone"> N/A </p>
+        </div>
+
+
+        <div class="col-4 px-2">
+          <p class="font-weight-bold">Device Model</p>
+          <p class="text_accion_stone"> N/A </p>
+        </div> -->
+      
+      </div>
+    </mat-list>
+  </div>
+
+</section>

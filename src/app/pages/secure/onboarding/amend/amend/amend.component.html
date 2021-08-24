@@ -1,0 +1,106 @@
+
+
+<mat-dialog-content>
+
+    <h3 style="font-weight: bold;" class="text-center text_accion">Edit Representative Details</h3>
+    <mat-divider></mat-divider>
+    <!-- <form [formGroup]="broadcastMessageForm" class="d-flex flex-column w-100 px-5 py-2"> -->
+            <div >
+                <!-- <h3 style="font-weight: bold;" class="text_accion"> Account Details</h3>
+                <mat-form-field class="col-md-4 col-sm-6 col-xs-12" appearance="legacy">
+                    <mat-label>Account Number</mat-label>
+                    <input [value]="this.broadcastMessageForm.value.accountNumber" matInput type="text"
+                        formControlName="accountNumber" >
+                    <button mat-button *ngIf="this.broadcastMessageForm.value.accountNumber" matSuffix mat-icon-button
+                        aria-label="Clear" (click)="this.broadcastMessageForm.value.accountNumber=''">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+
+    
+                <mat-form-field class="col-md-4 col-sm-6 col-xs-12" appearance="legacy">
+                    <mat-label>Account First Name</mat-label>
+                    <input readonly [value]="this.broadcastMessageForm.value.accountFirstName" matInput type="text"
+                        formControlName="accountFirstName" >
+                    <button mat-button *ngIf="this.broadcastMessageForm.value.accountFirstName" matSuffix mat-icon-button
+                        aria-label="Clear" (click)="this.broadcastMessageForm.value.accountFirstName=''">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+            
+                <mat-form-field class="col-md-4 col-sm-6 col-xs-12" appearance="legacy">
+                    <mat-label>Account Last Name</mat-label>
+                    <input readonly [value]="this.broadcastMessageForm.value.accountLastName" matInput type="text"
+                        formControlName="accountLastName">
+                    <button mat-button *ngIf="this.broadcastMessageForm.value.accountLastName" matSuffix mat-icon-button
+                        aria-label="Clear" (click)="this.broadcastMessageForm.value.accountLastName=''">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+    
+                <mat-form-field class="col-md-4 col-sm-6 col-xs-12" appearance="legacy">
+                    <mat-label>Account Address</mat-label>
+                    <input [value]="this.broadcastMessageForm.value.accountAddress" matInput type="text"
+                        formControlName="accountAddress">
+                    <button mat-button *ngIf="this.broadcastMessageForm.value.accountAddress" matSuffix mat-icon-button
+                        aria-label="Clear" (click)="this.broadcastMessageForm.value.accountAddress=''">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+
+
+                <mat-form-field class="col-md-4 col-sm-6 col-xs-12" appearance="legacy">
+                    <mat-label>Account Mobile Number</mat-label>
+                    <input [value]="this.broadcastMessageForm.value.accountMobileNumber" matInput type="text"
+                        formControlName="accountMobileNumber">
+                    <button mat-button *ngIf="this.broadcastMessageForm.value.accountMobileNumber" matSuffix mat-icon-button
+                        aria-label="Clear" (click)="this.broadcastMessageForm.value.accountMobileNumber=''">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field> -->
+
+
+        
+                <h3 class="text_accion" style="font-weight: bold;">Representative Information:</h3>
+                <div class=""
+                    *ngFor="let item of arr; let i = index;">
+                    <div >
+                        <mat-form-field class="col-md-3 col-sm-6 col-xs-12" appearance="outline">
+                            <mat-label>First Name</mat-label>
+                            <input [(ngModel)]="item.firstName"  matInput type="text" >
+                        </mat-form-field>
+        
+                        <mat-form-field class="col-md-3 col-sm-6 col-xs-12" appearance="outline">
+                            <mat-label>Last Name </mat-label>
+                            <input [(ngModel)]="item.lastName" matInput type="text" >
+                        </mat-form-field>
+        
+                        <mat-form-field class="col-md-3 col-sm-6 col-xs-12" appearance="outline">
+                            <mat-label>Email</mat-label>
+                            <input [(ngModel)]="item.email" matInput type="text"  >
+                        </mat-form-field>
+        
+                        <mat-form-field class="col-md-2 col-sm-6 col-xs-12" appearance="outline">
+                            <mat-label>Mobile Number</mat-label>
+                            <input [(ngModel)]="item.mobileNumber" matInput type="text"  >
+                            <!-- <button mat-button *ngIf="item.phone" matSuffix mat-icon-button
+                                aria-label="Clear" (click)="item.phone=''">
+                                <mat-icon>close</mat-icon>
+                            </button> -->
+                        </mat-form-field>
+                        <button style="color: white; background-color: blue;" mat-raised-button (click)="updateRepresentative(item)">Initiate</button>
+                        
+                    </div>
+
+                </div>                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <div *ngIf="isLoading" class="col-12 d-flex justify-content-center p-5" >
+                    <mat-spinner [diameter]="25" ></mat-spinner>
+                </div>
+                <!-- <button class="float-right" style="color: white; background-color: blue;" mat-raised-button (click)="submit()">Initiate</button> -->
+            </div>
+    <!-- </form> -->
+    <p class="dialog-paragraph">{{ data.headerText }}</p>
+    <ng-container [ngTemplateOutlet]="data.template"></ng-container>
+</mat-dialog-content>
+

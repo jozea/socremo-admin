@@ -1,0 +1,357 @@
+<div *ngIf="isLoadingResults" class="loader_container">
+    <div class="spinner">
+          <div class="spinner-item"></div>
+          <div class="spinner-item"></div>
+          <div class="spinner-item"></div>
+          <div class="spinner-item"></div>
+          <div class="spinner-item"></div>
+      </div>
+  </div>
+  
+  <section>
+    <div class="header mt-3 bg-white">
+      <p class="p-3 px-4 lead">Transactions</p>
+  </div>
+    <form [formGroup]="transactionFilterForm" class="filter mx-3">
+      <mat-card class="m-3 p-0 pt-3 px-3 pb-2">
+        <h5 class="font-weight-bold">Filter/Sort by</h5>
+        <div class="d-flex flex-wrap">
+          <mat-form-field appearance="outline">
+            <mat-label>Start Date</mat-label>
+            <input formControlName="startDate" matInput [max]="maxDate" [matDatepicker]="startDate">
+            <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+            <mat-datepicker #startDate></mat-datepicker>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>End date</mat-label>
+            <input formControlName="endDate" matInput [max]="maxDate" [matDatepicker]="picker">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Transaction Status</mat-label>
+            <mat-select formControlName="status">
+              <mat-option *ngFor="let item of allStatus" [value]="item.value">
+                {{item.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <!-- <mat-form-field appearance="outline">
+            <mat-label>Transaction Type</mat-label>
+            <mat-select formControlName="transactionType">
+              <mat-option *ngFor="let item of allTransactionType" [value]="item.value">
+                {{item.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Account Type</mat-label>
+            <mat-select formControlName="accountType">
+              <mat-option *ngFor="let item of allAccountType" [value]="item.value">
+                {{item.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field> 
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Transaction Reference</mat-label>
+            <input [value]="this.transactionFilterForm.value.transactionReference" formControlName="transactionReference" matInput type="text">
+            <button mat-button *ngIf="this.transactionFilterForm.value.transactionReference" matSuffix mat-icon-button aria-label="Clear"
+              (click)="this.transactionFilterForm.value.transactionReference=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Minimum Amount</mat-label>
+            <input [value]="this.transactionFilterForm.value.minAmount" formControlName="minAmount" matInput type="number">
+            <button mat-button *ngIf="this.transactionFilterForm.value.minAmount" matSuffix mat-icon-button aria-label="Clear"
+              (click)="this.transactionFilterForm.value.minAmount=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Maximum Amount</mat-label>
+            <input [value]="this.transactionFilterForm.value.maxAmount" formControlName="maxAmount" matInput type="number">
+            <button mat-button *ngIf="this.transactionFilterForm.value.maxAmount" matSuffix mat-icon-button aria-label="Clear"
+              (click)="this.transactionFilterForm.value.maxAmount=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Customer Name</mat-label>
+            <input [value]="this.transactionFilterForm.value.customerName" formControlName="customerName" matInput type="text">
+            <button mat-button *ngIf="this.transactionFilterForm.value.customerName" matSuffix mat-icon-button aria-label="Clear"
+              (click)="this.transactionFilterForm.value.customerName=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Account Number</mat-label>
+            <input [value]="this.transactionFilterForm.value.accountNumber" formControlName="accountNumber" matInput type="tel">
+            <button mat-button *ngIf="this.transactionFilterForm.value.accountNumber" matSuffix mat-icon-button aria-label="Clear"
+              (click)="this.transactionFilterForm.value.accountNumber=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field> -->
+  
+  
+               
+         
+          <button (click)="search()" class="btn btn-sm text-white filter_btn">Filter</button>
+        </div>
+  
+  
+      </mat-card>
+  
+    </form>
+    <div class="action mx-3">
+      <mat-card class="px-3 py-3 mx-3">
+        <h5 class="font-weight-bold">Action</h5>
+        <div class="d-flex flex-wrap">
+          <button (click)="exportTable('pdf')" type="button" class="btn btn-sm text-white accion_stone my-1">Export
+            PDF</button>
+          <button (click)="exportTable('xlsx')" type="button" class="btn btn-sm mx-2 text-white accion_sand my-1">Export
+            Excel</button>
+          <button (click)="exportTable('csv')" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">Export
+            CSV</button>
+          <button (click)="exportTable('png')" type="button"
+            class="btn btn-sm mx-2 text-white accion_sand my-1">PNG</button>
+          <!-- <button type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">Print</button> -->
+  
+        </div>
+      </mat-card>
+  
+  
+    </div>
+  
+    <div class="table_display mx-3">
+      <div class=" mat-elevation-z8">
+        <div id="transaction_table" class="table-container" [ngStyle]="{'max-height.px': tableContainerHeight}">
+          <h4 class="pt-3 px-2">Transactions</h4>
+          <table 
+          mat-table
+         [dataSource]="dataSource"
+         multiTemplateDataRows
+         class="mat-elevation-z8">
+  
+         <ng-container matColumnDef="position" sticky>
+          <th mat-header-cell *matHeaderCellDef> S/N </th>
+          <td mat-cell *matCellDef="let element; let i = dataIndex;"> {{i+1}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="name" sticky>
+          <th disableClear mat-header-cell *matHeaderCellDef> Customer Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.sender}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="provider">
+          <th mat-header-cell *matHeaderCellDef> Provider </th>
+          <td mat-cell *matCellDef="let element"> {{element.provider}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="transactionId">
+          <th mat-header-cell *matHeaderCellDef> Transaction Id </th>
+          <td mat-cell *matCellDef="let element"> {{element._id }} &nbsp; &nbsp; </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="reference">
+          <th mat-header-cell *matHeaderCellDef> Reference </th>
+          <td mat-cell *matCellDef="let element"> {{element.reference}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef> Transaction Type </th>
+          <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef> Status </th>
+          <td mat-cell *matCellDef="let element"> <span [class]="element.status">
+            {{ element.status === 'success' ? "Successful" : element.status }}
+          </span> </td>
+        </ng-container>
+  
+        <!-- <ng-container matColumnDef="channel">
+          <th mat-header-cell *matHeaderCellDef> Transaction Channel </th>
+          <td mat-cell *matCellDef="let element"> {{element.channel}} </td>
+        </ng-container> -->
+  
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef> Amount </th>
+          <td mat-cell *matCellDef="let element"> {{element.requestData.amount | number}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="state">
+          <th mat-header-cell *matHeaderCellDef> Completed? </th>
+          <td mat-cell *matCellDef="let element"> {{element.state}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="charge">
+          <th mat-header-cell *matHeaderCellDef> Charge </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.charge }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="fees">
+          <th mat-header-cell *matHeaderCellDef> Fees </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.commission }}
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="accion">
+          <th mat-header-cell *matHeaderCellDef> Accion Share </th>
+          <td mat-cell *matCellDef="let element">
+            {{  element.AMFB ? (element.AMFB).toFixed(2) : 'N/A' }}        
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="rubik">
+          <th mat-header-cell *matHeaderCellDef> RubikPay Share </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.RP ? (element.RP).toFixed(2) : 'N/A' }}        
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef> Date </th>
+          <td mat-cell *matCellDef="let element"> {{utilService.formatDateString(element.updatedAt)}} </td>
+        </ng-container>
+        <!-- <ng-container matColumnDef="beneficiaryName">
+          <th mat-header-cell *matHeaderCellDef> Beneficiary Name </th>
+          <td mat-cell *matCellDef="let element">
+            {{element.beneficiaryName ? element.beneficiaryName.uniqueId : ''}} </td>
+        </ng-container>
+        <ng-container matColumnDef="beneficiaryMobile">
+          <th mat-header-cell *matHeaderCellDef> Beneficiary Phone Number </th>
+          <td mat-cell *matCellDef="let element">
+            {{element.requestData.mobileNumber ? element.requestData.mobileNumber : ''}} </td>
+        </ng-container> -->
+        <ng-container matColumnDef="beneficiaryAccountNumber">
+          <th mat-header-cell *matHeaderCellDef> Account Number </th>
+          <td mat-cell *matCellDef="let element">
+            {{element.requestData.debitAccountNumber ? element.requestData.debitAccountNumber : element.requestData.debitAccount ? element.requestData.debitAccount : 'N/A'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="balanceBefore">
+          <th mat-header-cell *matHeaderCellDef> Account Balance Before </th>
+          <td mat-cell *matCellDef="let element">
+            {{element.balanceHistory ? element.balanceHistory.balanceBefore : "N/A"}} </td>
+        </ng-container>
+        <ng-container matColumnDef="balanceAfter">
+          <th mat-header-cell *matHeaderCellDef> Account Balance After </th>
+          <td mat-cell *matCellDef="let element">
+            {{element.balanceHistory ? element.balanceHistory.balanceAfter : "N/A"}} </td>
+        </ng-container>
+  
+  
+  
+        <ng-container matColumnDef="message">
+          <th mat-header-cell *matHeaderCellDef> Message </th>
+          <td mat-cell *matCellDef="let element">
+            {{element.message}}       
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="serviceID">
+          <th mat-header-cell *matHeaderCellDef> Service ID </th>
+          <td mat-cell *matCellDef="let element">
+            {{element.requestData.serviceID}}       
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="beneficiary">
+          <th mat-header-cell *matHeaderCellDef> Beneficiary </th>
+          <td mat-cell *matCellDef="let element">
+            {{element.beneficiary.uniqueId}}       
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell *matHeaderCellDef> Created Date </th>
+          <td mat-cell *matCellDef="let element">
+            {{element.createdAt | date }}       
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="updatedAt">
+          <th mat-header-cell *matHeaderCellDef> Updated Date </th>
+          <td mat-cell *matCellDef="let element">
+            {{element.updatedAt | date }}       
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="isCredit">
+          <th mat-header-cell *matHeaderCellDef> Debit/Credit Status </th>
+          <td mat-cell *matCellDef="let element">
+            {{  element.isCredit ? 'Credit' : 'Debit'  }}       
+          </td>
+        </ng-container>
+  
+  
+  
+    <!-- <ng-container matColumnDef="expandedDetail">
+      <td style="display: none;" mat-cell *matCellDef="let element; let i = index;" [attr.colspan]="columnsToDisplay.length">
+        <div class="transaction-detail"
+             [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+             <div class="row px-4 mt-3 flex-wrap w-100">
+              <div class="col-6 col-md-2 mx-2 d-flex">
+                <p class="font-weight-bold">Message: &nbsp;</p>
+                <p class="text_accion_stone">{{element.message}}</p>
+              </div>
+              <div class="col-6 col-md-2 mx-2 d-flex">
+                <p class="font-weight-bold">Service ID:&nbsp;</p>
+                <p class="text_accion_stone">{{element.requestData.serviceID}}</p>
+              </div>
+              <div class="col-6 col-md-2 mx-2 d-flex">
+                <p class="font-weight-bold">Beneficiary:&nbsp;</p>
+                <p class="text_accion_stone">{{element.beneficiary}}</p>
+              </div>
+              <div class="col-6 col-md-2 mx-2 d-flex">
+                <p class="font-weight-bold">Created Date:&nbsp;</p>
+                <p class="text_accion_stone">{{element.createdAt | date}}</p>
+              </div>
+              <div class="col-6 col-md-2 mx-2 d-flex">
+                <p class="font-weight-bold">Updated Date:&nbsp;</p>
+                <p class="text_accion_stone">{{element.updatedAt | date}}</p>
+              </div>
+              <div class="col-6 col-md-2 mx-2 d-flex">
+                <p class="font-weight-bold">Status:&nbsp;</p>
+                <p class="text_accion_stone">{{element.isCredit ? 'Credit' : 'Debit'}}</p>
+              </div>
+             </div>
+        </div>
+      </td>
+    </ng-container> -->
+  
+    <tr  mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
+    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+        class="transaction-row cursor_pointer border_bottom"
+        [class.transaction-expanded-row]="expandedElement === element"
+        (click)="expandedElement = expandedElement === element ? null : element">
+    </tr>
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">
+        No data
+      </td>
+    </tr>
+    <!-- <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="transaction-detail-row"></tr> -->
+  </table>
+        </div>
+        <div class="d-flex justify-content-end align-items-center">
+          <mat-spinner *ngIf="isLoadingResults" [diameter]="20"></mat-spinner>
+          <mat-paginator 
+          [pageSizeOptions]="[10, 25, 50, 100, 1000]" 
+          [pageIndex]="0"
+          [length] = "maxall"
+          (page)="onPageFired($event)"
+          showFirstLastButtons
+          ></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </section>

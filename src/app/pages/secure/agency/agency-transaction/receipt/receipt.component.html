@@ -1,0 +1,63 @@
+<div *ngIf="isLoadingResults" class="loader_container">
+	<div class="spinner">
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+	</div>
+</div>
+
+<!-- <h2 mat-dialog-title class="text_accion_stone"> Transaction Detail </h2> -->
+<mat-dialog-content id="receipt_section" class="mat-typography">
+	<div class="row">
+		<div class="w-100 mx-2 px-2">
+			<h2 class="text-center w-100">TRANSACTION DETAILS</h2>
+			<div class="d-flex justify-content-between align-items-center text_box w-100">
+				<h3 class="text_accion">Transaction Id</h3>
+				<p>AHILFJ234KJNASDF</p>
+			</div>
+			<div class="d-flex justify-content-between align-items-center text_box w-100">
+				<h3 class="text_accion">Transaction Type</h3>
+				<p>FUNDS TRANSFER</p>
+			</div>
+			<div class="d-flex justify-content-between align-items-center text_box w-100">
+				<h3 class="text_accion">Amount</h3>
+				<p>N{{'500' | number}} </p>
+			</div>
+			<div class="d-flex justify-content-between align-items-center text_box w-100">
+				<h3 class="text_accion">Date</h3>
+				<p>{{ '2020-10-28T14:00:12.376Z' | date: 'medium' }}</p>
+			</div>
+			<div class="d-flex justify-content-between align-items-center text_box w-100">
+				<h3 class="text_accion">Status</h3>
+				<p>Successful</p>
+			</div>
+			<div class="d-flex justify-content-between align-items-center text_box w-100">
+				<h3 class="text_accion">Account Name</h3>
+				<p>SUULOLA OLUWASEYI</p>
+			</div>
+			<div class="d-flex justify-content-between align-items-center text_box w-100">
+				<h3 class="text_accion">Account Number</h3>
+				<p>3095156793</p>
+			</div>
+			<div class="d-flex justify-content-between align-items-center text_box w-100">
+				<h3 class="text_accion">Bank</h3>
+				<p>FIRST BANK OF NIGERIA </p>
+			</div>
+			<div class="d-flex justify-content-between align-items-center text_box w-100">
+				<h3 class="text_accion">Phone Number</h3>
+				<p>07061972413</p>
+			</div>
+
+		</div>
+
+	</div>
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-content-between">
+	<div>
+		<button (click)="downloadFile('pdf')" class="btn btn-sm text-white accion_sand mr-2">PDF</button>
+		<button (click)="downloadFile('png')" class="btn btn-sm text-white accion_stone">PNG</button>
+	</div>
+	<button mat-button mat-dialog-close (click)="close()">Cancel</button>
+</mat-dialog-actions>

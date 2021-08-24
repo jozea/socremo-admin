@@ -1,0 +1,35 @@
+.sidenav_container {
+  max-width: 150px;
+  scrollbar-width: none;
+  height: calc(100vh - 200px);
+}
+
+
+mat-icon {
+  color: #4e94f0;
+}
+
+.mat-expansion-panel:not([class*='mat-elevation-z']) {
+  box-shadow: none;
+  
+}
+
+.mat-expansion-panel-header  {
+padding: 18px;
+}
+
+.mat-expansion-panel-header-title:hover {
+text-decoration: none;  
+}
+
+a:hover {
+text-decoration: none;  
+}
+
+.mat-expansion-panel-header-title, span, a {
+font-size: 12px;
+}
+
+.hide_menu {
+display: none !important;
+}

@@ -1,0 +1,95 @@
+<div *ngIf="isLoadingResults" class="loader_container">
+  <div class="spinner">
+    <div class="spinner-item"></div>
+    <div class="spinner-item"></div>
+    <div class="spinner-item"></div>
+    <div class="spinner-item"></div>
+    <div class="spinner-item"></div>
+  </div>
+</div>
+
+<h2 mat-dialog-title class="text_accion_stone">
+  {{status === 'create' ? 'Create Convenience Fee' : 'Update ' + details.name}} </h2>
+<mat-dialog-content *ngIf="!details" class="mat-typography">
+  <mat-spinner [diameter]="100"></mat-spinner>
+</mat-dialog-content>
+<mat-dialog-content *ngIf="details" class="mat-typography">
+
+  <div class="row">
+    <form [formGroup]="convenienceFeeForm" class="d-flex flex-column w-100 mx-3 px-5 py-2">
+      <mat-form-field *ngIf="status === 'create'" appearance="outline">
+        <mat-label>Transaction Type</mat-label>
+        <mat-select formControlName="transactionType">
+          <mat-option *ngFor="let item of allTransactionTypes" [value]="item.value">
+            {{item.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Range Type</mat-label>
+        <mat-select formControlName="rangeType">
+          <mat-option *ngFor="let item of allRangeTypes" [value]="item.value">
+            {{item.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="this.details.transactionType !== 'stamp_duty' && this.details.transactionType !== 'vat'" appearance="outline">
+        <mat-label>Stamp Duty Required?</mat-label>
+        <mat-select formControlName="isStampRequired">
+          <mat-option *ngFor="let item of stampRequired" [value]="item.value">
+            {{item.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="this.details.transactionType !== 'stamp_duty' && this.details.transactionType !== 'vat'" appearance="outline">
+        <mat-label>VAT Required?</mat-label>
+        <mat-select formControlName="isVatRequired">
+          <mat-option *ngFor="let item of stampRequired" [value]="item.value">
+            {{item.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div>
+        <div>
+          <h3>Fees</h3>
+        </div>
+
+        <div *ngFor="let item of allFees" class="row">
+          <mat-form-field class="col-md-4" appearance="outline">
+            <mat-label>Minimum Limit</mat-label>
+            <input matInput type="number" [formControlName]="'minLimit_' + item">
+          </mat-form-field>
+
+          <mat-form-field class="col-md-4" appearance="outline">
+            <mat-label>Maximum Limit</mat-label>
+            <input matInput type="number" [formControlName]="'maxLimit_' + item">
+          </mat-form-field>
+
+          <mat-form-field class="col-md-3" appearance="outline">
+            <mat-label>Charge</mat-label>
+            <input matInput type="number"
+              [formControlName]="'convenienceFee_' + item">
+          </mat-form-field>
+
+          <button mat-button class="clear_btn" *ngIf="item !== 1" mat-icon-button
+              aria-label="Clear" (click)="removeFee(item)">
+              <mat-icon>close</mat-icon>
+            </button>
+
+        </div>
+      </div>
+      
+      <button *ngIf="this.convenienceFeeForm.value.transactionType === 'cash_out' || this.convenienceFeeForm.value.transactionType === 'transfer'" (click)="addMoreFees()" style="width: 80px;" class="btn btn-sm btn-primary">Add More</button>
+
+
+    </form>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-content-between">
+  <button (click)="updateAgencyFees()" class="btn btn-sm text-white accion_sand">Submit</button>
+  <button mat-button mat-dialog-close (click)="close()">Cancel</button>
+</mat-dialog-actions>

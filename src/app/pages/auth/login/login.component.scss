@@ -1,0 +1,42 @@
+#login {
+    // background-image: url('../../../../assets/img/admin2.jpg');
+
+    min-height: 100vh;
+    form {
+        min-width: 25vw;
+    }
+}
+
+.inventory-body {
+    position: fixed;
+    min-width: 100%;
+    background-image: url('../../../../assets/img/admin3.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    background-size: cover;
+}
+
+.header {
+    color:  #006891;
+    font-weight: 800;
+} 
+
+.logo_container {
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+#logo {
+    width: 60%; 
+    margin-bottom: 50px;
+}
+
+.link-font {
+    color: #006891;
+    text-decoration: underline;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+  }

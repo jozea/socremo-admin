@@ -1,0 +1,43 @@
+<h2 mat-dialog-title class="text_accion_stone">{{details.fullName}} Role Setting</h2>
+<mat-dialog-content *ngIf="!details" class="mat-typography">
+  <mat-spinner [diameter]="100"></mat-spinner>
+</mat-dialog-content>
+<mat-dialog-content *ngIf="details" class="mat-typography">
+
+  <div class="row">
+    <form [formGroup]="userUpdateForm" class="d-flex flex-column w-100 mx-3 px-5 py-2">
+
+      <mat-form-field *ngIf="details.admin.status !== 'pending'" appearance="outline">
+        <mat-label>Choose Role</mat-label>
+        <mat-select formControlName="role">
+          <mat-option *ngFor="let item of allRolesOption" [value]="item.role">
+            {{item.role}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="details.admin.status === 'pending'"  appearance="outline">
+        <mat-label>Action</mat-label>
+        <mat-select formControlName="decision">
+          <mat-option *ngFor="let item of approvalOptions"  [value]="item.value">
+            {{item.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    
+      <mat-form-field appearance="outline" *ngIf="this.userUpdateForm.value.decision === 'rejected'">
+        <mat-label>Reason</mat-label>
+        <input [value]="this.userUpdateForm.value.reason" matInput type="text" formControlName="reason">
+        <button mat-button *ngIf="this.userUpdateForm.value.reason" matSuffix mat-icon-button aria-label="Clear"
+          (click)="this.userUpdateForm.value.reason=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+    </form>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-content-between">
+  <button (click)="processUserRole()" class="btn btn-sm text-white accion_sand">Submit</button>
+  <button mat-button mat-dialog-close (click)="close()">Cancel</button>
+</mat-dialog-actions>

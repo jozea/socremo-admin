@@ -1,0 +1,195 @@
+<div *ngIf="loading" class="loader_container">
+    <div class="spinner">
+        <div class="spinner-item"></div>
+        <div class="spinner-item"></div>
+        <div class="spinner-item"></div>
+        <div class="spinner-item"></div>
+        <div class="spinner-item"></div>
+    </div>
+</div>
+
+<div class="header px-4 mt-3 bg-white d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center">
+        <mat-icon routerLink="/app/loans/fileUpload" class="mt-1 mx-2 cursor_pointer">arrow_back</mat-icon>
+        <p class="lead pt-3"></p>
+    </div>
+</div>
+
+<section>
+    
+    <mat-card class="m-3 p-0 pt-3 px-3 pb-2">
+        <div class="">
+            <div  class=" offset-md-1 text-center">
+                <p class="font-weight-bold" style="font-size:18px;margin-top:20px;">
+                    Upload a CSV with list of Renewal scores
+                </p>
+                <p >Please see the <a download="Renewal Score.csv" target="_blank"
+                        href="https://drive.google.com/file/d/1XE85gHTYtDY0mPs14UMegUzXo9D4vZTD/view?usp=sharing"
+                        class="href">sample csv</a> of renewal score for guidance
+                </p>
+                <input id="fileID" type="file"
+                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                    class="form-control" (change)="convertFile($event)" hidden />
+                <br />
+                <div class="col-md-12 mt-2 mr-3">
+                    <button class="btn btn-secondary col-md-5 marg-left-15" (click)="uploadFile()">Upload CSV</button>
+                </div>
+                <div *ngIf="submitButton" class="col-md-12 mt-2 mr-3">
+                    <button (click)="storeRenewalScoreRecord()"
+                        class="btn accion text-white col-md-5 marg-left-20">Submit</button>
+                </div>
+                <br>
+            </div>
+        </div>
+    </mat-card>
+        
+
+    <div class="table_display mx-3">
+    
+        <div class=" mat-elevation-z8">
+            <div id="loan_table" class="table-container">
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    
+                    <ng-container matColumnDef="position">
+                        <th mat-header-cell *matHeaderCellDef> S/N </th>
+                        <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="address">
+                        <th disableClear mat-header-cell *matHeaderCellDef> Address </th>
+                        <td mat-cell *matCellDef="let element"> {{element.address}}
+                        </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="approvalOfficer">
+                        <th mat-header-cell *matHeaderCellDef>Approval Officer </th>
+                        <td mat-cell *matCellDef="let element"> {{element.approvalOfficer}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="balanceOutstanding">
+                        <th mat-header-cell *matHeaderCellDef> Balance Outstanding </th>
+                        <td mat-cell *matCellDef="let element"> {{element.balanceOutstanding}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="branch">
+                        <th mat-header-cell *matHeaderCellDef> Branch </th>
+                        <td mat-cell *matCellDef="let element"> {{element.branch}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="businessAddress">
+                        <th mat-header-cell *matHeaderCellDef> Business Address </th>
+                        <td mat-cell *matCellDef="let element"> {{element.businessAddress}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="cef">
+                        <th mat-header-cell *matHeaderCellDef> CEF # </th>
+                        <td mat-cell *matCellDef="let element"> {{element.cef}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="cifLoanOfficer">
+                        <th mat-header-cell *matHeaderCellDef> CIF Loan Officer</th>
+                        <td mat-cell *matCellDef="let element"> {{ element.cifLoanOfficer }} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="cif">
+                        <th mat-header-cell *matHeaderCellDef> CIF#</th>
+                        <td mat-cell *matCellDef="let element"> {{ element.cif}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="contractNo">
+                        <th mat-header-cell *matHeaderCellDef> CONTRACTNO </th>
+                        <td mat-cell *matCellDef="let element"> {{element.contractNo}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="clientName">
+                        <th mat-header-cell *matHeaderCellDef> Client Name</th>
+                        <td mat-cell *matCellDef="let element"> {{element.clientName}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="groupId">
+                        <th mat-header-cell *matHeaderCellDef> Group ID </th>
+                        <td mat-cell *matCellDef="let element"> {{element.groupId}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="groupName">
+                        <th mat-header-cell *matHeaderCellDef> Group Name </th>
+                        <td mat-cell *matCellDef="let element"> {{element.groupName}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="loanCycle">
+                        <th mat-header-cell *matHeaderCellDef> Loan Cycle </th>
+                        <td mat-cell *matCellDef="let element"> {{element.loanCycle}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="loanProduct">
+                        <th mat-header-cell *matHeaderCellDef> Loan Product </th>
+                        <td mat-cell *matCellDef="let element"> {{element.loanProduct}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="maturityDate">
+                        <th mat-header-cell *matHeaderCellDef> Maturity Date </th>
+                        <td mat-cell *matCellDef="let element"> {{element.maturityDate}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="maxNewLoan">
+                        <th mat-header-cell *matHeaderCellDef> Max New Loan </th>
+                        <td mat-cell *matCellDef="let element"> {{element.maxNewLoan}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="mobileNo">
+                        <th mat-header-cell *matHeaderCellDef> Mobile No. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.mobileNo}} </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="newTerm">
+                        <th mat-header-cell *matHeaderCellDef> New Term </th>
+                        <td mat-cell *matCellDef="let element"> {{element.newTerm}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="oldLoan">
+                        <th mat-header-cell *matHeaderCellDef> Old Loan </th>
+                        <td mat-cell *matCellDef="let element"> {{element.oldLoan}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="oldTerm">
+                        <th mat-header-cell *matHeaderCellDef> Old Term </th>
+                        <td mat-cell *matCellDef="let element"> {{element.oldTerm}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="process">
+                        <th mat-header-cell *matHeaderCellDef> Process </th>
+                        <td mat-cell *matCellDef="let element"> {{element.process}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="scoreDate">
+                        <th mat-header-cell *matHeaderCellDef> Score Date </th>
+                        <td mat-cell *matCellDef="let element"> {{element.scoreDate}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="strategy">
+                        <th mat-header-cell *matHeaderCellDef> Strategy </th>
+                        <td mat-cell *matCellDef="let element"> {{element.strategy}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="totalScore">
+                        <th mat-header-cell *matHeaderCellDef> Total Score </th>
+                        <td mat-cell *matCellDef="let element"> {{element.totalScore}} </td>
+                    </ng-container>
+    
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="cursor_pointer"
+                        (click)="openDialog(row)"></tr>
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">
+                            No data</td>
+                    </tr>
+                </table>
+            </div>
+            <!-- <div class="d-flex justify-content-end align-items-center">
+                <mat-paginator [pageSizeOptions]="[10, 25, 50, maxall]" [length]="maxall" (page)="onPageFired($event)"
+                    showFirstLastButtons></mat-paginator>
+            </div> -->
+        </div>
+    </div>
+</section>

@@ -1,0 +1,29 @@
+<div>
+
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #leftSidenav mode="side" opened>
+      <app-side-menu></app-side-menu>
+    </mat-sidenav>
+    <mat-sidenav-content [@onMainContentChange]="onSideNavChange ? 'open': 'close'">
+      <div class="main_content">
+        <div class="p-0 m-0">
+          <div class="header ">
+            <mat-toolbar class="bg-white">
+              <span class="example-spacer"></span>
+              <p>Welcome {{userName}}</p>
+              <button [matMenuTriggerFor]="menu" mat-icon-button class="example-icon favorite-icon">
+                <mat-icon>face</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button (click)="handleUserLogout()" mat-menu-item>Logout</button>
+              </mat-menu>
+
+            </mat-toolbar>
+          </div>
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+</div>

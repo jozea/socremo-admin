@@ -1,0 +1,50 @@
+<h2 mat-dialog-title class="text_accion_stone">{{detail.type === 'disbursed' ? 'Approve Disbursal' : detail.type === 'rejected' ? 'Reject' : detail.type === 'approve' ? 'Approve Loan' : 'Error'}}</h2>
+<mat-dialog-content class="mat-typography">
+  <div  *ngIf="detail.type !== 'approve'" class="row px-2">
+  Request {{detail.type === 'disbursed' ? 'Loan Disbursal' : 'Loan Rejection'}} 
+   of N{{detail.recommended.recommendedAmount | number}} by
+    {{ detail.user.name }} for 
+    {{ detail.recommended.recommendedTerm }}
+  </div>
+
+  <div  *ngIf="detail.type == 'approve'" class="px-2">
+    <p>
+      Approve Loan Request initiated By <span class="text-uppercase font-weight-bold"> {{ detail.manualLoanUpdate.maker }} </span>
+    </p>
+    <p class="text_accion">Loan Detail</p>
+    <p>Name: {{ detail.user.name }} </p>
+    <p>Amount:  {{ detail.recommended.recommendedAmount }} </p>
+    <p>Duration:  {{ detail.recommended.recommendedTerm }} </p>
+    <p>Action:  <span class="text-uppercase font-weight-bold"> {{ detail.manualLoanUpdate.status }} </span>  </p>
+    </div>
+  
+  <div>
+    <form [formGroup]="loanActionForm" class="mt-3">
+
+          <mat-form-field *ngIf="detail.type === 'noNeedForNow'"  class="w-100" appearance="outline">
+            <mat-label>Confirm Amount</mat-label>
+            <input [value]="this.loanActionForm.value.amount" matInput type="number" formControlName="amount">
+            <button mat-button *ngIf="this.loanActionForm.value.amount" matSuffix mat-icon-button aria-label="Clear"
+              (click)="this.loanActionForm.value.amount=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+  
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Enter Transaction PIN</mat-label>
+            <input [value]="this.loanActionForm.value.pin" matInput type="text" formControlName="pin">
+            <button mat-button *ngIf="this.loanActionForm.value.pin" matSuffix mat-icon-button aria-label="Clear"
+              (click)="this.loanActionForm.value.pin=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+
+    </form>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-content-between">
+  <button mat-button mat-dialog-close (click)="close()">Cancel</button>
+  <button *ngIf="detail.type !== 'approve' && !loading" mat-button (click)="handleRequest()">Confirm</button>
+  <button *ngIf="detail.type == 'approve' && !loading" mat-button (click)="approveRequest()">Confirm</button>
+  <mat-spinner [diameter]="20" *ngIf="loading" ></mat-spinner>
+</mat-dialog-actions>

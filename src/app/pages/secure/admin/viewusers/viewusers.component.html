@@ -1,0 +1,189 @@
+  <div *ngIf="isLoadingResults" class="loader_container">
+    <div class="spinner">
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+	</div>
+  </div>
+  
+  <section>
+    <div class="header mt-3 bg-white d-flex justify-content-between align-items-center pr-4">
+      <p class="p-3 px-4 lead">Admins</p>
+      <mat-slide-toggle color="primary" [checked]="checked"(change)="onPageToggle($event)" class="font-weight-bold">Roles and Permission</mat-slide-toggle>
+    </div>
+  
+    <form class="filter mx-3" [formGroup]="searchFilterForm">
+      <mat-card class="m-3 p-0 pt-3 px-3 pb-2">
+        <h5 class="font-weight-bold">Filter/Sort by</h5>
+        <div class="d-flex flex-wrap">
+         
+  
+          <mat-form-field
+          appearance="outline">
+            <mat-label>Start Date</mat-label>
+            <input formControlName="startDate" matInput [max]="maxDate" [matDatepicker]="startDate">
+            <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+            <mat-datepicker #startDate></mat-datepicker>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>End date</mat-label>
+            <input formControlName="endDate" matInput [max]="maxDate" [matDatepicker]="endDate">
+            <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+            <mat-datepicker #endDate></mat-datepicker>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+              <mat-option *ngFor="let item of filterList" [value]="item.value">
+                {{item.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Customer Name</mat-label>
+            <input [value]="this.searchFilterForm.value.customerName" formControlName="customerName" matInput type="text">
+            <button mat-button *ngIf="this.searchFilterForm.value.customerName" matSuffix mat-icon-button aria-label="Clear"
+            (click)="this.searchFilterForm.value.customerName=''">
+            <mat-icon>close</mat-icon>
+          </button>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Mobile Number</mat-label>
+            <input [value]="this.searchFilterForm.value.mobileNumber" formControlName="mobileNumber" matInput type="text">
+            <button mat-button *ngIf="this.searchFilterForm.value.mobileNumber" matSuffix mat-icon-button aria-label="Clear"
+            (click)="this.searchFilterForm.value.mobileNumber=''">
+            <mat-icon>close</mat-icon>
+          </button>
+          </mat-form-field>
+  
+          <!-- <mat-form-field appearance="outline">
+            <mat-label>Referrer Phone Number</mat-label>
+            <input 
+            [value]="this.searchFilterForm.value.referrerMobileNumber"
+            formControlName="referrerMobileNumber" 
+            matInput type="text" >
+            <button mat-button 
+            *ngIf="this.searchFilterForm.value.referrerMobileNumber"
+            matSuffix mat-icon-button aria-label="Clear" 
+            (click)="this.searchFilterForm.value.referrerMobileNumber=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field> -->
+          <button (click)="search()" class="btn btn-sm text-white filter_btn">Filter</button>
+        </div>
+  
+        
+  
+      </mat-card>
+  
+    </form>
+    <div class="action mx-3">
+      <mat-card class="px-3 py-3 mx-3">
+        <h5 class="font-weight-bold">Action</h5>
+        <div class="d-flex flex-wrap">
+          <button (click)="exportTable('pdf')" type="button" class="btn btn-sm text-white accion_stone my-1">Export
+            PDF</button>
+          <button (click)="exportTable('xlsx')" type="button" class="btn btn-sm mx-2 text-white accion_sand my-1">Export
+            Excel</button>
+          <button (click)="exportTable('csv')" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">Export
+            CSV</button>
+          <button (click)="exportTable('png')" type="button"
+            class="btn btn-sm mx-2 text-white accion_sand my-1">PNG</button>
+        </div>
+      </mat-card>
+  
+  
+    </div>
+  
+    <div class="table_display mx-3">
+  
+      <div class=" mat-elevation-z8">
+        <div id="referral_table" class="table-container p-0">
+          <table 
+          mat-table 
+          [dataSource]="dataSource"        
+          class="mat-elevation-z8">
+  
+          <ng-container matColumnDef="position">
+            <th  mat-header-cell *matHeaderCellDef> S/N </th>
+            <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </td>
+          </ng-container>
+        
+          <ng-container matColumnDef="firstName">
+            <th disableClear mat-header-cell *matHeaderCellDef> First Name </th>
+            <td      
+           
+            mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+          </ng-container>
+        
+          <ng-container matColumnDef="middleName">
+            <th mat-header-cell *matHeaderCellDef> Middle Name</th>
+            <td mat-cell *matCellDef="let element"> {{element.middleName}} </td>
+          </ng-container>
+        
+          <ng-container matColumnDef="lastName">
+            <th mat-header-cell *matHeaderCellDef> Last Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="mobileNumber">
+            <th mat-header-cell *matHeaderCellDef> Mobile number </th>
+            <td mat-cell *matCellDef="let element"> {{element.mobileNumber}} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let element"> {{element.admin && element.admin.status ? element.admin.status : ''}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="role">
+            <th mat-header-cell *matHeaderCellDef> Role </th>
+            <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="maker">
+            <th mat-header-cell *matHeaderCellDef> Maker </th>
+            <td mat-cell *matCellDef="let element"> {{element.admin ? element.admin.maker : 'N/A'}} </td>
+          </ng-container>
+          <ng-container matColumnDef="authorizer">
+            <th mat-header-cell *matHeaderCellDef> Authorizer </th>
+            <td mat-cell *matCellDef="let element"> {{element.admin ? element.admin.authorizer : 'N/A'}} </td>
+          </ng-container>
+         
+
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> Date </th>
+            <td mat-cell *matCellDef="let element"> {{ element.createdAt | date :'medium' }} </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let element"> 
+              <button (click)="openDialog(element)" class="btn btn-sm text-white filter_btn">Update</button>    
+            </td>
+          </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">
+               No data</td>
+            </tr>
+          </table>
+        </div>
+        <div class="d-flex justify-content-end align-items-center">
+          <mat-paginator 
+          [pageSizeOptions]="[10, 25, 50, maxall]" 
+          [length]="maxall" 
+          (page)="onPageFired($event)"
+          showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </section>

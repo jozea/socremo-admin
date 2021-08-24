@@ -1,0 +1,207 @@
+<div *ngIf="isLoadingResults" class="loader_container">
+  <div class="spinner">
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+	</div>
+</div>
+
+<section >
+  <div class="header mt-3 text-white">
+    <p class="p-3 px-4 lead">Customer Management</p>
+</div>
+ 
+
+  <form class="filter mx-3" [formGroup]="userFilterForm">
+    <mat-card class="m-3 p-0 pt-3 px-3 pb-2">
+      <h5 class="font-weight-bold">Filter/Sort by</h5>
+      <div class="d-flex flex-wrap">
+        <mat-form-field
+        appearance="outline">
+          <mat-label>Start Date</mat-label>
+          <input formControlName="startDate" matInput [max]="maxDate" [matDatepicker]="startDate">
+          <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+          <mat-datepicker #startDate></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>End date</mat-label>
+          <input formControlName="endDate" matInput [max]="maxDate" [matDatepicker]="endDate">
+          <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+          <mat-datepicker #endDate></mat-datepicker>
+        </mat-form-field>
+
+        <!-- <mat-form-field appearance="outline">
+          <mat-label>Account Type</mat-label>
+          <mat-select formControlName="accountType">
+            <mat-option *ngFor="let item of allAccountType" [value]="item.value">
+              {{item.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field> -->
+        <!-- <mat-form-field appearance="outline">
+          <mat-label>Customer Status</mat-label>
+          <mat-select formControlName="customerStatus">
+            <mat-option *ngFor="let item of allCustomerStatus" [value]="item.value">
+              {{item.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field> -->
+
+        <mat-form-field appearance="outline">
+          <mat-label>Customer Name</mat-label>
+          <input [value]="this.userFilterForm.value.customerName" formControlName="customerName" matInput type="text">
+          <button mat-button *ngIf="this.userFilterForm.value.customerName" matSuffix mat-icon-button aria-label="Clear"
+          (click)="this.userFilterForm.value.customerName=''">
+          <mat-icon>close</mat-icon>
+        </button>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Phone Number</mat-label>
+          <input [value]="this.userFilterForm.value.mobileNumber" formControlName="mobileNumber" matInput type="text">
+          <button mat-button *ngIf="this.userFilterForm.value.mobileNumber" matSuffix mat-icon-button aria-label="Clear"
+          (click)="this.userFilterForm.value.mobileNumber=''">
+          <mat-icon>close</mat-icon>
+        </button>
+        </mat-form-field>
+
+        <!-- <mat-form-field appearance="outline">
+          <mat-label>BVN</mat-label>
+          <input [value]="this.userFilterForm.value.bvn" formControlName="bvn" matInput type="text">
+          <button mat-button *ngIf="this.userFilterForm.value.bvn" matSuffix mat-icon-button aria-label="Clear"
+          (click)="this.userFilterForm.value.bvn=''">
+          <mat-icon>close</mat-icon>
+        </button>
+        </mat-form-field> -->
+        <!-- <mat-form-field appearance="outline">
+          <mat-label>Account Number</mat-label>
+          <input [value]="this.userFilterForm.value.accountNumber" formControlName="accountNumber" matInput type="text">
+          <button mat-button *ngIf="this.userFilterForm.value.accountNumber" matSuffix mat-icon-button aria-label="Clear"
+          (click)="this.userFilterForm.value.accountNumber=''">
+          <mat-icon>close</mat-icon>
+        </button>
+        </mat-form-field> -->
+        <button 
+        (click)="search()"
+        class="btn btn-sm text-white filter_btn"
+         >Filter</button>
+      </div>
+
+
+    </mat-card>
+
+  </form>
+  <div class="action mx-3">
+    <mat-card class="px-3 py-3 mx-3">
+      <h5 class="font-weight-bold">Action</h5>
+      <div class="d-flex flex-wrap">
+        <button (click)="exportTable('pdf')" type="button" class="btn btn-sm text-white accion_stone my-1">Export
+          PDF</button>
+        <button (click)="exportTable('xlsx')" type="button" class="btn btn-sm mx-2 text-white accion_sand my-1">Export
+          Excel</button>
+        <button (click)="exportTable('csv')" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">Export
+          CSV</button>
+        <button (click)="exportTable('png')" type="button"
+          class="btn btn-sm mx-2 text-white accion_sand my-1">PNG</button>
+        <!-- <button type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">Print</button> -->
+      </div>
+    </mat-card>
+    
+
+  </div>
+
+  <div class="table_display mx-3">
+
+    <div class=" mat-elevation-z8">      
+      <div id="userlist_table"  class="table-container p-0">
+      <table 
+      mat-table 
+      [dataSource]="customerData" 
+      class="mat-elevation-z8">
+      
+        <ng-container matColumnDef="position">
+          <th  mat-header-cell *matHeaderCellDef> S/N </th>
+          <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="id">
+          <th disableClear mat-header-cell *matHeaderCellDef> Customer ID </th>
+          <td  mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="firstName">
+          <th disableClear mat-header-cell *matHeaderCellDef> First Name </th>
+          <td  mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="lastName">
+          <th mat-header-cell *matHeaderCellDef> Last Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="mobileNumber">
+          <th mat-header-cell *matHeaderCellDef> Mobile number </th>
+          <td mat-cell *matCellDef="let element"> {{element.mobileNumber || element.phone}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef> Customer Status </th>
+          <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="accountType">
+          <th mat-header-cell *matHeaderCellDef> Account Type </th>
+          <td mat-cell *matCellDef="let element"> {{element.accountType}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="accountNumber">
+          <th mat-header-cell *matHeaderCellDef> Account Number </th>
+          <!-- <td mat-cell *matCellDef="let element"> {{element.accountNumber.length ? element.accountNumber[0] : '' }} </td> -->
+          <td mat-cell *matCellDef="let element"> {{element.accountNumber }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="lastLogin">
+          <th mat-header-cell *matHeaderCellDef> Last Login </th>
+          <td mat-cell *matCellDef="let element">  {{ element.lastLogin | date :'medium' }}  </td>
+        </ng-container>
+       
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef> Date </th>
+          <td mat-cell *matCellDef="let element"> {{ element.date | date :'medium' }} </td>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> Action </th>
+          <td mat-cell *matCellDef="let element" class="action-link"> 
+            <!-- <a (click)="openDialog('Update',element)">Edit</a>  -->
+            <a  (click)="openKycTierModal()" style="padding-right:5px;">
+              <mat-icon aria-hidden="false" aria-label="Example edit icon">edit </mat-icon></a>
+            
+          </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="cursor_pointer" [routerLink]="['details', row.mobileNumber]"></tr>
+      
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4"> 
+           No data
+          </td>
+        </tr>
+      </table>
+    </div>
+   <div class="d-flex justify-content-end align-items-center">
+    <mat-spinner *ngIf="isLoadingResults" [diameter]="20"></mat-spinner>
+    <mat-paginator 
+    [pageSizeOptions]="[10, 25, 50, maxall]"  
+    [length] = "maxall"
+    (page)="onPageFired($event)"
+    showFirstLastButtons
+    ></mat-paginator>  
+   </div>
+    </div>
+  </div>
+</section>

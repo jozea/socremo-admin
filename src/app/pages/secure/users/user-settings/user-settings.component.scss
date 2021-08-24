@@ -1,0 +1,12 @@
+.text_box {
+    border-bottom: 0.3px solid #dadada;
+    height: 40px;
+}
+
+.app_version {
+    min-height: 150px;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+  }

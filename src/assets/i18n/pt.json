@@ -1,0 +1,63 @@
+{
+    "register": {
+        "header": "Criar perfil",
+        "firstName": "Primeiro nome",
+        "middleName": "Nome do meio",
+        "lastName": "Último nome",
+        "gender": "Gênero",
+        "dob": "Data de nascimento",
+        "mobileNumber": "Número de celular",
+        "address": " Endereço residencial",
+        "id": "Número de identidade",
+        "designation": "Designação",
+        "password": "Coloque sua senha",
+        "confirmPassword": "Confirme a Senha",
+        "pin": "Insira seu PIN",
+        "confirmPin": "Confirmar PIN",
+        "securityQuestion": "Pergunta de Segurança",
+        "securityAnswer": "Digite sua resposta de segurança",
+        "register": "Registro",
+        "back": "Voltar"
+    },
+    "login": {
+        "id": "Digite o seu número de identificação",
+        "password": "Coloque sua senha",
+        "otp": "Insira seu OTP",
+        "newPassword": "Insira a nova senha",
+        "confirmPassword": "Confirme a nova senha",
+        "securityAnswer": "Digite sua resposta de segurança",
+        "rememberMe": "Lembre de mim",
+        "forgotPassword": "Esqueceu sua senha",
+        "createProfile": "Criar perfil",
+        "rp": "Eu sei minha senha",
+        "login": "Conecte-se"
+    },
+    "dashboard": {
+        "headerText": "Painel",
+        "rangeHeader": "Escolha a data por",
+        "dayRange": "Intervalo do dia",
+        "monthRange": "Intervalo do mês",
+        "startDate": "Data de início",
+        "endDate": "Data final",
+        "fetch": "Buscar",
+        "refresh": "refrescar",
+        "transVol": "Volume e valor da transação",
+        "recentLoanActivity": "Atividades de empréstimo recentes",
+        "name": "Nome",
+        "amount": "Quantia",
+        "status": "Status",
+        "noData": "Sem dados",
+        "transactionTypes": "Tipos de transação",
+        "transactionStatus": "Status da transação",
+        "noOfAccountOpened": "Número de contas abertas",
+        "loanSummary": "Resumo do Empréstimo",
+        "action": "Açao",
+        "count": "Contar",
+        "requestedAmount": "Quantidade Solicitada",
+        "recommendedAmount": "Quantidade Recomendada"
+
+    }
+
+    
+
+}

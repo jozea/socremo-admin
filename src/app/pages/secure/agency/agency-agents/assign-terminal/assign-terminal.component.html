@@ -1,0 +1,37 @@
+<div *ngIf="isLoadingResults" class="loader_container">
+	<div class="spinner">
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+	</div>
+</div>
+
+<h2 mat-dialog-title class="text_accion_stone"> Assign Terminal </h2>
+<mat-dialog-content id="add_terminal_section" class="mat-typography">
+
+	<form [formGroup]="assignTerminalForm" class="row w-100 mx-3 px-5 py-2">
+		<mat-form-field class="col-12" appearance="outline">
+			<mat-label>Agent Name</mat-label>
+			<input [value]="userDetail.fullName" matInput type="text" disabled>
+		  </mat-form-field>
+	
+		  <mat-form-field class="col-12" appearance="outline">
+			<mat-label>Bank</mat-label>
+			<mat-select formControlName="bankId">
+			  <mat-option *ngFor="let item of allBanks" [value]="item.value">
+				{{item.name}}
+			  </mat-option>
+			</mat-select>
+		  </mat-form-field> 
+
+	</form>
+	
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-content-between">
+	<div>
+		<button  class="btn btn-sm text-white accion_stone">Assign</button>
+	</div>
+	<button mat-button mat-dialog-close (click)="close()">Cancel</button>
+</mat-dialog-actions>

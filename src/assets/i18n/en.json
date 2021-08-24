@@ -1,0 +1,61 @@
+{
+    "register": {
+        "header": "Create Profile",
+        "firstName": "First Name",
+        "middleName": "Middle Name",
+        "lastName": "Last Name",
+        "gender": "Gender",
+        "dob": "Date of Birth",
+        "mobileNumber": "Mobile Number",
+        "address": "Residential Address",
+        "id": "ID Number",
+        "designation": "Designation",
+        "password": "Enter your Password",
+        "confirmPassword": "Confirm Password",
+        "pin": "Enter your Pin",
+        "confirmPin": "Confirm Pin",
+        "securityQuestion": "Security Question",
+        "securityAnswer": "Enter your Security Answer",
+        "register": "Register",
+        "back": "Back"
+
+    },
+    "login": {
+        "id": "Enter your ID number",
+        "password": "Enter your password",
+        "otp": "Enter your OTP",
+        "newPassword": "Enter new password",
+        "confirmPassword": "Confirm new password",
+        "securityAnswer": "Enter your Security Answer",
+        "rememberMe": "Remember me",
+        "forgotPassword": "Forgot Password",
+        "createProfile": "Create Profile",
+        "rp": "I Know my Password",
+        "login": "Login"
+    },
+    "dashboard": {
+        "headerText": "Dashboard",
+        "rangeHeader": "Choose Date By",
+        "dayRange": "Day range",
+        "monthRange": "Month range",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "fetch": "Fetch",
+        "refresh": "refresh",
+        "transVol": "Transaction Volume and Value",
+        "recentLoanActivity": "Recent Loan Activities",
+        "name": "Name",
+        "amount": "Amount",
+        "status": "Status",
+        "noData": "No data",
+        "transactionTypes": "Transaction Types",
+        "transactionStatus": "Transaction Status",
+        "noOfAccountOpened": "Number of Account Opened",
+        "loanSummary": "Loan Summary",
+        "action": "Action",
+        "count": "Count",
+        "requestedAmount": "Requested Amount",
+        "recommendedAmount": "Recommended Amount"
+    }
+}
+  

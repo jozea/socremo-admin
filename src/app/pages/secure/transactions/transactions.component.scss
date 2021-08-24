@@ -1,0 +1,114 @@
+// .table-container {
+//     min-height: 200px;
+//     overflow: auto;
+//     width: 100%;
+//     overflow-x: scroll;
+//     overflow-y: scroll;
+//   }
+
+//   .table_display {
+//     padding: 20px;
+//   }
+
+//   table {
+//     text-align: center;
+//     // table-layout: fixed;
+//     min-width: 1000px;
+//     overflow-x: scroll;
+//   }
+
+.table-container {
+  overflow: auto;
+  width: 100%
+
+}
+
+.table_display {
+  padding: 20px;
+}
+
+table {
+  text-align: center;
+  // table-layout: fixed;
+  width: 100%;
+  min-width: 900px;
+  overflow-x: scroll;
+}
+
+  th, td {
+    text-align: center !important;
+    text-transform: capitalize;
+    padding: 10px !important;
+  }
+
+
+  tr{
+    text-align: center;
+    }
+
+  .mat-header-cell, .mat-sort-header {
+    background-color: #0065ea;
+    color: white;
+    width: fit-content;
+    text-align: center;
+  
+  }
+
+  ::ng-deep .mat-sort-header-arrow {
+    transform: none !important;
+    opacity: 1 !important;
+    color: white !important;
+}
+
+tr.transaction-detail-row {
+  height: 0;
+  padding: 0 !important;
+}
+
+tr.transaction-row:not(.transaction-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.transaction-row:not(.transaction-expanded-row):active {
+  background: #efefef;
+}
+
+.transaction-row td {
+  border-bottom-width: 0;
+}
+
+.transaction-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.mat-column-expandedDetail {
+  padding: 0 !important;
+}
+
+.mat-column-beneficiaryName, .mat-column-date {
+  min-width: 150px;
+}
+
+.Success, .success {
+  background-color: #32c861;
+  color: #fff;
+  padding: 5px;
+  border-radius: 4px;
+}
+.failed {
+  background-color: #f96a74;
+  color: #fff;
+  padding: 3px 9px;
+  border-radius: 4px;
+}
+.pending {
+  background-color: #FFBF00;
+  color: #fff;
+  padding: 3px 9px;
+  border-radius: 4px;
+}
+
+.border_bottom {
+  border-bottom: 1px solid #bbb6b6;
+}

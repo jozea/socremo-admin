@@ -1,0 +1,98 @@
+<div *ngIf="isLoadingResults" class="loader_container">
+  <div class="spinner">
+    <div class="spinner-item"></div>
+    <div class="spinner-item"></div>
+    <div class="spinner-item"></div>
+    <div class="spinner-item"></div>
+    <div class="spinner-item"></div>
+  </div>
+</div>
+
+<h2 mat-dialog-title class="text_accion_stone">Create Broadcast Message</h2>
+<mat-dialog-content class="mat-typography">
+
+  <div class="row">
+    <form [formGroup]="broadcastMessageForm" class="d-flex flex-column w-100 mx-3 px-5 py-2">
+
+      <h3 class="text_accion"> Message Details</h3>
+      <div>
+        <mat-form-field class="w-100">
+          <mat-label>Title</mat-label>
+          <input [value]="this.broadcastMessageForm.value.title" matInput type="text" formControlName="title" required>
+          <button mat-button *ngIf="this.broadcastMessageForm.value.title" matSuffix mat-icon-button aria-label="Clear"
+            (click)="this.broadcastMessageForm.value.title=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field class="w-100">
+          <mat-label>Enter Message Here</mat-label>
+          <textarea formControlName="message" matInput placeholder="Ex. This is to notify you ... AccionMFB"></textarea>
+        </mat-form-field>
+
+      </div>
+
+      <h3 class="text_accion">Recipient</h3>
+      <div class="w-100">
+
+        <mat-form-field class="w-100">
+          <mat-label>Select Recipient</mat-label>
+          <mat-select formControlName="recipientType" (selectionChange)="handleRecipientSelection()" required>
+            <mat-option value="all"> All </mat-option>
+            <mat-option value="saveBrighta Users"> SaveBrighta Users </mat-option>
+            <mat-option value="wallet Users"> Wallet Users </mat-option>
+            <mat-option value="some"> Select User(s) </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div *ngIf="showSearchByMobile">
+
+          <div class="row">
+            <mat-form-field class="col-11">
+              <mat-label>Search User using Mobile Number</mat-label>
+              <input [value]="this.broadcastMessageForm.value.mobileNumber" matInput type="tel"
+                formControlName="mobileNumber" required>
+              <button mat-button *ngIf="this.broadcastMessageForm.value.mobileNumber" matSuffix mat-icon-button
+                aria-label="Clear" (click)="this.broadcastMessageForm.value.mobileNumber=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+            <div class="col-1 d-flex justify-content-center align-items-center">
+              <button style="max-width: 30px;display: flex;justify-content: center; align-items: center;"
+                class="btn btn-sm accion text-white " (click)="getUser()">
+                <mat-icon *ngIf="!searchingUser" aria-hidden="false" aria-label="search icon">search</mat-icon>
+                <div *ngIf="searchingUser">
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <mat-form-field *ngIf="userNameList.length" class="w-100">
+            <mat-label>Select User(s)</mat-label>
+            <mat-select formControlName="selectedUsers" multiple>
+              <mat-option *ngFor="let item of userNameList" [value]="item.mobileNumber">{{item.fullName}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </div>
+
+      </div>
+
+      <div *ngIf="isLoading" class="col-12 d-flex justify-content-center p-5" >
+        <mat-spinner [diameter]="25" ></mat-spinner>
+      </div>
+
+
+
+
+
+    </form>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-content-between">
+  <button (click)="sendMessage()" class="btn btn-sm text-white accion_sand">Submit</button>
+  <button mat-button mat-dialog-close (click)="close()">Cancel</button>
+</mat-dialog-actions>

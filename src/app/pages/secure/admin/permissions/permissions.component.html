@@ -1,0 +1,238 @@
+<div *ngIf="loadingState" class="loader_container">
+  <div class="spinner">
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+	</div>
+</div>
+<section>
+  <div class="header mt-3 bg-white d-flex justify-content-between align-items-center pr-3">
+    <p class="p-3 px-4 lead">Roles and Permission Management</p>
+    <mat-slide-toggle color="primary" class="font-weight-bold" (change)="onPageToggle($event)">View Admins</mat-slide-toggle>
+
+  </div>
+  <div class="row mx-3">
+    <div class="col-md-4">
+      <div class="card  m-2 p-3">
+        <div class="text-center mt-2">
+          <h1>USERS</h1>
+          <div class="lead">Assign role to user</div>
+        </div>
+        <div class="d-flex justify-content-center mt-4" *ngIf="removeUserAssign.includes(buttonClicked)">
+          <mat-icon (click)="refreshPage()" class="cursor_pointer" aria-hidden="false" aria-label="search icon">refresh
+          </mat-icon>
+        </div>
+        <div class="mt-4" *ngIf="!removeUserAssign.includes(buttonClicked)">
+          <form>
+            <div>
+              <ul>
+                <li>
+                  <small>Search for the user you want to assign role</small>
+                </li>
+                <li>
+                  <small> Select the user from the dropdown </small>
+                </li>
+                <li><small> Click on the 'Assign' button </small></li>
+              </ul>
+            </div>
+            <div class="form-row">
+              <h3 class="col-12 p-0 m-0 px-2">Search user </h3>
+              <div *ngIf="searchUserMessage" class="col-12">
+                <small class="px-2 text-secondary">{{searchUserMessage}}</small>
+              </div>
+              <div class="form-group col-10">
+                <div>
+                  <input type="text" class="form-control" [(ngModel)]="mobile" name="mobile"
+                    [ngModelOptions]="{ standalone: true }" placeholder="Enter user's mobile number" />
+                </div>
+              </div>
+
+              <div class="form-group col-2">
+                <button style="max-width: 30px;display: flex;justify-content: center; align-items: center;"
+                  class="btn btn-sm accion text-white" (click)="getUser()">
+                  <mat-icon *ngIf="!searchingUser" aria-hidden="false" aria-label="search icon">search</mat-icon>
+                  <div *ngIf="searchingUser">
+                    <div  class="spinner-border text-primary" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-12">
+                <h3>Select user </h3>
+                <div class="mb-3">
+
+                  <!-- (change)="changeUser($event.target)" -->
+                  <select 
+                  class="form-control browser-default custom-select" 
+                  [(ngModel)]="selectedUserId"
+                  (change)="handleUserSelection(selectedUserId)"
+                    name="selectedUser">
+                    <option [selected]="i == 0" *ngFor="let user of userNameList;let index = i" [value]="user.mobileNumber">
+                      {{ user.fullName }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div>
+              <button class="btn accion text-white" (click)="assignRole()">
+                Assign Role
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="col-12 col-md-4">
+      <div class="card  m-2">
+        <div class="text-center mt-4">
+          <h1>ROLES</h1>
+          <p class="lead">Create, Edit and Delete Role(s)</p>
+        </div>
+
+        <div class="my-3 d-flex justify-content-center">
+          <button (click)="handleButtonClicked('create')" type="button" class="btn btn-sm text-white accion m-1">
+            Create role
+          </button>
+          <button (click)="getRoles('edit')" *ngIf="availableRoles && availableRoles.length > 0" type="button"
+            class="btn btn-sm text-white accion_sand m-1">
+            Edit role
+          </button>
+          <button (click)="getRoles('delete')" *ngIf="availableRoles && availableRoles.length > 0" type="button"
+            class="btn btn-sm text-white accion_stone m-1">
+            Delete role
+          </button>
+        </div>
+
+        <div class="mb-3 p-3">
+          <div class="mb-2">
+            <div class="lead">Available roles</div>
+          </div>
+
+          <div *ngIf="!availableRoles">
+            <div class="spinner-border text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+
+          <div *ngIf="availableRoles && availableRoles.length === 0">
+            <div>You are yet to create a role</div>
+          </div>
+
+          <div *ngIf="availableRoles && availableRoles.length > 0">
+            <div *ngFor="let role of availableRoles">
+              <mat-checkbox [checked]="role.isSelected" (change)="changeRole(role.role)">
+                <span>{{ role.role }}</span> </mat-checkbox>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <form [formGroup]="roleForm">
+            <div class="form-row px-4">
+              <div class="form-group col-12 mb-5 pb-3" *ngIf="buttonClicked === 'create'">
+                <h3 class="p-0 m-0">Role Name </h3>
+                <small>To create a role: Enter the name of the role here, then go to the permissions column and select
+                  permissions for the role. Once done click the create button at the bottom</small>
+                <input type="text" class="mt-3 form-control" placeholder="New Role Name" [(ngModel)]="roleName"
+                  name="roleName" [ngModelOptions]="{ standalone: true }" />
+              </div>
+
+              <div class="form-group col-12" *ngIf="buttonClicked === 'edit'">
+                <div>
+                  <label class="font-weight-bolder" for="">Select role to edit
+                  </label>
+                </div>
+                <div class="mb-3">
+                  <select class="form-control" class="browser-default custom-select" formControlName="selectedRole"
+                    (change)="selectedRole()">
+                    <option *ngFor="let role of roles" [ngValue]="role">{{
+                        role.role
+                      }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group col-12" *ngIf="buttonClicked === 'delete'">
+                <div>
+                  <label class="font-weight-bolder" for="">Select Role to delete
+                  </label>
+                </div>
+                <div class="mb-3">
+                  <select class="form-control" class="browser-default custom-select" formControlName="selectedRole"
+                    (change)="selectedRole()">
+                    <option *ngFor="let role of roles" [ngValue]="role">{{
+                        role.role
+                      }}</option>
+                  </select>
+                </div>
+                <div>
+                  <div>
+                    <label class="font-weight-bold" for="">Selected Role
+                    </label>
+                  </div>
+                  <div>
+                    <input disabled type="text" class="form-control" [(ngModel)]="roleName" name="roleName"
+                      [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                  <div class="mt-2">
+                    <button (click)="onDelete()" class="btn btn-danger btn-sm"
+                      [disabled]="roleForm.value.selectedRole === null">
+                      Confirm Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <form class="card  m-2 p-3">
+        <div>
+          <div class="text-center mt-2">
+            <h1>PERMISSIONS</h1>
+            <div class="lead">
+              Select permissions for role
+            </div>
+          </div>
+          <div class="mt-4">
+            <mat-checkbox [checked]="isAll" (change)="selectCheck('all', $event)" [disabled]="isAssign">
+              <span>Select all permissions</span>
+            </mat-checkbox>
+          </div>
+
+          <div class="mb-4">
+            <div *ngFor="let perm of permissions">
+              <mat-checkbox [disabled]="isAssign" [checked]="perm.isPermitted"
+                (change)="selectCheck(perm.action, $event)">
+                {{ perm.label }}
+              </mat-checkbox>
+            </div>
+          </div>
+
+          <div class="m-3" *ngIf="!isAssign">
+            <button *ngIf="buttonClicked === 'create'" type="submit" class="btn btn-sm text-white accion m-1"
+              (click)="checkValues('create')">
+              Create Role
+            </button>
+            <button type="submit" class="btn btn-sm text-white accion_sand m-1" *ngIf="buttonClicked === 'edit'"
+              (click)="checkValues('edit')">
+              Save
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+</section>

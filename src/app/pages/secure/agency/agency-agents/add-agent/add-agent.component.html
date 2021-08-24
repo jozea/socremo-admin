@@ -1,0 +1,198 @@
+<div *ngIf="isLoadingResults" class="loader_container">
+  <div class="spinner">
+    <div class="spinner-item"></div>
+    <div class="spinner-item"></div>
+    <div class="spinner-item"></div>
+    <div class="spinner-item"></div>
+    <div class="spinner-item"></div>
+  </div>
+</div>
+
+<h2 mat-dialog-title class="text_accion_stone">Create Agent</h2>
+<mat-dialog-content class="mat-typography">
+
+  <div class="row">
+    <form [formGroup]="agentCreationForm" class="d-flex flex-column w-100 mx-3 px-5 py-2">
+
+      <h3 class="text_accion">Agent Information</h3>
+      <div class="row">
+
+        <mat-form-field class="col-md-4 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input [value]="this.agentCreationForm.value.firstName" matInput type="text" formControlName="firstName">
+          <button mat-button *ngIf="this.agentCreationForm.value.firstName" matSuffix mat-icon-button aria-label="Clear"
+            (click)="this.agentCreationForm.value.firstName=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-4 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Middle Name(Optional)</mat-label>
+          <input [value]="this.agentCreationForm.value.middleName" matInput type="text" formControlName="middleName">
+          <button mat-button *ngIf="this.agentCreationForm.value.middleName" matSuffix mat-icon-button
+            aria-label="Clear" (click)="this.agentCreationForm.value.middleName=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-4 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input [value]="this.agentCreationForm.value.lastName" matInput type="text" formControlName="lastName">
+          <button mat-button *ngIf="this.agentCreationForm.value.lastName" matSuffix mat-icon-button aria-label="Clear"
+            (click)="this.agentCreationForm.value.lastName=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-4 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Date of Birth</mat-label>
+          <input formControlName="dateOfBirth" matInput [matDatepicker]="dateOfBirth">
+          <mat-datepicker-toggle matSuffix [for]="dateOfBirth"></mat-datepicker-toggle>
+          <mat-datepicker #dateOfBirth></mat-datepicker>
+        </mat-form-field>
+
+
+        <mat-form-field class="col-md-4 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Email</mat-label>
+          <input [value]="this.agentCreationForm.value.emailAddress" matInput type="text" formControlName="emailAddress">
+          <button mat-button *ngIf="this.agentCreationForm.value.emailAddress" matSuffix mat-icon-button aria-label="Clear"
+            (click)="this.agentCreationForm.value.emailAddress=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-4 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Gender</mat-label>
+          <mat-select formControlName="gender">
+            <mat-option *ngFor="let item of genderTypes" [value]="item.value">
+              {{item.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-4 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Aggregator</mat-label>
+          <input [value]="this.agentCreationForm.value.aggregator" matInput type="text" formControlName="aggregator">
+          <button mat-button *ngIf="this.agentCreationForm.value.aggregator" matSuffix mat-icon-button aria-label="Clear"
+            (click)="this.agentCreationForm.value.aggregator=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+      </div>
+
+      <h3 class="text_accion">Business Information</h3>
+      <div class="row">
+
+        <mat-form-field class="col-md-4 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Business Name</mat-label>
+          <input [value]="this.agentCreationForm.value.businessName" matInput type="text" formControlName="businessName">
+          <button mat-button *ngIf="this.agentCreationForm.value.businessName" matSuffix mat-icon-button aria-label="Clear"
+            (click)="this.agentCreationForm.value.businessName=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-4 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Business Address</mat-label>
+          <input [value]="this.agentCreationForm.value.businessAddress" matInput type="text" formControlName="businessAddress">
+          <button mat-button *ngIf="this.agentCreationForm.value.businessAddress" matSuffix mat-icon-button aria-label="Clear"
+            (click)="this.agentCreationForm.value.businessAddress=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-4 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Business Phone</mat-label>
+          <input [value]="this.agentCreationForm.value.businessPhone" matInput type="tel" formControlName="businessPhone">
+          <button mat-button *ngIf="this.agentCreationForm.value.businessPhone" matSuffix mat-icon-button aria-label="Clear"
+            (click)="this.agentCreationForm.value.businessPhone=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-4 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>State</mat-label>
+          <mat-select formControlName="businessState" (selectionChange)="handleStateSelection()">
+            <mat-option *ngFor="let item of allStates" [value]="item.alias">
+              {{item.state}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field class="col-md-4 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Local Government Area</mat-label>
+          <mat-select formControlName="businessLGA">
+            <mat-option *ngFor="let item of allLocalGovernment" [value]="item">
+              {{item}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+
+      <h3 class="text_accion">Account Information</h3>
+      <div class="row">
+
+        <mat-form-field class="col-md-4 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Account Number</mat-label>
+          <input [value]="this.agentCreationForm.value.accountNumber" matInput type="text" formControlName="accountNumber">
+          <button mat-button *ngIf="this.agentCreationForm.value.accountNumber" matSuffix mat-icon-button aria-label="Clear"
+            (click)="this.agentCreationForm.value.accountNumber=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-4 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Account Name</mat-label>
+          <input [value]="this.agentCreationForm.value.accountName" matInput type="text" formControlName="accountName">
+          <button mat-button *ngIf="this.agentCreationForm.value.accountName" matSuffix mat-icon-button aria-label="Clear"
+            (click)="this.agentCreationForm.value.accountName=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-4 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Banks</mat-label>
+          <mat-select formControlName="bank">
+            <mat-option *ngFor="let item of allBanks" [value]="item.bank">
+              {{item.bank}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-4 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>BVN</mat-label>
+          <input [value]="this.agentCreationForm.value.bvn" matInput type="text" formControlName="bvn">
+          <button mat-button *ngIf="this.agentCreationForm.value.bvn" matSuffix mat-icon-button aria-label="Clear"
+            (click)="this.agentCreationForm.value.bvn=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-4 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Username</mat-label>
+          <input [value]="this.agentCreationForm.value.username" matInput type="text" formControlName="username">
+          <button mat-button *ngIf="this.agentCreationForm.value.username" matSuffix mat-icon-button aria-label="Clear"
+            (click)="this.agentCreationForm.value.username=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+
+
+      </div>
+
+
+
+
+
+
+    </form>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-content-between">
+  <button (click)="handleAddAgent()" class="btn btn-sm text-white accion_sand">Submit</button>
+  <button mat-button mat-dialog-close (click)="close()">Cancel</button>
+</mat-dialog-actions>

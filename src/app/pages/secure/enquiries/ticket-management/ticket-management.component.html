@@ -1,0 +1,154 @@
+<div *ngIf="isLoadingResults" class="loader_container">
+    <div class="spinner">
+          <div class="spinner-item"></div>
+          <div class="spinner-item"></div>
+          <div class="spinner-item"></div>
+          <div class="spinner-item"></div>
+          <div class="spinner-item"></div>
+      </div>
+  </div>
+  
+  <section >
+    <div class="header mt-3">
+      <p class="p-3 px-4 lead text-white">Ticket Listing</p>
+  </div>
+   
+    <form class="filter mx-3" [formGroup]="enquiryFilterForm">
+      <mat-card class="m-3 p-0 pt-3 px-3 pb-2">
+        <h5 class="font-weight-bold">Filter/Sort by</h5>
+        <div class="d-flex flex-wrap">
+          <mat-form-field
+          appearance="outline">
+            <mat-label>Start Date</mat-label>
+            <input formControlName="startDate" matInput [max]="maxDate" [matDatepicker]="startDate">
+            <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+            <mat-datepicker #startDate></mat-datepicker>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>End date</mat-label>
+            <input formControlName="endDate" matInput [max]="maxDate" [matDatepicker]="endDate">
+            <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+            <mat-datepicker #endDate></mat-datepicker>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Rating</mat-label>
+            <mat-select formControlName="rating">
+              <mat-option *ngFor="let item of ratingCode" [value]="item.value">
+                {{item.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Customer Name</mat-label>
+            <input 
+            [value]="this.enquiryFilterForm.value.customerName"
+            formControlName="customerName" 
+            matInput type="text" >
+            <button mat-button 
+            *ngIf="this.enquiryFilterForm.value.customerName"
+            matSuffix mat-icon-button aria-label="Clear" 
+            (click)="this.enquiryFilterForm.value.customerName=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+          <button 
+          (click)="search()"
+          class="btn btn-sm text-white filter_btn"
+           >Filter</button>
+        </div>
+  
+  
+      </mat-card>
+  
+    </form>
+    <div class="action mx-3">
+      <mat-card class="px-3 py-3 mx-3">
+        <h5 class="font-weight-bold">Action</h5>
+        <div class="d-flex flex-wrap">
+          <button (click)="exportTable('pdf')" type="button" class="btn btn-sm text-white accion_stone my-1">Export
+            PDF</button>
+          <button (click)="exportTable('xlsx')" type="button" class="btn btn-sm mx-2 text-white accion_sand my-1">Export
+            Excel</button>
+          <button (click)="exportTable('csv')" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">Export
+            CSV</button>
+          <button (click)="exportTable('png')" type="button"
+            class="btn btn-sm mx-2 text-white accion_sand my-1">PNG</button>
+        </div>
+      </mat-card>
+      
+  
+    </div>
+  
+    <div class="table_display mx-3">
+  
+      <div class=" mat-elevation-z8">      
+        <div id="feedback_table"  class="table-container p-0">
+        <table 
+        mat-table 
+        [dataSource]="ticketData" 
+        matSort 
+        class="mat-elevation-z8">
+        
+          <ng-container matColumnDef="position">
+            <th  mat-header-cell *matHeaderCellDef> S/N </th>
+            <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </td>
+          </ng-container>
+        
+          <ng-container matColumnDef="fullName">
+            <th disableClear mat-header-cell *matHeaderCellDef> Customer Name </th>
+            <td      
+           
+            mat-cell *matCellDef="let element"> {{element.fullName}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="mobileNumber">
+            <th disableClear mat-header-cell *matHeaderCellDef>Mobile Number</th>
+            <td      
+           
+            mat-cell *matCellDef="let element"> {{element.mobileNumber}} </td>
+          </ng-container>
+      
+      
+          <!-- <ng-container matColumnDef="rating">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+          </ng-container> -->
+      
+          <ng-container matColumnDef="comment">
+            <th mat-header-cell *matHeaderCellDef> Comment </th>
+            <td mat-cell *matCellDef="let element"> {{element.comment}} </td>
+          </ng-container>
+         
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+          </ng-container>
+
+          <!-- <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> State </th>
+            <td mat-cell *matCellDef="let element"> Open </td>
+          </ng-container> -->
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <!-- <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="cursor_pointer"></tr> -->
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="cursor_pointer" (click)="openDialog(row)"></tr>
+        
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4"> No data</td>
+          </tr>
+        </table>
+      </div>
+     <div class="d-flex justify-content-end align-items-center">
+      <mat-paginator 
+      [pageSizeOptions]="[10, 25, 50, maxall]"  
+      [length] = "maxall"
+      (page)="onPageFired($event)"
+      showFirstLastButtons
+      ></mat-paginator>  
+     </div>
+      </div>
+    </div>
+  </section>

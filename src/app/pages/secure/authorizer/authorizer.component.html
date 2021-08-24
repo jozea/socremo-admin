@@ -1,0 +1,55 @@
+<!-- <h1 style="margin-top: 20%; font-weight: bold; font-size: x-large;" class="text-center">0% Loading..........</h1> -->
+
+<div class="table_display mx-3">
+
+    <div class=" mat-elevation-z8">
+      <div id="branches_table" class="table-container p-0">
+        <table 
+        mat-table 
+        [dataSource]="onBoardDetails"        
+        class="mat-elevation-z8">
+
+          <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef> S/N </th>
+            <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="companyName">
+            <th  mat-header-cell *matHeaderCellDef> Company Account Name </th>
+            <td mat-cell *matCellDef="let element"> 
+              {{element.companyName}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="companyAccNumber">
+            <th  mat-header-cell *matHeaderCellDef> Company Account Number </th>
+            <td mat-cell *matCellDef="let element">
+              {{element.companyAccount}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="action">
+            <th  mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let element">
+                <button (click)="openDialog(element)" mat-raised-button style="color: white; background-color: rgb(82, 82, 180);">Approve</button> 
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">
+             No data</td>
+          </tr>
+        </table>
+      </div>
+      <div class="d-flex justify-content-end align-items-center">
+        <!-- <mat-paginator 
+        [pageSizeOptions]="[10, 25, 50, 1000]" 
+        [length]="maxall" 
+        (page)="onPageFired($event)"
+        showFirstLastButtons></mat-paginator> -->
+      </div>
+    </div>
+  </div>
