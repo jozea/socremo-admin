@@ -42,11 +42,11 @@ const path = require('path');
 const app = express();
 
 // Serve only the static files form the dist directory
-app.use(express.static('./dist/socremo-admin'));
+app.use(express.static('./dist/accion'));
 
 app.get('/*', function(req,res) {
     
-res.sendFile('index.html', {root: '/dist/socremo-admin/'});
+res.sendFile('index.html', {root: '/dist/accion/'});
 });
 
 // Start the app by listening on the default Heroku port
