@@ -19,7 +19,11 @@ constructor(private http: HttpClient) {}
 // }
 
 getAllUsers(limit: number, page: number, model): Observable<any> {
-  return this.http.post<any>(`${this.baseUrl}users/admin?limit=${limit}&page=${page}`, model);
+  return this.http.post<any>(`${this.baseUrl}customer/admin-fetch-customers?limit=${limit}&page=${page}`, model);
+}
+
+getSingleUser(model): Observable<any> {
+  return this.http.post<any>(`${this.baseUrl}customer/admin-fetch-customers?limit=1`, model);
 }
 
 getUserCount(model): Observable<any> {

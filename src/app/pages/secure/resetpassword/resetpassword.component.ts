@@ -3,6 +3,10 @@ import {Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { UtilsService } from 'src/app/services/utils/utils.service';
+
+import { marker } from '@biesbjerg/ngx-translate-extract-marker';
+
 
 
 @Component({
@@ -19,13 +23,15 @@ export class ResetpasswordComponent implements OnInit {
   resetForm: FormGroup; 
 
   currentSetting: any = 1
-  headerText: any = 'Change Password'
-  action: any = 'Reset Password'
+  headerText: any = marker('security.changePassword')
+  action: any = marker('security.resetPassword')
 
   constructor(
     public formBuilder: FormBuilder,
     private router: Router,
-  ) { }
+    public util: UtilsService
+    ) {
+    }
 
   resetPassword(): void {
     this.loading = true;
@@ -50,16 +56,16 @@ export class ResetpasswordComponent implements OnInit {
    changesettings(value: any) {
      if (value == 1) {
        this.currentSetting = 1
-       this.headerText = 'Change Password'
-       this.action = 'Reset Password'
+       this.headerText = marker('security.changePassword')
+       this.action = marker('security.resetPassword')
      }else if (value == 2) {
        this.currentSetting = 2
-       this.headerText = 'Change Pin'
-       this.action = 'Reset Pin'
+       this.headerText = marker('security.changePin')
+       this.action = marker('security.resetPin')
      }else if (value == 3) {
        this.currentSetting = 3
-       this.headerText = 'Change Security Question and Answer'
-       this.action = 'Reset Security Question'
+       this.headerText = marker('security.changeSecurityQuestion')
+       this.action = marker('security.resetSecurityQuestion')
      }
 
    }

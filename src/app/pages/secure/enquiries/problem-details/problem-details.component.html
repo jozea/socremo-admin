@@ -1,0 +1,87 @@
+<h2 mat-dialog-title class="text_accion_stone">{{ 'ticket.problemDetails' | translate }}</h2>
+<mat-dialog-content style="background-color: rgb(230, 240, 240);">
+    <div class="card mx-4 mb-3 mt-3 rounded-0">
+        <mat-list>
+            <!-- <div class="subHeader font-weight-bold" mat-subheader>Type</div> -->
+            <!-- <mat-divider></mat-divider> -->
+            <div class="row px-4 mt-3 flex-wrap">
+                <div class="col-4">
+                    <p class="font-weight-bold">{{ 'ticket.type' | translate }}</p>
+                    <p class="text_accion_stone">{{problemDetail.type}} </p>
+                </div>
+                <div class="col-4">
+                    <p class="font-weight-bold">{{ 'ticket.createdBy' | translate }}</p>
+                    <p class="text_accion_stone">{{problemDetail.creator}}</p>
+                </div>
+
+                <div class="col-4">
+                    <p class="font-weight-bold"> {{ 'ticket.created' | translate }} </p>
+                    <p class="text_accion_stone">{{ problemDetail.createdAt | date: 'yyyy-MM-dd'}}</p>
+                </div>
+
+                <div class="col-4">
+                    <p class="font-weight-bold">{{ 'ticket.updated' | translate }}</p>
+                    <p class="text_accion_stone">{{ problemDetail.updatedAt | date: 'yyyy-MM-dd'}}</p>
+                </div>
+
+                <div class="col-4">
+                    <p class="font-weight-bold">{{ 'ticket.deleted' | translate }}</p>
+                    <p class="text_accion_stone">{{ problemDetail.isDeleted == true?'YES':'NO'}}</p>
+                </div>
+
+                <!-- <h5  class="font-weight-500 text_accion_sand">Categories</h5> -->
+                        
+                <table class="table table-bordered table-sm mt-3">
+                    <thead>
+                        <tr>
+                            <th scope="col">{{ 'ticket.category' | translate }}</th>
+                            <th scope="col">{{ 'ticket.description' | translate }}</th>
+                            <th scope="col">{{ 'ticket.created' | translate }}</th>
+                            <th scope="col">{{ 'ticket.updatedBy' | translate }}</th>
+                            <th scope="col">{{ 'ticket.deleted' | translate }}</th>
+                            <th scope="col">{{ 'ticket.action' | translate }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of problemDetail.categories;let i = index;">
+                            <td class="text_accion_stone">{{item.category}}</td>
+                            <td class="text_accion_stone">{{item.description}}</td>
+                            <td class="text_accion_stone">{{ item.createdAt | date: 'yyyy-MM-dd'}}</td>
+                            <td class="text_accion_stone">{{ item.lastUpdatedBy}}</td>
+                            <td class="text_accion_stone">{{ item.isDeleted == true?'YES':'NO'}}</td>
+                            <td class="text_accion_stone">
+                                <button (click)="openActionDialog(problemDetail, item, 'category')" type="button" class="btn btn-sm mx-2 text-white my-1" style="background-color: rgb(218, 52, 52);">
+                                    {{ 'ticket.deleteCategory' | translate }}
+                                </button>
+                                <button (click)="openActionDialog(problemDetail, item, 'update')" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">
+                                    {{ 'ticket.updateCategory' | translate }}
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </mat-list>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-content-between">
+    <div>
+        <!-- <button (click)="openActionDialog2(problemDetail, 'update')" type="button"
+            class="btn btn-sm mx-2 text-white accion_stone my-1">
+            {{ 'ticket.updateCategory' | translate }}
+        </button> -->
+        <button (click)="openActionDialog2(problemDetail, 'add')" type="button"
+            class="btn btn-sm mx-2 text-white accion_stone my-1">
+            {{ 'ticket.addNewCategory' | translate }}
+        </button>
+        <button (click)="openActionDialog2(problemDetail, 'type')" type="button"
+            class="btn btn-sm mx-2 text-white my-1" style="background-color: rgb(218, 52, 52);">
+            {{ 'ticket.deleteType' | translate }}
+        </button>
+        <!-- <button (click)="openActionDialog(problemDetail, 'category')" type="button"
+            class="btn btn-sm mx-2 text-white accion_stone my-1">
+            Delete Category
+        </button> -->
+    </div>
+    <button mat-button mat-dialog-close (click)="close()">{{ 'ticket.cancel' | translate }}</button>
+</mat-dialog-actions>

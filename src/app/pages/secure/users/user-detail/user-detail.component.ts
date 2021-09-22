@@ -5,6 +5,7 @@ import { LoanService } from 'src/app/services/loan/loan.service';
 import { monthNames } from 'src/app/constants/constant';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { UserSettingsComponent } from '../user-settings/user-settings.component';
+import { UtilsService } from 'src/app/services/utils/utils.service';
 
 
 @Component({
@@ -17,8 +18,10 @@ export class UserDetailComponent implements OnInit {
   userId: string;
   userName: string = "";
   userData: any = {};
+  userDetails: any[]=[]
   userLoanData: any = [];
   isAccountUser: boolean = true;
+  isLoadingResults: boolean = false;
 
 
 
@@ -26,6 +29,7 @@ export class UserDetailComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private loanService: LoanService,
+    private utilService: UtilsService,
     public dialog: MatDialog,
     private router: Router,
   ) { }
@@ -33,16 +37,37 @@ export class UserDetailComponent implements OnInit {
   ngOnInit() {
 
     this.userId = this.activatedRoute.snapshot.paramMap.get('id');
-    // this.userService.getUserById(this.userId).subscribe(response => {
-    //   if (response.data.docs[0].middleName == undefined) {
-    //     response.data.docs[0].middleName = ''
-    //   }
-    //   this.userName = `${response.data.docs[0].firstName} ${response.data.docs[0].middleName} ${response.data.docs[0].lastName}`
-    //   this.userData = response.data.docs[0]
-    //   this.isAccountUser = response.data.docs[0].isAccount ? true : false
-    // })
+    console.log(this.userId)
+    // let param = {}
+    let param = {primaryTelephone: this.userId}
+    this.getSingleUser(param)
+  }
 
-    // this.fetchUserLoanDetail()
+  handleSuccessResponse = async (response) => {
+    this.isLoadingResults = false;
+  }
+
+  handleFailureResponse = async (error) => {
+    this.utilService.triggerNotification(error.status ? 'Error fetching data' : 'Network Issues. Try again')     
+    this.isLoadingResults = false;
+  }
+
+  getSingleUser(model: any) {
+    this.isLoadingResults = true;
+    this.userService.getSingleUser(model).subscribe(async (response: any) => {
+      this.handleSuccessResponse(response)
+      // console.log(response.data[0].result)
+      this.userData = response.data[0].result[0]
+      console.log(this.userData)
+      // this.userDetails.forEach(e => {
+      //   if (this.userId == e._id) {
+      //     this.userData = e
+      //   }
+      // });
+      this.userName = `${this.userData.name}`
+    }, (error: any) => {
+      this.handleFailureResponse(error);
+    })
   }
 
   fetchUserLoanDetail() {

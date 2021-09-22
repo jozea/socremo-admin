@@ -31,9 +31,11 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    this.router.navigate(['/app/dashboard']);
+    // this.router.navigate(['/app/dashboard']);
 
 
+    this.utilService.deleteKeyIfEmpty(this.loginForm.value)
+    console.log(this.loginForm.value)
     // if (!this.loginForm.valid) {
     //   this.utilService.triggerNotification('Invalid Login Details');
     //   return;
@@ -42,30 +44,34 @@ export class LoginComponent implements OnInit {
     // let timestamp = Date.now().toString();
     // // this.loginForm.value.timestamp = timestamp;
     // // this.loginForm.value.channel = 'web';
-    // this.loading = true;
-    // this.authService.login(this.loginForm.value).subscribe(async (response: any) => {
+    this.loading = true;
+    this.authService.login(this.loginForm.value).subscribe(async (response: any) => {
 
-    //   // if (response.status === true && response.data == "otp") {
-    //   //   this.showOTP = true;
-    //   // } else 
-    //   if (response.status === true && response.data.user ) {
-    //     const { user, permissions } = response.data
-    //     const authorization = user.auth.accessToken;
+      // if (response.status === true && response.data == "otp") {
+      //   this.showOTP = true;
+      // } else 
+      console.log(response)
+      if (response.status === true && response.data ) {
+        // const { user } = response.data
+        // const { user, permissions } = response.data
+        const user = response.data
+        const authorization = user.auth.accessToken;
 
-    //     sessionStorage.setItem('authorization', authorization);
-    //     sessionStorage.setItem('user', JSON.stringify({ ...user, permissions }));
-    //     this.showOTP = false;
-    //     this.router.navigate(['/app/dashboard']);
-    //   }
-    //   this.loading = false;
-    //   this.utilService.triggerNotification(response.message)
-    // }, error=> {
-    //   if (error.status == 403) {
-    //     this.showOTP = true;
-    //   }
-    //   this.loading = false;
-    //   this.utilService.triggerNotification( error.message || 'Network Error',)
-    // })
+        sessionStorage.setItem('authorization', authorization);
+        sessionStorage.setItem('user', JSON.stringify({ user }));
+        // sessionStorage.setItem('user', JSON.stringify({ ...user, permissions }));
+        this.showOTP = false;
+        this.router.navigate(['/app/dashboard']);
+      }
+      this.loading = false;
+      this.utilService.triggerNotification(response.message)
+    }, error=> {
+      if (error.status == 403) {
+        this.showOTP = true;
+      }
+      this.loading = false;
+      this.utilService.triggerNotification( error.message || 'Network Error',)
+    })
 
   }
 
@@ -75,8 +81,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      id: new FormControl('', Validators.compose([Validators.required, Validators.minLength(10)])),
-      password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(4)])),
+      primaryTelephone: new FormControl('', Validators.compose([Validators.required, Validators.minLength(10)])),
+      loginPin: new FormControl('', Validators.compose([Validators.required, Validators.minLength(4)])),
       otp: new FormControl('', Validators.compose([Validators.minLength(6)])),
       newPassword: new FormControl('', Validators.compose([Validators.required, Validators.minLength(10)])),
       confirmPassword: new FormControl('', Validators.compose([Validators.required, Validators.minLength(4)])),

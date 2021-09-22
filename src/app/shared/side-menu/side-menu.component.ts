@@ -3,6 +3,8 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { onSideNavChange, animateText } from '../../utils/animations/animations'
 import { SidenavService } from 'src/app/services/sidenav/sidenav.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { marker } from '@biesbjerg/ngx-translate-extract-marker';
+
 
 @Component({
   selector: 'app-side-menu',
@@ -39,21 +41,22 @@ export class SideMenuComponent implements OnInit, AfterViewInit {
   ]
 
   pages: any = [
-    { name: 'Dashboard', link: '/app/dashboard', icon: 'home' },
-    { name: 'Transaction Listing', link: '/app/transactions', icon: 'account_balance' },
-    { name: 'Customer Management', link: '/app/users', icon: 'person' },
+    { name:  marker('menu.dashboard'), link: '/app/dashboard', icon: 'home' },
+    { name: marker('menu.transactionListing'), link: '/app/transactions', icon: 'account_balance' },
+    { name: marker('menu.customerManagement'), link: '/app/users', icon: 'person' },
+    { name: marker('menu.productManagement'), link: '/app/product/management', icon: 'business' },
     // { name: 'Dashboard', permission: 'transaction', link: '/app/dashboard', icon: 'home' },
     // { name: 'Transaction Listing', permission: 'transaction', link: '/app/transactions', icon: 'account_balance' },
     // { name: 'Customer Management', permission: 'users', link: '/app/users', icon: 'person' },
-    // { name: 'Broadcast', permission: 'users', link: '/app/broadcast', icon: 'cast' },
+    { name: 'Broadcast', permission: 'users', link: '/app/broadcast', icon: 'cast' },
 
     // { name: 'Card Management', permission: 'users', link: '/app/broadcast', icon: 'payments' },
   ]
   nestedPages: any = [
-    // {
-    //   title: 'Report',
-    //   icon: 'inbox',
-    //   list: [
+    {
+      title: marker('menu.branchManagement'),
+      icon: 'inbox',
+      list: [
     //     // {
     //     //   name: "Feedback",
     //     //   permission: 'feedback',
@@ -78,20 +81,32 @@ export class SideMenuComponent implements OnInit, AfterViewInit {
     //       link: "/app/report/platforms",
     //       icon: "360"
     //     },
+        {
+          name: marker('menu.branches'),
+          permission: 'roles_permissions',
+          link: "/app/report/branches",
+          icon: "add_business"
+        },
+      ]
+    },
+    // {
+    //   title: marker('menu.productManagement'),
+    //   icon: 'inbox',
+    //   list: [
     //     {
-    //       name: "Branches",
-    //       permission: 'roles_permissions',
-    //       link: "/app/report/branches",
-    //       icon: "add_business"
-    //     },
+    //       name: marker('menu.productMan'),
+    //       permission: 'referral',
+    //       link: "/app/product/listing",
+    //       icon: "sms"
+    //     }
     //   ]
     // },
     {
-      title: 'Ticket Management',
+      title: marker('menu.ticketManagement'),
       icon: 'inbox',
       list: [
         {
-          name: "Ticket Listings",
+          name: marker('menu.ticketListing'),
           permission: 'referral',
           link: "/app/ticket/management",
           icon: "sms"
@@ -237,7 +252,7 @@ export class SideMenuComponent implements OnInit, AfterViewInit {
     //   ]
     // },
     {
-      title: 'Settings',
+      title: marker('menu.settings'),
       icon: 'settings',
       list: [
         // {
@@ -252,14 +267,20 @@ export class SideMenuComponent implements OnInit, AfterViewInit {
         //   link: "/app/setting/permission",
         //   icon: "enhanced_encryption"
         // },
+        // {
+        //   name: marker('menu.admin'),
+        //   permission: 'roles_permissions',
+        //   link: "/app/setting/admin-user",
+        //   icon: "enhanced_encryption"
+        // },
         {
-          name: "Create Admin",
+          name: marker('menu.createAdmin'),
           permission: 'change_password',
           link: "/app/setting/createProfile",
           icon: "supervised_user_circle"
         },
         {
-          name: "Change Password",
+          name: marker('menu.changePassword'),
           permission: 'change_password',
           link: "/app/setting/password",
           icon: "security"

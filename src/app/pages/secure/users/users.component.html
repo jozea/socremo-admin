@@ -10,24 +10,34 @@
 
 <section >
   <div class="header mt-3 text-white">
-    <p class="p-3 px-4 lead">Customer Management</p>
+    <p class="p-3 px-4 lead">{{ 'users.headerText' | translate }}</p>
 </div>
+
+<!-- <div class="header px-4 mt-3 d-flex justify-content-between align-items-center">
+  <div class="d-flex align-items-center">
+    <p class="p-3 px-4 lead text-white">{{ 'users.headerText' | translate }}</p>
+  </div>
+  <div class="">
+    <button type="button" class="btn btn-sm text-white accion_stone my-1" (click)="useLanguage('en')">en</button>&nbsp;
+    <button type="button" class="btn btn-sm text-white accion_stone my-1" (click)="useLanguage('pt')">pt</button>
+  </div>
+</div> -->
  
 
   <form class="filter mx-3" [formGroup]="userFilterForm">
     <mat-card class="m-3 p-0 pt-3 px-3 pb-2">
-      <h5 class="font-weight-bold">Filter/Sort by</h5>
+      <h5 class="font-weight-bold">{{ 'users.filterHeader' | translate }}</h5>
       <div class="d-flex flex-wrap">
         <mat-form-field
         appearance="outline">
-          <mat-label>Start Date</mat-label>
+          <mat-label>{{ 'users.startDate' | translate }}</mat-label>
           <input formControlName="startDate" matInput [max]="maxDate" [matDatepicker]="startDate">
           <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
           <mat-datepicker #startDate></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>End date</mat-label>
+          <mat-label>{{ 'users.endDate' | translate }}</mat-label>
           <input formControlName="endDate" matInput [max]="maxDate" [matDatepicker]="endDate">
           <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
           <mat-datepicker #endDate></mat-datepicker>
@@ -51,7 +61,7 @@
         </mat-form-field> -->
 
         <mat-form-field appearance="outline">
-          <mat-label>Customer Name</mat-label>
+          <mat-label>{{ 'users.customerName' | translate }}</mat-label>
           <input [value]="this.userFilterForm.value.customerName" formControlName="customerName" matInput type="text">
           <button mat-button *ngIf="this.userFilterForm.value.customerName" matSuffix mat-icon-button aria-label="Clear"
           (click)="this.userFilterForm.value.customerName=''">
@@ -59,7 +69,7 @@
         </button>
         </mat-form-field>
         <mat-form-field appearance="outline">
-          <mat-label>Phone Number</mat-label>
+          <mat-label>{{ 'users.mobileNumber' | translate }}</mat-label>
           <input [value]="this.userFilterForm.value.mobileNumber" formControlName="mobileNumber" matInput type="text">
           <button mat-button *ngIf="this.userFilterForm.value.mobileNumber" matSuffix mat-icon-button aria-label="Clear"
           (click)="this.userFilterForm.value.mobileNumber=''">
@@ -86,7 +96,7 @@
         <button 
         (click)="search()"
         class="btn btn-sm text-white filter_btn"
-         >Filter</button>
+         >{{ 'users.filter' | translate }}</button>
       </div>
 
 
@@ -95,16 +105,13 @@
   </form>
   <div class="action mx-3">
     <mat-card class="px-3 py-3 mx-3">
-      <h5 class="font-weight-bold">Action</h5>
+      <h5 class="font-weight-bold">{{ 'users.action' | translate }}</h5>
       <div class="d-flex flex-wrap">
-        <button (click)="exportTable('pdf')" type="button" class="btn btn-sm text-white accion_stone my-1">Export
-          PDF</button>
-        <button (click)="exportTable('xlsx')" type="button" class="btn btn-sm mx-2 text-white accion_sand my-1">Export
-          Excel</button>
-        <button (click)="exportTable('csv')" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">Export
-          CSV</button>
+        <button (click)="exportTable('pdf')" type="button" class="btn btn-sm text-white accion_stone my-1">{{ 'users.exportPdf' | translate }}</button>
+        <button (click)="exportTable('xlsx')" type="button" class="btn btn-sm mx-2 text-white accion_sand my-1">{{ 'users.exportExcel' | translate }}</button>
+        <button (click)="exportTable('csv')" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">{{ 'users.exportCsv' | translate }}</button>
         <button (click)="exportTable('png')" type="button"
-          class="btn btn-sm mx-2 text-white accion_sand my-1">PNG</button>
+          class="btn btn-sm mx-2 text-white accion_sand my-1">{{ 'users.exportPng' | translate }}</button>
         <!-- <button type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">Print</button> -->
       </div>
     </mat-card>
@@ -118,7 +125,7 @@
       <div id="userlist_table"  class="table-container p-0">
       <table 
       mat-table 
-      [dataSource]="customerData" 
+      [dataSource]="dataSource" 
       class="mat-elevation-z8">
       
         <ng-container matColumnDef="position">
@@ -126,50 +133,50 @@
           <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </td>
         </ng-container>
       
-        <ng-container matColumnDef="id">
-          <th disableClear mat-header-cell *matHeaderCellDef> Customer ID </th>
+        <!-- <ng-container matColumnDef="id">
+          <th disableClear mat-header-cell *matHeaderCellDef> {{ 'users.customerId' | translate }} </th>
           <td  mat-cell *matCellDef="let element"> {{element.id}} </td>
-        </ng-container>
+        </ng-container> -->
 
-        <ng-container matColumnDef="firstName">
-          <th disableClear mat-header-cell *matHeaderCellDef> First Name </th>
-          <td  mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+        <ng-container matColumnDef="name">
+          <th disableClear mat-header-cell *matHeaderCellDef> {{ 'users.name' | translate }} </th>
+          <td  mat-cell *matCellDef="let element"> {{element.name}} </td>
         </ng-container>
       
-        <ng-container matColumnDef="lastName">
-          <th mat-header-cell *matHeaderCellDef> Last Name </th>
+        <!-- <ng-container matColumnDef="lastName">
+          <th mat-header-cell *matHeaderCellDef> {{ 'users.lastName' | translate }} </th>
           <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+        </ng-container> -->
+    
+        <ng-container matColumnDef="primaryTelephone">
+          <th mat-header-cell *matHeaderCellDef> {{ 'users.mobileNumber' | translate }} </th>
+          <td mat-cell *matCellDef="let element"> {{element.primaryTelephone}} </td>
         </ng-container>
     
-        <ng-container matColumnDef="mobileNumber">
-          <th mat-header-cell *matHeaderCellDef> Mobile number </th>
-          <td mat-cell *matCellDef="let element"> {{element.mobileNumber || element.phone}} </td>
+        <ng-container matColumnDef="maritalStatus">
+          <th mat-header-cell *matHeaderCellDef> {{ 'users.maritalStatus' | translate }} </th>
+          <td mat-cell *matCellDef="let element"> {{element.maritalStatus}} </td>
         </ng-container>
     
-        <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef> Customer Status </th>
-          <td mat-cell *matCellDef="let element"> {{element.status}} </td>
-        </ng-container>
-    
-        <ng-container matColumnDef="accountType">
-          <th mat-header-cell *matHeaderCellDef> Account Type </th>
-          <td mat-cell *matCellDef="let element"> {{element.accountType}} </td>
+        <ng-container matColumnDef="nationality">
+          <th mat-header-cell *matHeaderCellDef> {{ 'users.nationality' | translate }} </th>
+          <td mat-cell *matCellDef="let element"> {{element.nationality}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="accountNumber">
-          <th mat-header-cell *matHeaderCellDef> Account Number </th>
+        <ng-container matColumnDef="countryOfResidence">
+          <th mat-header-cell *matHeaderCellDef> {{ 'users.countryOfResidence' | translate }} </th>
           <!-- <td mat-cell *matCellDef="let element"> {{element.accountNumber.length ? element.accountNumber[0] : '' }} </td> -->
-          <td mat-cell *matCellDef="let element"> {{element.accountNumber }} </td>
+          <td mat-cell *matCellDef="let element"> {{element.countryOfResidence }} </td>
         </ng-container>
 
-        <ng-container matColumnDef="lastLogin">
+        <!-- <ng-container matColumnDef="lastLogin">
           <th mat-header-cell *matHeaderCellDef> Last Login </th>
           <td mat-cell *matCellDef="let element">  {{ element.lastLogin | date :'medium' }}  </td>
-        </ng-container>
+        </ng-container> -->
        
-        <ng-container matColumnDef="date">
-          <th mat-header-cell *matHeaderCellDef> Date </th>
-          <td mat-cell *matCellDef="let element"> {{ element.date | date :'medium' }} </td>
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell *matHeaderCellDef> {{ 'users.date' | translate }} </th>
+          <td mat-cell *matCellDef="let element"> {{ element.createdAt | date :'medium' }} </td>
         </ng-container>
 
         <!-- Action Column -->
@@ -184,7 +191,7 @@
         </ng-container>
       
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="cursor_pointer" [routerLink]="['details', row.mobileNumber]"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="cursor_pointer" [routerLink]="['details', row.primaryTelephone]"></tr>
       
         <tr class="mat-row" *matNoDataRow>
           <td class="mat-cell" colspan="4"> 

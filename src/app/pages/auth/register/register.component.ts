@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -16,9 +15,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private translate: TranslateService
     ) {
-    translate.setDefaultLang('pt');
   }
 
   ngOnInit(): void {
@@ -39,10 +36,6 @@ export class RegisterComponent implements OnInit {
       securityQuestion: new FormControl('', Validators.required),
       securityAnswer: new FormControl('', Validators.required)
     });
-  }
-
-  useLanguage(language: string): void {
-    this.translate.use(language);
   }
 
 }

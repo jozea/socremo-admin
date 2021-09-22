@@ -8,7 +8,9 @@
     "heroku-postbuild": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "i18n:init": "ngx-translate-extract --input ./src --output ./src/assets/i18n/template.json --key-as-default-value --replace --format json",
+    "i18n:extract": "ngx-translate-extract --input ./src --output ./src/assets/i18n/{en,da,de,fi,nb,nl,sv}.json --clean --format json"
   },
   "private": true,
   "dependencies": {
@@ -24,6 +26,8 @@
     "@angular/platform-browser": "~11.2.7",
     "@angular/platform-browser-dynamic": "~11.2.7",
     "@angular/router": "~11.2.7",
+    "@biesbjerg/ngx-translate-extract": "^7.0.4",
+    "@biesbjerg/ngx-translate-extract-marker": "^1.0.0",
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
     "bn-ng-idle": "^1.0.1",
@@ -69,5 +73,4 @@
     "node": "14.15.1",
     "npm": "6.14.8"
   }
-} 
- 
+}

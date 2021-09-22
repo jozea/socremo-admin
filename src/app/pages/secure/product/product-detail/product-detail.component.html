@@ -1,0 +1,132 @@
+<h2 mat-dialog-title style="color: rgb(0, 89, 255);" class="text_accion_stone">Product Details</h2>
+<mat-dialog-content class="mat-typography">
+    <!-- <mat-spinner [diameter]="100"></mat-spinner> -->
+</mat-dialog-content>
+<mat-dialog-content class="mat-typography">
+
+    <div class="row mb-5 mt-3">
+        <div class="col-4 d-flex">
+            <h5 class="font-weight-500 mr-3">Product Name:</h5>
+            <p class="text-capitalize">{{productDetails.fullName}} </p>
+        </div>
+        <div class="col-4 d-flex">
+            <h5 class="font-weight-500 mr-3">Product Number:</h5>
+            <p class="text-capitalize">{{productDetails.mobileNumber}} </p>
+        </div>
+
+        <!-- <div class="col-4 d-flex">
+            <h5 class="font-weight-500 mr-3">Email:</h5>
+            <p class="text-capitalize">{{productDetails.emailAddress}} </p>
+        </div> -->
+        <!-- <div class="col-4 d-flex">
+            <h5 class="font-weight-500 mr-3">Debit Account:</h5>
+            <p class="text-capitalize">{{productDetails.debitAccount}} </p>
+        </div> -->
+    </div>
+
+
+
+    <div class="row mb-5">
+        <div class="col-6">
+            <div class="d-flex">
+                <h5 class="font-weight-500 mr-3">Product Status:</h5>
+                <p class="text-capitalize">{{productDetails.comment}} </p>
+            </div>
+            <div class="d-flex">
+                <h5 class="font-weight-500 mr-3">Product Type :</h5>
+                <!-- <p class="text-capitalize">{{productDetails.investmentType}} </p> -->
+            </div>
+            <!-- <div class="d-flex">
+                <h5 class="font-weight-500 mr-3">Duration :</h5>
+                <p class="text-capitalize">{{productDetails.noOfMonths}} </p>
+            </div> -->
+            <div class="d-flex">
+                <h5 class="font-weight-500 mr-3">Product Date:</h5>
+                <p class="text-capitalize">{{productDetails.date | date }} </p>
+            </div>
+            <!-- <div class="d-flex">
+                <h5 class="font-weight-500 mr-3">Status Reason:</h5>
+                <p class="text-capitalize">{{productDetails.statusReason}} </p>
+            </div> -->
+            <!-- <div class="d-flex">
+                <h5 class="font-weight-500 mr-3">Channel:</h5>
+                <p class="text-capitalize">{{productDetails.channel}} </p>
+            </div> -->
+            <!-- <div class="d-flex">
+                <h5 class="font-weight-500 mr-3">Target Date Achieved:</h5>
+                <p class="text-capitalize">{{productDetails.targetDateAchieved}} </p>
+            </div> -->
+        </div>
+    </div>
+<!-- 
+
+        <div class="col-6">
+            <div class="d-flex">
+                <h5 class="font-weight-500 mr-3">Principal:</h5>
+                <p class="text-capitalize">₦{{investmentDetails.principal | number}} </p>
+            </div>
+            <div class="d-flex">
+                <h5 class="font-weight-500 mr-3">Daily Interest Amount:</h5>
+                <p class="text-capitalize">₦{{investmentDetails.dailyInterestAmount | number}} </p>
+            </div>
+            <div class="d-flex">
+                <h5 class="font-weight-500 mr-3">Interest Rate:</h5>
+                <p class="text-capitalize">{{investmentDetails.interestRate}}% </p>
+            </div>
+            <div class="d-flex">
+                <h5 class="font-weight-500 mr-3">Interest Amount:</h5>
+                <p class="text-capitalize">₦{{investmentDetails.expectedInterestAmount | number}} </p>
+            </div>
+            <div class="d-flex">
+                <h5 class="font-weight-500 mr-3">Total Amount:</h5>
+                <p class="text-capitalize">₦{{investmentDetails.expectedAmount | number}} </p>
+            </div>
+            <div class="d-flex">
+                <h5 class="font-weight-500 mr-3">Withholding Tax:</h5>
+                <p class="text-capitalize">₦{{investmentDetails.WHT10Percent | number}} </p>
+            </div>
+            <div class="d-flex">
+                <h5 class="font-weight-500 mr-3">Rolled Over:</h5>
+                <p class="text-capitalize">{{investmentDetails.wasRolledOver}} </p>
+            </div>
+        </div>
+    </div>
+
+    <h5 style="color: orange;" class="font-weight-500 text_accion_sand">Goal Contribution History</h5>
+    <table class="table table-bordered table-sm">
+        <thead>
+            <tr>
+                <th scope="col">S/N</th>
+                <th scope="col">Application Ref </th>
+                <th scope="col">Payment Ref</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Credited</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of contributionHistory">
+                <td>1</td>
+                <td>{{item.appRef}}</td>
+                <td>{{item.paymentReference}}</td>
+                <td>₦{{item.amount != null? item.amount: '0' | number}}</td>
+                <td>{{item.isCredit}}</td>
+                <td>{{item.date | date }}</td>
+            </tr>
+        </tbody>
+    </table> -->
+
+
+    <!-- <div *ngIf="!loanDetail.loanCompute">
+    No data
+  </div> -->
+
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-content-between ">
+    <div>
+        <button *ngIf="data.row.comment == 'inactive'" style="background-color: brown;color: white;" mat-button mat-dialog-close (click)="close()">Activate</button>
+        <button *ngIf="data.row.comment == 'active'" style="background-color: rgb(134, 42, 165);color: white;" mat-button mat-dialog-close (click)="openDialog(productDetails)">Update Product</button>
+        <button *ngIf="data.row.comment == 'active'" style="background-color: red;color: white;" mat-button mat-dialog-close (click)="close()">Inactivate</button>
+    </div>
+    <button style="background-color: rgb(0, 89, 255);color: white;" mat-button mat-dialog-close (click)="close()">Close</button>
+</mat-dialog-actions>

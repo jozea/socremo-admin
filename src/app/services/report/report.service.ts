@@ -72,6 +72,50 @@ fetchEnquireisAndComplaints(limit: number, page: number, model: any): Observable
   return this.http.post<any>(`${this.baseUrl}feedbacks/admin/enquiriesandcomplaints?limit=${limit}&page=${page}`, model);
 }
 
+createTicket(model: any): Observable<any> {
+  return this.http.post<any>(`${this.baseUrl}ticket/problem-type`, model);
+}
+
+updateTicket(model: any): Observable<any> {
+  return this.http.patch<any>(`${this.baseUrl}ticket/problem-type`, model);
+}
+
+addTicket(model: any): Observable<any> {
+  return this.http.put<any>(`${this.baseUrl}ticket/problem-type`, model);
+}
+
+getProblemType(): Observable<any> {
+  return this.http.get<any>(`${this.baseUrl}ticket/problem-type`);
+}
+
+deleteProblemCategory(type: any, category): Observable<any> {
+  return this.http.delete<any>(`${this.baseUrl}ticket/problem-type-category/${type}/${category}/true`);
+}
+
+deleteProblemType(model: any): Observable<any> {
+  
+  return this.http.delete<any>(`${this.baseUrl}problem-type/${model}/true`);
+}
+
+getTickets(model:any): Observable<any> {
+  return this.http.post<any>(`${this.baseUrl}ticket/admin/fetch`, model);
+}
+
+openTicket(model:any): Observable<any> {
+  return this.http.post<any>(`${this.baseUrl}ticket/open`, model);
+}
+
+assignTicket(model:any): Observable<any> {
+  return this.http.post<any>(`${this.baseUrl}ticket/admin/assign`, model);
+}
+
+closeTicket(model:any): Observable<any> {
+  return this.http.post<any>(`${this.baseUrl}ticket/admin/close`, model);
+}
+
+commentOnTicket(model:any): Observable<any> {
+  return this.http.post<any>(`${this.baseUrl}ticket/admin/comment`, model);
+}
 
 
 }

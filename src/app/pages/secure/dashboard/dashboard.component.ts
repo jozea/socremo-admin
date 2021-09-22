@@ -11,7 +11,6 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { Label } from 'ng2-charts';
 import { dashboardTopTabs, customChartColors, monthNames, barChartConstOptions, pieChartConstOptions } from 'src/app/constants/constant';
 
-import { TranslateService } from '@ngx-translate/core';
 
 
 
@@ -109,8 +108,7 @@ export class DashboardComponent implements OnInit {
     public transactionService: TransactionService,
     public loanService: LoanService,
     public reportService: ReportService,
-    private translate: TranslateService
-  ) {translate.setDefaultLang('en'); 
+  ) {
 }
 
   ngOnInit() {
@@ -127,10 +125,6 @@ export class DashboardComponent implements OnInit {
     // this.updateBarChart(this.generalRequestModel)
     // this.updatePieChart(this.generalRequestModel)
     // this.updateDashboardTables(this.generalRequestModel)
-  }
-
-  useLanguage(language: string): void {
-    this.translate.use(language);
   }
 
 // DONE 

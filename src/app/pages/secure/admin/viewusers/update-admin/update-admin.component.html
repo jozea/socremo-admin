@@ -16,7 +16,8 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field *ngIf="details.admin.status === 'pending'"  appearance="outline">
+      <mat-form-field  appearance="outline">
+      <!-- <mat-form-field *ngIf="details.admin.status === 'pending'"  appearance="outline"> -->
         <mat-label>Action</mat-label>
         <mat-select formControlName="decision">
           <mat-option *ngFor="let item of approvalOptions"  [value]="item.value">
@@ -24,8 +25,18 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Action</mat-label>
+        <mat-select formControlName="decision">
+          <mat-option > Enable </mat-option>
+          <mat-option > Disable </mat-option>
+          <mat-option > Suspend </mat-option>
+        </mat-select>
+      </mat-form-field>
     
-      <mat-form-field appearance="outline" *ngIf="this.userUpdateForm.value.decision === 'rejected'">
+      <mat-form-field appearance="outline">
+      <!-- <mat-form-field appearance="outline" *ngIf="this.userUpdateForm.value.decision === 'rejected'"> -->
         <mat-label>Reason</mat-label>
         <input [value]="this.userUpdateForm.value.reason" matInput type="text" formControlName="reason">
         <button mat-button *ngIf="this.userUpdateForm.value.reason" matSuffix mat-icon-button aria-label="Clear"

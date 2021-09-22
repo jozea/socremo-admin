@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Injectable({
@@ -9,6 +10,7 @@ export class UtilsService {
 
 constructor(
   private _snackBar: MatSnackBar,
+  private translate: TranslateService
 ) { }
 
 triggerNotification(message: string, duration?: number) {
@@ -60,6 +62,11 @@ deleteKeyIfEmpty(obj: any) {
       delete obj[o];
     }
   }
+}
+
+async translateWords(words:string) {
+  const translatedWord = await this.translate.get(words).toPromise();
+  return translatedWord;
 }
 
 }

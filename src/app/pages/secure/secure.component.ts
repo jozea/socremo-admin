@@ -6,6 +6,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { BnNgIdleService } from 'bn-ng-idle';
 import { UtilsService } from 'src/app/services/utils/utils.service';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-secure',
   templateUrl: './secure.component.html',
@@ -27,19 +28,25 @@ export class SecureComponent implements OnInit {
     private router: Router,
     private bnIdle: BnNgIdleService,
     private utilService: UtilsService,
-  ) {
+    private translate: TranslateService
+    ) {
+      translate.setDefaultLang('pt'); 
     this._sidenavService.sideNavState$.subscribe(res => {
       this.onSideNavChange = res;
     })
   }
 
+  useLanguage(language: string): void {
+    this.translate.use(language);
+  }
+
   async handleUserLogout() {
-    this.router.navigate(['/login']); 
-    // this.authService.logOutUser({ mobileNumber: this.mobileNumber }).subscribe(response => {
-    //   this.handleNavigationToAuth()
-    // }, (err) => {
-    //   this.handleNavigationToAuth()
-    // })
+    // this.router.navigate(['/login']); 
+    this.authService.logOutUser({ mobileNumber: this.mobileNumber }).subscribe(response => {
+      this.handleNavigationToAuth()
+    }, (err) => {
+      this.handleNavigationToAuth()
+    })
 
   }
 
@@ -53,8 +60,9 @@ export class SecureComponent implements OnInit {
   ngOnInit() {
     if (sessionStorage.user) {
       const user = JSON.parse(sessionStorage.user);
-      this.mobileNumber = user.mobileNumber;
-      this.userName = `${user.firstName} ${user.lastName}`
+      this.mobileNumber = user.user.mobileNumber;
+      this.userName = `${user.user.name}`
+      // this.userName = `${user.firstName} ${user.lastName}`
 
       this.bnIdle.startWatching(3600).subscribe((isTimedOut: boolean) => {
         if (isTimedOut) {

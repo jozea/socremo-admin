@@ -21,7 +21,7 @@ import { KycTierComponent } from '../admin/kyc-tier/kyc-tier.component';
 export class UsersComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  displayedColumns: string[] = ['position', 'id', 'firstName', 'lastName', 'mobileNumber', 'accountType', 'accountNumber', 'date'];
+  displayedColumns: string[] = ['position', 'name', 'primaryTelephone', 'maritalStatus', 'nationality', 'countryOfResidence', 'createdAt'];
   dataSource: any = new MatTableDataSource([]);;
   dataSourceUnSorted: any;
   userFilterForm: FormGroup;
@@ -56,8 +56,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
     private router: Router,
     private utilService: UtilsService,
     public dialog: MatDialog,
-
-  ) { }
+    ) {}
 
   ngOnInit() {
     const currentYear = new Date();
@@ -73,7 +72,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
       bvn: new FormControl(''),
       accountNumber: new FormControl(''),
     });
-    // this.getAllUserTransactions(10, 1, this.userRequestModel)
+    this.getAllUser(10, 1, this.userRequestModel)
   }
   
 
@@ -82,9 +81,9 @@ export class UsersComponent implements OnInit, AfterViewInit {
   }
 
   handleSuccessResponse = async (response) => {
-    this.dataSourceUnSorted = await new MatTableDataSource(response.data.docs);
+    this.dataSourceUnSorted = await new MatTableDataSource(response.data[0].result);
     this.dataSource = await this.dataSourceUnSorted;
-    this.maxall = response.data.meta.total;
+    // this.maxall = response.data.meta.total;
     this.isLoadingResults = false;
   }
 
@@ -94,11 +93,11 @@ export class UsersComponent implements OnInit, AfterViewInit {
     this.dataSource = new MatTableDataSource([]);
   }
 
-  getAllUserTransactions(limit: number, page: number, model: any) {
+  getAllUser(limit: number, page: number, model: any) {
     this.isLoadingResults = true;
     this.userService.getAllUsers(limit, page, model).subscribe(async (response: any) => {
       this.handleSuccessResponse(response)
-      // console.log(response)
+      console.log(response.data[0].result)
     }, (error: any) => {
       this.handleFailureResponse(error);
     })
@@ -116,11 +115,11 @@ export class UsersComponent implements OnInit, AfterViewInit {
     this.userRequestModel.fullName = fullName;
     this.userRequestModel.accountNumber = accountNumber;
 
-    await this.getAllUserTransactions(10, 1, this.userRequestModel)
+    await this.getAllUser(10, 1, this.userRequestModel)
   }
 
   onPageFired(event) {
-    this.getAllUserTransactions(event.pageSize, event.pageIndex + 1, {})
+    this.getAllUser(event.pageSize, event.pageIndex + 1, {})
   }
 
   async routeToDetails(user) {

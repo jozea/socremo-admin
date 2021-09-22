@@ -10,6 +10,7 @@ import { ISelection } from 'src/app/models/iselection';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 import { stateAndLocalGovt } from 'src/app/constants/nigeria_state';
+import { NgxCsvParser, NgxCSVParserError } from 'ngx-csv-parser';
 
 @Component({
   selector: 'app-branches',
@@ -19,16 +20,41 @@ import { stateAndLocalGovt } from 'src/app/constants/nigeria_state';
 export class BranchesComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  displayedColumns: string[] = ['position', 'branchName', 'branchAddress', 'state', 'longitude', 'latitude', 'branchCode'];
+  displayedColumns: string[] = ['position', 'branchName', 'contactEmail', 'contactNumber', 'region', 'area', 'gpsLocation'];
   dataSource: any = new MatTableDataSource([]);;
   searchFilterForm: FormGroup;
   exportAsConfig: ExportAsConfig = exportConfig('pdf', 'branches_table', 'Referral')
   maxDate: Date;
-  isLoadingResults = true;
+  isLoadingResults = false;
   requestModel: any = {}
   allStatus: ISelection[] = transactionStatus;
   maxall: number = 1000;
   allStates = stateAndLocalGovt;
+
+  renewalScoreRecord:any;
+  submitButton: boolean = false;
+  renewalScore: any 
+
+  branchData: any[] = [
+    // {branchName:'Baixa',	contactEmail:'Isabel.Augusto@Socremo.com',	contactNumber:'877618804', region:'Maputo',	area:'Baixa',	gpsLocation:'25°58\'16.2"S 32°34\'04.5"E'},
+    // {branchName:'Sede',	contactEmail:'Info@Socremo.com',	contactNumber:'843211565',	region:'Maputo',	area:'Museu',	 gpsLocation:'25°58\'28.10"S 32°35\'22.70"E'},
+    // {branchName:'Xiquelene', contactEmail:'Diquisson.Longote@Socremo.com',	contactNumber:'877618802',	region:'Maputo',	area:'Xiquelene',	gpsLocation:'25°55\'33.4"S 32°36\'21.5"E'},
+    // {branchName:'Benfica', contactEmail:'Ersilio.Churi@Socremo.com',	contactNumber:'877618805',	region:'Maputo',	area:'Benfica',	gpsLocation:'25°53\'42.8"S 32°33\'49.4"E'},
+    // {branchName:'Xipamanine', contactEmail:'Marcelo.Junior@Socremo.com',	contactNumber:'877618801',	region:'Maputo',	area:'Alto-Maé',	gpsLocation:'23°52\'05.0"S 35°23\'07.5"E'},
+    // {branchName:'Boane', contactEmail:'Nico.Mahanjane@Socremo.com',	contactNumber:'867618797',	region:'Maputo',	area:'Boane',	gpsLocation:'26°02\'38.6"S 32°19\'43.0"E'},
+    // {branchName:'Matola', contactEmail:'Dulce.chissumba@Socremo.com',	contactNumber:'877618803',	region:'Maputo',	area:'Matola 700',	gpsLocation:'25°56\'07.8"S 32°28\'02.3"E'},
+    // {branchName:'Beira', contactEmail:'Sandra.Mandude@Socremo.com',	contactNumber:'877618794',	region:'Sofala',	area:'Chaimite',	gpsLocation:'19°50\'05.7"S 34°50\'12.9"E'},
+    // {branchName:'Quelimane', contactEmail:'Andre.Chamussora@Socremo.com',	contactNumber:'877618791',	region:'Quelimane',	area:'Quelimane',	gpsLocation:'17°52\'41.80"S 36°53\'8.40"E'},
+    // {branchName:'Tete', contactEmail:'David.Mumba@Socremo.com',	contactNumber:'867618792',	region:'Tete',	area:'Tete',	gpsLocation:'16°09\'32.8"S 33°35\'00.5"E'},
+    // {branchName:'Chimoio', contactEmail:'Malven.Pedro@Socremo.com',	contactNumber:'877618795',	region:'Manica',	area:'Chimoio',	gpsLocation:'19°06\'47.3"S 33°28\'55.8"E'},
+    // {branchName:'Xai-Xai', contactEmail:'Alexandre.Nweti@Socremo.com',	contactNumber:'877618796',	region:'Gaza',	area:'Xai-Xai',	gpsLocation:'25°02\'54.9"S 33°38\'44.7"E'},
+    // {branchName:'Maxixe', contactEmail:'Florinda.Mauaie@Socremo.com',	contactNumber:'877618798',	region:'Inhambane',	area:'Maxixe',	gpsLocation:'23°51\'34.3"S 35°20\'51.7"E'},
+    // {branchName:'Inhambane', contactEmail:'Iolanda.Joaquim@Socremo.com',	contactNumber:'877618800',	region:'Inhambane',	area:'Inhambane', 	gpsLocation:'23°52\'05.0"S 35°23\'07.5"E'},
+    // {branchName:'Nampula', contactEmail:'Daniel.Junior@Socremo.com',	contactNumber:'877618793',	region:'Nampula',	area:'Nampula',	gpsLocation:'15°07\'38.9"S 39°15\'51.1"E'},
+    // {branchName:'Manica', contactEmail:'Nelson.Antonio@Socremo.com',	contactNumber:'870000569',	region:'Manica',	area:'Manica',	gpsLocation:'18°56\'12.2"S 32°52\'36.2"E'},
+
+  ]
+
 
   constructor(
     private reportService: ReportService,
@@ -36,6 +62,7 @@ export class BranchesComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     public formBuilder: FormBuilder,
     private exportAsService: ExportAsService,
+    private ngxCsvParser: NgxCsvParser
   ) { }
 
   ngOnInit() {
@@ -48,7 +75,7 @@ export class BranchesComponent implements OnInit, AfterViewInit {
       branchCode: new FormControl(''),
       branchName: new FormControl(''),
     });
-    this.fetchBranches(10, 1, this.requestModel)
+    // this.fetchBranches(10, 1, this.requestModel)
   }
 
   ngAfterViewInit() {
@@ -108,5 +135,50 @@ export class BranchesComponent implements OnInit, AfterViewInit {
     });
   }
 
+  convertFile(ev) {
+    // console.log(ev);
+    this.utilService.triggerNotification("File added successfully");
+    this.isLoadingResults = true
+    let files = ev.target.files;
+    this.ngxCsvParser.parse(files[0], { header: true, delimiter: "," })
+      .pipe()
+      .subscribe((result: Array<any>) => {
+        console.log(result)
+        this.submitButton = true;
+        this.renewalScore = result
+        this.renewalScoreRecord = {
+          renewalScoreRecord: result
+        }
+        this.isLoadingResults = false
+        this.dataSource = new MatTableDataSource(this.renewalScore);
+        // this.maxall = response.data.meta.total;
+        // this.isLoadingResults = false;
+      }, (error: NgxCSVParserError) => {
+        this.utilService.triggerNotification("Could not process csv file");
+        this.isLoadingResults = false
+      }
+      );
+  }
+
+  storeRenewalScoreRecord() {
+    this.isLoadingResults = true
+    this.submitButton = false;
+    // console.log(this.renewalScoreRecord)
+    // this.loan.storeRenewalScore(this.renewalScoreRecord).subscribe((res: any)=>{
+    //   // console.log(res)
+    //   if (res.status == true) {
+    //     this.utilService.triggerNotification(res.message)
+    //     this.isLoadingResults = false
+    //   }
+    // }, (error: any) => {
+    //   this.utilService.triggerNotification(error.status ?'Network Issues. Try again' : 'Error processing data')
+    //   this.dataSource = new MatTableDataSource([]);
+    //   this.isLoadingResults = false;
+    // })
+  }
+
+  uploadFile() {
+    document.getElementById("fileID").click();
+  }
 
 }

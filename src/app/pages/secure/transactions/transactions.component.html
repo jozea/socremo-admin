@@ -9,29 +9,31 @@
 </div>
 
 <section>
-  <div class="header mt-3 bg-white">
-    <p class="p-3 px-4 lead">Transactions</p>
-</div>
+  <div class="header px-4 mt-3 d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center">
+      <p class="p-3 px-4 lead text-white">{{ 'transactions.headerText' | translate }}</p>
+    </div>
+  </div>
   <form [formGroup]="transactionFilterForm" class="filter mx-3">
     <mat-card class="m-3 p-0 pt-3 px-3 pb-2">
-      <h5 class="font-weight-bold">Filter/Sort by</h5>
+      <h5 class="font-weight-bold">{{ 'transactions.filterHeader' | translate }}</h5>
       <div class="d-flex flex-wrap">
         <mat-form-field appearance="outline">
-          <mat-label>Start Date</mat-label>
+          <mat-label>{{ 'transactions.startDate' | translate }}</mat-label>
           <input formControlName="startDate" matInput [max]="maxDate" [matDatepicker]="startDate">
           <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
           <mat-datepicker #startDate></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>End date</mat-label>
+          <mat-label>{{ 'transactions.endDate' | translate }}</mat-label>
           <input formControlName="endDate" matInput [max]="maxDate" [matDatepicker]="picker">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Transaction Status</mat-label>
+          <mat-label>{{ 'transactions.transactionStatus' | translate }}</mat-label>
           <mat-select formControlName="status">
             <mat-option *ngFor="let item of allStatus" [value]="item.value">
               {{item.name}}
@@ -40,7 +42,7 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Transaction Type</mat-label>
+          <mat-label>{{ 'transactions.transactionType' | translate }}</mat-label>
           <mat-select formControlName="transactionType">
             <mat-option *ngFor="let item of allTransactionType" [value]="item.value">
               {{item.name}}
@@ -49,7 +51,7 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Account Type</mat-label>
+          <mat-label>{{ 'transactions.accountType' | translate }}</mat-label>
           <mat-select formControlName="accountType">
             <mat-option *ngFor="let item of allAccountType" [value]="item.value">
               {{item.name}}
@@ -58,7 +60,7 @@
         </mat-form-field> 
 
         <mat-form-field appearance="outline">
-          <mat-label>Transaction Reference</mat-label>
+          <mat-label>{{ 'transactions.transactionReference' | translate }}</mat-label>
           <input [value]="this.transactionFilterForm.value.transactionReference" formControlName="transactionReference" matInput type="text">
           <button mat-button *ngIf="this.transactionFilterForm.value.transactionReference" matSuffix mat-icon-button aria-label="Clear"
             (click)="this.transactionFilterForm.value.transactionReference=''">
@@ -67,7 +69,7 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Minimum Amount</mat-label>
+          <mat-label>{{ 'transactions.minimumAmount' | translate }}</mat-label>
           <input [value]="this.transactionFilterForm.value.minAmount" formControlName="minAmount" matInput type="number">
           <button mat-button *ngIf="this.transactionFilterForm.value.minAmount" matSuffix mat-icon-button aria-label="Clear"
             (click)="this.transactionFilterForm.value.minAmount=''">
@@ -76,7 +78,7 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Maximum Amount</mat-label>
+          <mat-label>{{ 'transactions.maximumAmount' | translate }}</mat-label>
           <input [value]="this.transactionFilterForm.value.maxAmount" formControlName="maxAmount" matInput type="number">
           <button mat-button *ngIf="this.transactionFilterForm.value.maxAmount" matSuffix mat-icon-button aria-label="Clear"
             (click)="this.transactionFilterForm.value.maxAmount=''">
@@ -85,7 +87,7 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Customer Name</mat-label>
+          <mat-label>{{ 'transactions.customerName' | translate }}</mat-label>
           <input [value]="this.transactionFilterForm.value.customerName" formControlName="customerName" matInput type="text">
           <button mat-button *ngIf="this.transactionFilterForm.value.customerName" matSuffix mat-icon-button aria-label="Clear"
             (click)="this.transactionFilterForm.value.customerName=''">
@@ -94,7 +96,7 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Account Number</mat-label>
+          <mat-label>{{ 'transactions.accountNumber' | translate }}</mat-label>
           <input [value]="this.transactionFilterForm.value.accountNumber" formControlName="accountNumber" matInput type="tel">
           <button mat-button *ngIf="this.transactionFilterForm.value.accountNumber" matSuffix mat-icon-button aria-label="Clear"
             (click)="this.transactionFilterForm.value.accountNumber=''">
@@ -105,7 +107,7 @@
 
              
        
-        <button (click)="search()" class="btn btn-sm text-white filter_btn">Filter</button>
+        <button (click)="search()" class="btn btn-sm text-white filter_btn">{{ 'transactions.filter' | translate }}</button>
       </div>
 
 
@@ -114,16 +116,13 @@
   </form>
   <div class="action mx-3">
     <mat-card class="px-3 py-3 mx-3">
-      <h5 class="font-weight-bold">Action</h5>
+      <h5 class="font-weight-bold">{{ 'transactions.action' | translate }}</h5>
       <div class="d-flex flex-wrap">
-        <button (click)="exportTable('pdf')" type="button" class="btn btn-sm text-white accion_stone my-1">Export
-          PDF</button>
-        <button (click)="exportTable('xlsx')" type="button" class="btn btn-sm mx-2 text-white accion_sand my-1">Export
-          Excel</button>
-        <button (click)="exportTable('csv')" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">Export
-          CSV</button>
+        <button (click)="exportTable('pdf')" type="button" class="btn btn-sm text-white accion_stone my-1">{{ 'transactions.exportPdf' | translate }}</button>
+        <button (click)="exportTable('xlsx')" type="button" class="btn btn-sm mx-2 text-white accion_sand my-1">{{ 'transactions.exportExcel' | translate }}</button>
+        <button (click)="exportTable('csv')" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">{{ 'transactions.exportCsv' | translate }}</button>
         <button (click)="exportTable('png')" type="button"
-          class="btn btn-sm mx-2 text-white accion_sand my-1">PNG</button>
+          class="btn btn-sm mx-2 text-white accion_sand my-1">{{ 'transactions.exportPng' | translate }}</button>
         <!-- <button type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">Print</button> -->
 
       </div>
@@ -135,7 +134,7 @@
   <div class="table_display mx-3">
     <div class=" mat-elevation-z8">
       <div id="transaction_table" class="table-container" [ngStyle]="{'max-height.px': tableContainerHeight}">
-        <h4 class="pt-3 px-2">Transactions</h4>
+        <h4 class="pt-3 px-2">{{ 'transactions.headerText' | translate }}</h4>
         <table 
         mat-table
        [dataSource]="dataSource"
@@ -148,32 +147,32 @@
       </ng-container>
 
       <ng-container matColumnDef="name" sticky>
-        <th disableClear mat-header-cell *matHeaderCellDef> Customer Name </th>
+        <th disableClear mat-header-cell *matHeaderCellDef> {{ 'transactions.customerName' | translate }} </th>
         <td mat-cell *matCellDef="let element"> {{element.sender.fullName}} </td>
       </ng-container>
 
       <ng-container matColumnDef="provider">
-        <th mat-header-cell *matHeaderCellDef> Provider </th>
+        <th mat-header-cell *matHeaderCellDef> {{ 'transactions.provider' | translate }} </th>
         <td mat-cell *matCellDef="let element"> {{element.provider}} </td>
       </ng-container>
 
       <ng-container matColumnDef="transactionId">
-        <th mat-header-cell *matHeaderCellDef> Transaction Id </th>
+        <th mat-header-cell *matHeaderCellDef> {{ 'transactions.transactionId' | translate }} </th>
         <td mat-cell *matCellDef="let element"> {{element.transactionData && element.transactionData.reference ? element.transactionData.reference : element.transactionData && element.transactionData.responseData && element.transactionData.responseData.content ? element.transactionData.responseData.content.transactions.transactionId :element.transactionData && element.transactionData.paymentReference ? element.transactionData.paymentReference : '' }} &nbsp; &nbsp; </td>
       </ng-container>
 
       <ng-container matColumnDef="reference">
-        <th mat-header-cell *matHeaderCellDef> Reference </th>
+        <th mat-header-cell *matHeaderCellDef> {{ 'transactions.reference' | translate }} </th>
         <td mat-cell *matCellDef="let element"> {{element.reference}} </td>
       </ng-container>
 
       <ng-container matColumnDef="type">
-        <th mat-header-cell *matHeaderCellDef> Transaction Type </th>
+        <th mat-header-cell *matHeaderCellDef> {{ 'transactions.transactionType' | translate }} </th>
         <td mat-cell *matCellDef="let element"> {{element.type}} </td>
       </ng-container>
 
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <th mat-header-cell *matHeaderCellDef> {{ 'transactions.status' | translate }} </th>
         <td mat-cell *matCellDef="let element"> <span [class]="element.status">
           {{ element.status === 'success' ? "Successful" : element.status }}
         </span> </td>

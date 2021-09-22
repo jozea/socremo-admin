@@ -1,0 +1,196 @@
+<div *ngIf="isLoadingResults" class="loader_container">
+	<div class="spinner">
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+	</div>
+</div>
+<!-- <mat-spinner *ngIf="isLoadingResultss"></mat-spinner> -->
+
+
+<!-- <h2 mat-dialog-title class="text_accion_stone"> Ticket Settings </h2> -->
+<section class="app_version mat-typography">
+	<div  class="row">
+        <form [formGroup]="ticketSettingsForm" class="d-flex flex-column w-100 px-5 py-2">
+            <mat-card class="col-sm-12 mt-3 mb-3">
+                <div>
+                    <h3 class="text_accion"> {{ 'ticket.createProblemType' | translate }}</h3>
+                    
+        
+                    <mat-form-field class="col-md-3 col-sm-6 col-xs-12" appearance="outline">
+                        <mat-label>{{ 'ticket.type' | translate }}</mat-label>
+                        <input [value]="this.ticketSettingsForm.value.type" matInput type="text"
+                            formControlName="type">
+                        <button mat-button *ngIf="this.ticketSettingsForm.value.type" matSuffix mat-icon-button
+                            aria-label="Clear" (click)="this.ticketSettingsForm.value.type=''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+
+                    
+                    <!-- <h3 class="text_accion mt-3" style="font-weight: bold;">Categories:</h3> -->
+                    <div formArrayName="categories"
+                        *ngFor="let item of ticketSettingsForm.get('categories')['controls']; let i = index;"> 
+                        <!-- <span style="font-weight: bold;">Categories {{i+1}}</span> -->
+                        <div [formGroupName]="i">
+                            <mat-form-field class="col-md-3 col-sm-6 col-xs-12" appearance="outline">
+                                <mat-label>{{ 'ticket.description' | translate }}</mat-label>
+                                <input [value]="this.ticketSettingsForm.value.description" matInput type="text"
+                                    formControlName="description">
+                                <button mat-button *ngIf="this.ticketSettingsForm.value.description" matSuffix mat-icon-button
+                                    aria-label="Clear" (click)="this.ticketSettingsForm.value.description=''">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                            </mat-form-field>
+                            <!-- <mat-form-field class="col-md-12" appearance="outline">
+                                <mat-label>{{ 'ticket.description' | translate }}</mat-label>
+                                <textarea name="" id="" cols="30" rows="10" [value]="this.ticketSettingsForm.value.description" matInput type="text"
+                                formControlName="description"></textarea>
+                            </mat-form-field> -->
+            
+                            <mat-form-field class="col-md-3 col-sm-6 col-xs-12" appearance="outline">
+                                <mat-label>{{ 'ticket.category' | translate }} </mat-label>
+                                <input [value]="this.ticketSettingsForm.value.category" matInput type="text"
+                                    formControlName="category">
+                                <button mat-button *ngIf="this.ticketSettingsForm.value.category" matSuffix mat-icon-button
+                                    aria-label="Clear" (click)="this.ticketSettingsForm.value.category=''">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                            </mat-form-field>
+                            <!-- <button class="" style="color: white; background-color: rgb(102, 102, 235);" mat-raised-button (click)="submitTicketSettings('create')">{{ 'ticket.create' | translate }}</button> -->
+
+                        </div>
+
+                    </div>
+                    <button style="color: white; background-color: rgb(93, 235, 93);" mat-raised-button type="button" (click)="addItem()">Add Category</button>&nbsp;
+                    <button style="color: white; background-color: rgb(228, 86, 86);" mat-raised-button *ngIf="add" type="button" (click)="removevalue()">Remove Category</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button class="float-right" style="color: white; background-color: rgb(102, 102, 235);" mat-raised-button (click)="submitTicketSettings('create')">{{ 'ticket.create' | translate }}</button>
+                </div>
+            </mat-card>        
+        </form>
+    </div>
+
+
+    <div class="table_display mx-3">
+  
+        <div class=" mat-elevation-z8">      
+          <div id="feedback_table"  class="table-container p-0">
+          <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+          
+            <ng-container matColumnDef="position">
+              <th  mat-header-cell *matHeaderCellDef> S/N </th>
+              <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="type">
+              <th disableClear mat-header-cell *matHeaderCellDef>{{ 'ticket.problemType' | translate }} </th>
+              <td mat-cell *matCellDef="let element">{{element.type}}  </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="createdAt">
+              <th disableClear mat-header-cell *matHeaderCellDef>{{ 'ticket.creationDate' | translate }}</th>
+              <td mat-cell *matCellDef="let element">{{element.createdAt}}  </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="updatedAt">
+              <th mat-header-cell *matHeaderCellDef> {{ 'ticket.updated' | translate }} </th>
+              <td mat-cell *matCellDef="let element">{{element.updatedAt}}  </td>
+            </ng-container>
+<!--            
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef> {{ 'ticket.date' | translate }} </th>
+              <td mat-cell *matCellDef="let element">  </td>
+            </ng-container> -->
+  
+            <!-- <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef> Action </th>
+              <td mat-cell *matCellDef="let element"> Delete </td>
+            </ng-container> -->
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <!-- <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="cursor_pointer"></tr> -->
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="cursor_pointer" (click)="openDialog(row)"></tr>
+          
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4"> No data</td>
+            </tr>
+          </table>
+        </div>
+       <div class="d-flex justify-content-end align-items-center">
+        <mat-paginator 
+        [pageSizeOptions]="[10, 25, 50, maxall]"  
+        [length] = "maxall"
+        (page)="onPageFired($event)"
+        showFirstLastButtons
+        ></mat-paginator>  
+       </div>
+        </div>
+      </div>
+
+    <!-- <div class="row">
+        <form [formGroup]="ticketSettingsForm2" class="d-flex flex-column w-100 px-5 py-2">
+            <mat-card class="col-sm-12">
+                <h3 class="text_accion"> Update problem category</h3>
+                <div class="d-flex flex-wrap">
+                    <mat-form-field class="col-md-3 col-sm-6 col-xs-12" appearance="outline">
+                        <mat-label>problem type ID</mat-label>
+                        <input [value]="ticketSettingsForm2.value.problemTypeId" formControlName="problemTypeId" matInput type="text">
+                    </mat-form-field>
+            
+                    <mat-form-field class="col-md-3 col-sm-6 col-xs-12" appearance="outline">
+                        <mat-label>Category ID</mat-label>
+                        <input [value]="ticketSettingsForm2.value.categoryId" formControlName="categoryId" matInput type="text">
+                    </mat-form-field>
+            
+                    <mat-form-field class="col-md-3 col-sm-6 col-xs-12" appearance="outline">
+                        <mat-label>Category</mat-label>
+                        <input [value]="ticketSettingsForm2.value.category" formControlName="category" matInput type="text">
+                    </mat-form-field>
+                </div>
+                <button class="float-right" style="color: white; background-color: rgb(102, 102, 235);" mat-raised-button (click)="submitTicketSettings('update')">Update</button>
+            </mat-card>
+        </form>
+    </div>
+
+    <div class="row">
+        <form [formGroup]="ticketSettingsForm3" class="d-flex flex-column w-100 px-5 py-2">
+            <mat-card class="col-sm-12">
+                <h3 class="text_accion"> Add new Category to problem type</h3>
+                <div class="d-flex flex-wrap">
+                    <mat-form-field class="col-md-3 col-sm-6 col-xs-12" appearance="outline">
+                        <mat-label>problem type ID</mat-label>
+                        <input [value]="ticketSettingsForm3.value.problemTypeId" formControlName="problemTypeId" matInput type="text">
+                    </mat-form-field>
+            
+                    <div>
+                        <div formGroupName="categoryObj">
+                            <mat-form-field class="col-md-3 col-sm-6 col-xs-12" appearance="outline">
+                                <mat-label>Category</mat-label>
+                                <input [value]="ticketSettingsForm3.value.category" formControlName="category" matInput type="text">
+                            </mat-form-field>
+                    
+                            <mat-form-field class="col-md-3 col-sm-6 col-xs-12" appearance="outline">
+                                <mat-label>Description</mat-label>
+                                <input [value]="ticketSettingsForm3.value.description" formControlName="description" matInput type="text">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <button class="float-right" style="color: white; background-color: rgb(102, 102, 235);" mat-raised-button (click)="submitTicketSettings('add')">Add</button>
+            </mat-card>
+        </form>
+    </div> -->
+	<!-- <div *ngIf="isLoading" class="col-12 d-flex justify-content-center p-5" >
+		<mat-spinner [diameter]="25" ></mat-spinner>
+	</div> -->
+
+</section>
+<!-- <mat-dialog-actions class="d-flex justify-content-between">
+	<div >
+		<button (click)="submit()" class="btn btn-sm text-white accion_stone">Submit</button>
+	</div>
+	<button mat-button mat-dialog-close (click)="close()">Cancel</button>
+</mat-dialog-actions> -->

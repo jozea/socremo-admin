@@ -9,13 +9,15 @@
         <div class="p-0 m-0">
           <div class="header ">
             <mat-toolbar class="bg-white">
+              <button type="button" class="btn btn-sm text-white accion_stone my-1 mb-3" (click)="useLanguage('en')">en</button>&nbsp;
+              <button type="button" class="btn btn-sm text-white accion_stone my-1 mb-3" (click)="useLanguage('pt')">pt</button>&nbsp;
               <span class="example-spacer"></span>
-              <p>Welcome {{userName}}</p>
+              <p>{{ 'nav.welcome' | translate }} {{userName}}</p>
               <button [matMenuTriggerFor]="menu" mat-icon-button class="example-icon favorite-icon">
                 <mat-icon>face</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button (click)="handleUserLogout()" mat-menu-item>Logout</button>
+                <button (click)="handleUserLogout()" mat-menu-item>{{ 'nav.logout' | translate }}</button>
               </mat-menu>
 
             </mat-toolbar>

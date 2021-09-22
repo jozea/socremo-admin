@@ -94,6 +94,14 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClientModule, HttpClient  } from '@angular/common/http';
 import { TicketManagementComponent } from './enquiries/ticket-management/ticket-management.component';
 import { TicketDetailsComponent } from './enquiries/ticket-details/ticket-details.component';
+import { ProductManagementComponent } from './product/product-management/product-management.component';
+import { ProductDetailComponent } from './product/product-detail/product-detail.component';
+import { CreateProductComponent } from './product/create-product/create-product.component';
+import { UpdateProductComponent } from './product/update-product/update-product.component';
+import { TicketSettingsComponent } from './enquiries/ticket-settings/ticket-settings.component';
+import { ProblemDetailsComponent } from './enquiries/problem-details/problem-details.component';
+import { TicketActionComponent } from './enquiries/ticket-action/ticket-action.component';
+import { TicketCommentsComponent } from './enquiries/ticket-comments/ticket-comments.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -204,6 +212,14 @@ export function HttpLoaderFactory(http: HttpClient) {
     UserSettingsComponent,
     TicketManagementComponent,
     TicketDetailsComponent,
+    ProductManagementComponent,
+    ProductDetailComponent,
+    CreateProductComponent,
+    UpdateProductComponent,
+    TicketSettingsComponent,
+    ProblemDetailsComponent,
+    TicketActionComponent,
+    TicketCommentsComponent,
   ],
   providers: [SidenavService, MatDatepickerModule, AuthImagePipe, BnNgIdleService],
   entryComponents: [

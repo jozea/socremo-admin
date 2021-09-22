@@ -1,0 +1,88 @@
+<div *ngIf="loading" class="loader_container">
+    <div class="spinner">
+        <div class="spinner-item"></div>
+        <div class="spinner-item"></div>
+        <div class="spinner-item"></div>
+        <div class="spinner-item"></div>
+        <div class="spinner-item"></div>
+    </div>
+</div>
+
+<div class="row header mt-3 bg-white">
+    <div class="col-md-3">
+        <p class="p-3 px-4 lead">Create New Product</p>
+    </div>
+</div>
+
+<section>
+    <!-- <form [formGroup]="newProductForm" class="filter mx-3">
+        <mat-card class="m-3 p-0 pt-3 px-3 pb-2">
+            <h5 class="font-weight-bold">Select Term</h5>
+            <div class="d-flex flex-wrap">
+                <mat-form-field appearance="outline">
+                    <mat-label>Terms</mat-label>
+                    <mat-select formControlName="term" (selectionChange)="handleLoanRequest()">
+                        <mat-option *ngFor="let item of terms" [value]="item">
+                            {{item}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>&nbsp;&nbsp;
+                <mat-form-field appearance="outline">
+                    <mat-label>Action</mat-label>
+                    <mat-select formControlName="action" (selectionChange)="selectAction()">
+                        <mat-option value="create">Create Term</mat-option>
+                        <mat-option value="add">Add Term</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </mat-card>
+    </form> -->
+
+    <form action="">
+        <div class="mb-5">
+            <mat-card class="m-3 p-0 pt-3 px-3 pb-2">
+                <h5 class="font-weight-bold">New Product</h5>
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Field 1</mat-label>
+                        <input [(ngModel)]="field1" matInput name="field1" type="number">
+                    </mat-form-field>&nbsp;&nbsp;
+        
+                    <mat-form-field appearance="outline">
+                        <mat-label>Field 2</mat-label>
+                        <input [(ngModel)]="field2" matInput name="field2" type="number">
+                    </mat-form-field>&nbsp;&nbsp;
+        
+                    <mat-form-field appearance="outline">
+                        <mat-label>Field 3</mat-label>
+                        <input [(ngModel)]="field3" matInput name="field3" type="number">
+                    </mat-form-field>&nbsp;&nbsp;
+        
+                    <mat-form-field appearance="outline">
+                        <mat-label>Field 4</mat-label>
+                        <input [(ngModel)]="field4" matInput name="field4" type="number">
+                    </mat-form-field>&nbsp;&nbsp;
+        
+                    <button class="btn btn-sm btn-primary filter_btn">Confirm</button>
+                </div>
+    
+                <hr>
+    
+                <!-- <div *ngIf="isPinInput" style="margin-left: 40%;" class="justify-content-center">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Enter Pin</mat-label>
+                        <input [(ngModel)]="pin" matInput type="tel">
+                    </mat-form-field>&nbsp;&nbsp;
+                </div>
+                <div *ngIf="isPinInput" style="margin-left: 45%;">
+                    <button (click)="buttonText == 'Create'? createInvestmentTerm(): addToInvestment()" class="btn btn-sm btn-primary filter_btn">{{buttonText}} </button>
+                </div> -->
+        
+            </mat-card>
+        </div>
+    </form>
+    
+
+    
+
+</section>

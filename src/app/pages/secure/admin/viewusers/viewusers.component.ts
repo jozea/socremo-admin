@@ -36,6 +36,25 @@ export class ViewusersComponent implements OnInit {
   // dataSource: any = new MatTableDataSource([]);
   allRoles = [];
 
+  adminData: any[]=[
+    {
+      admin: {
+        authorizer: "JOSEPH",
+        maker: "JOSEPH",
+        role: "developer",
+        status: "approved",
+      },
+      createdAt: "2021-06-30T11:36:47.489Z",
+      firstName: "jack",
+      fullName: "Jack Jerry Job",
+      gender: "M",
+      lastName: "Job",
+      middleName: "Jerry",
+      mobileNumber: "08100000889"
+
+    }
+  ]
+
   selectedData: String;
   doneAction: boolean = false;
   filterList = [
@@ -66,10 +85,10 @@ export class ViewusersComponent implements OnInit {
       status: new FormControl(''),
       customerName: new FormControl(''),
     });
-    this.fetchAllRoles()
+    // this.fetchAllRoles()
     this.selectedData = "All";
     this.checked = true;
-    this.fetchAdmins(10, 1, this.requestModel)
+    // this.fetchAdmins(10, 1, this.requestModel)
 
   }
 
@@ -112,25 +131,31 @@ export class ViewusersComponent implements OnInit {
   }
 
   openDialog(user) {
-    const { admin } = user
+    const dialogConfig = new MatDialogConfig();
 
-    const { fullName } = JSON.parse(sessionStorage.getItem('user'));
+    dialogConfig.width = 'auto';
+    dialogConfig.maxHeight = 'auto';
+    dialogConfig.data = { detail: user, roles: this.allRoles };
+    const dialogRef = this.dialog.open(UpdateAdminComponent, dialogConfig);
+    // const { admin } = user
 
-    if (admin && ((admin.status === "approved") || (admin.status && admin.maker !== fullName))) {
-      const dialogConfig = new MatDialogConfig();
+    // const { fullName } = JSON.parse(sessionStorage.getItem('user'));
 
-      dialogConfig.width = 'auto';
-      dialogConfig.maxHeight = 'auto';
-      dialogConfig.data = { detail: user, roles: this.allRoles };
-      const dialogRef = this.dialog.open(UpdateAdminComponent, dialogConfig);
+    // if (admin && ((admin.status === "approved") || (admin.status && admin.maker !== fullName))) {
+    //   const dialogConfig = new MatDialogConfig();
 
-      dialogRef.afterClosed().subscribe(_ => {
-        this.isLoadingResults = true;
-        this.fetchAdmins(10, 1, this.requestModel)
-      });
-    } else {
-      this.utilService.triggerNotification('You cannot approve user')
-    }
+    //   dialogConfig.width = 'auto';
+    //   dialogConfig.maxHeight = 'auto';
+    //   dialogConfig.data = { detail: user, roles: this.allRoles };
+    //   const dialogRef = this.dialog.open(UpdateAdminComponent, dialogConfig);
+
+    //   dialogRef.afterClosed().subscribe(_ => {
+    //     this.isLoadingResults = true;
+    //     this.fetchAdmins(10, 1, this.requestModel)
+    //   });
+    // } else {
+    //   this.utilService.triggerNotification('You cannot approve user')
+    // }
 
   }
 

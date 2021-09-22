@@ -47,8 +47,7 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
     private transactionService: TransactionService,
     public formBuilder: FormBuilder,
     private exportAsService: ExportAsService,
-    private utilService: UtilsService
-
+    private utilService: UtilsService,
   ) {
     const currentYear = new Date();
     this.maxDate = new Date(currentYear);

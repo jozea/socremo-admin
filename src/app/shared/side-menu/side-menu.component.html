@@ -25,7 +25,7 @@ class="sidenav_container"
         <!-- <a  [ngClass]="page.permission === 'dashboard' ? 'show_menu' : permissions[page.permission] ? 'show_menu' : 'hide_menu' "  [routerLink]="page.link" mat-list-item> -->
           <mat-icon>{{page.icon}}</mat-icon>
           <span [@animateText]="linkText && sideNavState !== false ? 'show' : 'hide'"> &nbsp;
-            {{page.name}}
+            {{page.name | translate}}
           </span>
         </a>
       </mat-nav-list>
@@ -38,15 +38,15 @@ class="sidenav_container"
                 <mat-panel-title style="display: flex;align-items: center;">
                   <mat-icon style="padding-right:5px;">{{page.icon}}</mat-icon>
                   &nbsp; 
-                  {{page.title}}
+                  {{page.title | translate}}
                 </mat-panel-title>
               </mat-expansion-panel-header > 
               <div style="margin-bottom: 10px; margin-left: 15px; display: flex;align-items: center;" *ngFor="let item of page.list" >
 
               <!-- <div [ngClass]="permissions[item.permission]  ? 'show_menu' : 'hide_menu'" style="margin-bottom: 10px; margin-left: 15px; display: flex;align-items: center;" *ngFor="let item of page.list" > -->
                 <mat-icon>{{item.icon}}</mat-icon>  &nbsp; 
-                <a *ngIf="item.link" style="padding-right:5px;color: #000;"  [routerLink]="item.link">{{item.name}}</a>
-                <a *ngIf="item.method" (click)="openAppVersionModal()" style="padding-right:5px;color: #000;">{{item.name}}</a>
+                <a *ngIf="item.link" style="padding-right:5px;color: #000;"  [routerLink]="item.link">{{item.name | translate}}</a>
+                <a *ngIf="item.method" (click)="openAppVersionModal()" style="padding-right:5px;color: #000;">{{item.name | translate}}</a>
               </div>
             </mat-expansion-panel>
           </mat-accordion>

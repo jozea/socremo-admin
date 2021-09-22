@@ -9,40 +9,46 @@
   </div>
   
   <section >
-    <div class="header mt-3">
-      <p class="p-3 px-4 lead text-white">Ticket Listing</p>
+    <!-- <div class="header mt-3">
+      <p class="p-3 px-4 lead text-white">{{ 'ticket.headerText' | translate }}</p>
+  </div> -->
+
+  <div class="header px-4 mt-3 d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center">
+      <p class="p-3 px-4 lead text-white">{{ 'ticket.headerText' | translate }}</p>
+    </div>
   </div>
    
     <form class="filter mx-3" [formGroup]="enquiryFilterForm">
       <mat-card class="m-3 p-0 pt-3 px-3 pb-2">
-        <h5 class="font-weight-bold">Filter/Sort by</h5>
+        <h5 class="font-weight-bold">{{ 'ticket.filterHeader' | translate }}</h5>
         <div class="d-flex flex-wrap">
           <mat-form-field
           appearance="outline">
-            <mat-label>Start Date</mat-label>
+            <mat-label>{{ 'ticket.startDate' | translate }}</mat-label>
             <input formControlName="startDate" matInput [max]="maxDate" [matDatepicker]="startDate">
             <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
             <mat-datepicker #startDate></mat-datepicker>
           </mat-form-field>
   
           <mat-form-field appearance="outline">
-            <mat-label>End date</mat-label>
+            <mat-label>{{ 'ticket.endDate' | translate }}</mat-label>
             <input formControlName="endDate" matInput [max]="maxDate" [matDatepicker]="endDate">
             <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
             <mat-datepicker #endDate></mat-datepicker>
           </mat-form-field>
   
           <mat-form-field appearance="outline">
-            <mat-label>Rating</mat-label>
-            <mat-select formControlName="rating">
-              <mat-option *ngFor="let item of ratingCode" [value]="item.value">
-                {{item.name}}
-              </mat-option>
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+              <mat-option value="open">{{ 'ticket.open' | translate }}</mat-option>
+              <mat-option value="closed">{{ 'ticket.closed' | translate }}</mat-option>
+              <mat-option value="processing">{{ 'ticket.processing' | translate }}</mat-option>
             </mat-select>
           </mat-form-field>
   
           <mat-form-field appearance="outline">
-            <mat-label>Customer Name</mat-label>
+            <mat-label>{{ 'ticket.customerName' | translate }}</mat-label>
             <input 
             [value]="this.enquiryFilterForm.value.customerName"
             formControlName="customerName" 
@@ -57,7 +63,7 @@
           <button 
           (click)="search()"
           class="btn btn-sm text-white filter_btn"
-           >Filter</button>
+           >{{ 'ticket.filter' | translate }}</button>
         </div>
   
   
@@ -68,14 +74,11 @@
       <mat-card class="px-3 py-3 mx-3">
         <h5 class="font-weight-bold">Action</h5>
         <div class="d-flex flex-wrap">
-          <button (click)="exportTable('pdf')" type="button" class="btn btn-sm text-white accion_stone my-1">Export
-            PDF</button>
-          <button (click)="exportTable('xlsx')" type="button" class="btn btn-sm mx-2 text-white accion_sand my-1">Export
-            Excel</button>
-          <button (click)="exportTable('csv')" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">Export
-            CSV</button>
-          <button (click)="exportTable('png')" type="button"
-            class="btn btn-sm mx-2 text-white accion_sand my-1">PNG</button>
+          <button (click)="exportTable('pdf')" type="button" class="btn btn-sm text-white accion_stone my-1">{{ 'ticket.exportPdf' | translate }}</button>
+          <button (click)="exportTable('xlsx')" type="button" class="btn btn-sm mx-2 text-white accion_sand my-1">{{ 'ticket.exportExcel' | translate }}</button>
+          <button (click)="exportTable('csv')" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">{{ 'ticket.exportCsv' | translate }}</button>
+          <button (click)="exportTable('png')" type="button" class="btn btn-sm mx-2 text-white accion_sand my-1">{{ 'ticket.exportPng' | translate }}</button>
+          <button (click)="openTicketSettings()" type="button" class="btn btn-sm mx-2 text-white accion_sand my-1">{{ 'ticket.settings' | translate }}</button>
         </div>
       </mat-card>
       
@@ -88,7 +91,7 @@
         <div id="feedback_table"  class="table-container p-0">
         <table 
         mat-table 
-        [dataSource]="ticketData" 
+        [dataSource]="dataSource" 
         matSort 
         class="mat-elevation-z8">
         
@@ -97,34 +100,39 @@
             <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </td>
           </ng-container>
         
-          <ng-container matColumnDef="fullName">
-            <th disableClear mat-header-cell *matHeaderCellDef> Customer Name </th>
-            <td      
-           
-            mat-cell *matCellDef="let element"> {{element.fullName}} </td>
+          <ng-container matColumnDef="customerId">
+            <th disableClear mat-header-cell *matHeaderCellDef>{{ 'ticket.customerName' | translate }} </th>
+            <td  mat-cell *matCellDef="let element"> {{element.customerId}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="mobileNumber">
-            <th disableClear mat-header-cell *matHeaderCellDef>Mobile Number</th>
-            <td      
-           
-            mat-cell *matCellDef="let element"> {{element.mobileNumber}} </td>
+          <ng-container matColumnDef="customerName">
+            <th disableClear mat-header-cell *matHeaderCellDef>{{ 'ticket.customerName' | translate }}</th>
+            <td mat-cell *matCellDef="let element"> {{element.customerName}} </td>
           </ng-container>
       
-      
-          <!-- <ng-container matColumnDef="rating">
-            <th mat-header-cell *matHeaderCellDef> Status </th>
+          <ng-container matColumnDef="category">
+            <th mat-header-cell *matHeaderCellDef> {{ 'ticket.category' | translate }} </th>
+            <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> {{ 'ticket.status' | translate }} </th>
             <td mat-cell *matCellDef="let element"> {{element.status}} </td>
-          </ng-container> -->
-      
-          <ng-container matColumnDef="comment">
-            <th mat-header-cell *matHeaderCellDef> Comment </th>
-            <td mat-cell *matCellDef="let element"> {{element.comment}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="reference">
+            <th mat-header-cell *matHeaderCellDef> {{ 'ticket.reference' | translate }} </th>
+            <td mat-cell *matCellDef="let element"> {{element.reference}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="createdAt">
+            <th mat-header-cell *matHeaderCellDef> {{ 'ticket.created' | translate }} </th>
+            <td mat-cell *matCellDef="let element"> {{element.createdAt}} </td>
           </ng-container>
          
-          <ng-container matColumnDef="date">
-            <th mat-header-cell *matHeaderCellDef> Date </th>
-            <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+          <ng-container matColumnDef="updatedAt">
+            <th mat-header-cell *matHeaderCellDef> {{ 'ticket.updated' | translate }} </th>
+            <td mat-cell *matCellDef="let element"> {{element.updatedAt}} </td>
           </ng-container>
 
           <!-- <ng-container matColumnDef="action">

@@ -39,6 +39,8 @@ import { CorporateTransactionsComponent } from './corporate-transactions/corpora
 import { InvestmentSettingComponent } from './investment/investment-setting/investment-setting.component';
 import { RegisterComponent } from '../auth/register/register.component';
 import { TicketManagementComponent } from './enquiries/ticket-management/ticket-management.component';
+import { ProductManagementComponent } from './product/product-management/product-management.component';
+import { TicketSettingsComponent } from './enquiries/ticket-settings/ticket-settings.component';
 
 const routes: Routes = [{
   path: '',
@@ -55,11 +57,11 @@ const routes: Routes = [{
       component: TransactionsComponent,
       // canActivate: [AuthenticationGuard, RoleGuard], data: { allowedPermissions: ['transaction'] }
     },
-    // {
-    //   path: 'broadcast',
-    //   component: BroadcastComponent,
-    //   canActivate: [AuthenticationGuard, RoleGuard], data: { allowedPermissions: ['transaction'] }
-    // },
+    {
+      path: 'broadcast',
+      component: BroadcastComponent,
+      // canActivate: [AuthenticationGuard, RoleGuard], data: { allowedPermissions: ['transaction'] }
+    },
     // {
     //   path: 'cardmanagement',
     //   component: CardManagement,
@@ -82,9 +84,9 @@ const routes: Routes = [{
 
       ]
     },
-    // {
-    //   path: 'report',
-    //   children: [
+    {
+      path: 'report',
+      children: [
     //     {
     //       path: 'referral',
     //       component: ReferralComponent,
@@ -105,13 +107,13 @@ const routes: Routes = [{
     //       component: ThirdPartiesComponent,
     //       canActivate: [AuthenticationGuard, RoleGuard], data: { allowedPermissions: ['roles_permissions'] }
     //     },
-    //     {
-    //       path: 'branches',
-    //       component: BranchesComponent,
-    //       canActivate: [AuthenticationGuard, RoleGuard], data: { allowedPermissions: ['roles_permissions'] }
-    //     },
-    //   ]
-    // },
+        {
+          path: 'branches',
+          component: BranchesComponent,
+          // canActivate: [AuthenticationGuard, RoleGuard], data: { allowedPermissions: ['roles_permissions'] }
+        },
+      ]
+    },
     {
       path: 'setting',
       children: [
@@ -131,13 +133,23 @@ const routes: Routes = [{
         // {
         //   path: 'permission', 
         //   component: PermissionsComponent, 
-        //   canActivate: [AuthenticationGuard, RoleGuard], data: { allowedPermissions: ['roles_permissions'] }
+        //   // canActivate: [AuthenticationGuard, RoleGuard], data: { allowedPermissions: ['roles_permissions'] }
         // },
-        // {
-        //   path: 'admin-user', 
-        //   component: ViewusersComponent, 
-        //   canActivate: [AuthenticationGuard, RoleGuard], data: { allowedPermissions: ['roles_permissions'] }
-        // },
+        {
+          path: 'admin-user', 
+          component: ViewusersComponent, 
+          // canActivate: [AuthenticationGuard, RoleGuard], data: { allowedPermissions: ['roles_permissions'] }
+        },
+      ]
+    },
+    {
+      path: 'product',
+      children: [
+        {
+          path: 'management', 
+          component: ProductManagementComponent, 
+          // canActivate: [AuthenticationGuard, RoleGuard], data: { allowedPermissions: ['change_password'] }
+        },
       ]
     },
     {
@@ -146,6 +158,11 @@ const routes: Routes = [{
         {
           path: 'management', 
           component: TicketManagementComponent, 
+          // canActivate: [AuthenticationGuard, RoleGuard], data: { allowedPermissions: ['change_password'] }
+        },
+        {
+          path: 'settings', 
+          component: TicketSettingsComponent, 
           // canActivate: [AuthenticationGuard, RoleGuard], data: { allowedPermissions: ['change_password'] }
         },
       ]

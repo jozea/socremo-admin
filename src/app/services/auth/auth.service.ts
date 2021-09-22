@@ -16,8 +16,12 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
+  // login(loginDetail: any): Observable<any> {
+  //   return this.http.post<any>(`${this.baseUrl}users/admin/login`, loginDetail);
+  // }
+
   login(loginDetail: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}users/admin/login`, loginDetail);
+    return this.http.post<any>(`${this.baseUrl}auth/signin`, loginDetail);
   }
   
   logOutUser(logoutDetail: any): Observable<any> {
