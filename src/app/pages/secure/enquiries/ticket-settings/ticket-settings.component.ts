@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ReportService } from 'src/app/services/report/report.service';
 import { UserService } from 'src/app/services/user/user.service';
@@ -46,6 +47,7 @@ export class TicketSettingsComponent implements OnInit {
     public userService: UserService,
     private report: ReportService,
     public dialog: MatDialog,
+    private router: Router,
 
     // @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
@@ -175,5 +177,8 @@ export class TicketSettingsComponent implements OnInit {
     });
   }
 
+  back() {
+    this.router.navigate(['app/ticket/management'])
+  }
 
 }

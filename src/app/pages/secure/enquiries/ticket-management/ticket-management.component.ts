@@ -1,6 +1,6 @@
 import { ISelection } from 'src/app/models/iselection';
 import { UtilsService } from 'src/app/services/utils/utils.service';
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ExportAsService, ExportAsConfig } from 'ngx-export-as';
@@ -43,6 +43,7 @@ export class TicketManagementComponent implements OnInit {
     private utilService: UtilsService,
     private router: Router,
     public dialog: MatDialog,
+    private cdref: ChangeDetectorRef
     ) {
     }
 
@@ -59,6 +60,10 @@ export class TicketManagementComponent implements OnInit {
     });
     this.fetchFeedback(this.feedbackRequestModel)
 
+  }
+
+  ngAfterContentChecked() {
+    this.cdref.detectChanges();
   }
 
   changeStatus(e) {

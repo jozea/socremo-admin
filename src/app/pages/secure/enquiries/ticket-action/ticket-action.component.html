@@ -1,4 +1,4 @@
-<div *ngIf="isLoadingResults" class="loader_container">
+<!-- <div *ngIf="isLoadingResults" class="loader_container">
 	<div class="spinner">
 		<div class="spinner-item"></div>
 		<div class="spinner-item"></div>
@@ -6,8 +6,10 @@
 		<div class="spinner-item"></div>
 		<div class="spinner-item"></div>
 	</div>
+</div> -->
+<div *ngIf="isLoadingResults" class="col-12 d-flex justify-content-center p-5" >
+	<mat-spinner [diameter]="25" ></mat-spinner>
 </div>
-
 <h2 mat-dialog-title class="text_accion_stone">{{ 'ticket.action' | translate }}</h2>
 <mat-dialog-content style="background-color: rgb(230, 240, 240);">
     <div class="row" *ngIf="action == 'update'">
@@ -51,11 +53,17 @@
                                 <mat-label>{{ 'ticket.category' | translate }}</mat-label>
                                 <input [value]="ticketSettingsForm3.value.category" formControlName="category" matInput type="text">
                             </mat-form-field>
+
+                            <mat-form-field class="col-md-12" appearance="outline">
+                                <mat-label>{{ 'ticket.description' | translate }}</mat-label>
+                                <textarea name="" id="" cols="30" rows="10" [value]="ticketSettingsForm3.value.description" matInput type="text"
+                                formControlName="description"></textarea>
+                            </mat-form-field>
                     
-                            <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+                            <!-- <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
                                 <mat-label>{{ 'ticket.description' | translate }}</mat-label>
                                 <input [value]="ticketSettingsForm3.value.description" formControlName="description" matInput type="text">
-                            </mat-form-field>
+                            </mat-form-field> -->
                         <!-- </div> -->
                     <!-- </div> -->
                 </div>

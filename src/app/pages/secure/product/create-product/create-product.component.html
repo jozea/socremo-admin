@@ -8,13 +8,8 @@
     </div>
 </div>
 
-<div class="row header mt-3 bg-white">
-    <div class="col-md-3">
-        <p class="p-3 px-4 lead">Create New Product</p>
-    </div>
-</div>
-
-<section>
+<h2 mat-dialog-title class="text_accion_stone">Create New Product</h2>
+<mat-dialog-content style="background-color: rgb(230, 240, 240);">
     <!-- <form [formGroup]="newProductForm" class="filter mx-3">
         <mat-card class="m-3 p-0 pt-3 px-3 pb-2">
             <h5 class="font-weight-bold">Select Term</h5>
@@ -81,8 +76,24 @@
             </mat-card>
         </div>
     </form>
-    
-
-    
-
-</section>
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-content-between">
+    <div>
+        <!-- <button type="button" (click)="assignTicket()" class="btn btn-sm mx-2 text-white accion_stone my-1">
+            {{ 'ticket.assign' | translate }}
+        </button> -->
+        <!-- <button (click)="openActionDialog2(problemDetail, 'add')" type="button"
+            class="btn btn-sm mx-2 text-white accion_stone my-1">
+            {{ 'ticket.addNewCategory' | translate }}
+        </button>
+        <button (click)="openActionDialog2(problemDetail, 'type')" type="button"
+            class="btn btn-sm mx-2 text-white my-1" style="background-color: rgb(218, 52, 52);">
+            {{ 'ticket.deleteType' | translate }}
+        </button> -->
+        <!-- <button (click)="openActionDialog(problemDetail, 'category')" type="button"
+            class="btn btn-sm mx-2 text-white accion_stone my-1">
+            Delete Category
+        </button> -->
+    </div>
+    <button mat-button mat-dialog-close (click)="close()">{{ 'ticket.cancel' | translate }}</button>
+</mat-dialog-actions>

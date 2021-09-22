@@ -16,6 +16,7 @@
         <form [formGroup]="ticketSettingsForm" class="d-flex flex-column w-100 px-5 py-2">
             <mat-card class="col-sm-12 mt-3 mb-3">
                 <div>
+                    <a class="float-right cursor_pointer" type="text" (click)="back()">Back</a>&nbsp;
                     <h3 class="text_accion"> {{ 'ticket.createProblemType' | translate }}</h3>
                     
         
@@ -35,7 +36,7 @@
                         *ngFor="let item of ticketSettingsForm.get('categories')['controls']; let i = index;"> 
                         <!-- <span style="font-weight: bold;">Categories {{i+1}}</span> -->
                         <div [formGroupName]="i">
-                            <mat-form-field class="col-md-3 col-sm-6 col-xs-12" appearance="outline">
+                            <!-- <mat-form-field class="col-md-3 col-sm-6 col-xs-12" appearance="outline">
                                 <mat-label>{{ 'ticket.description' | translate }}</mat-label>
                                 <input [value]="this.ticketSettingsForm.value.description" matInput type="text"
                                     formControlName="description">
@@ -43,11 +44,6 @@
                                     aria-label="Clear" (click)="this.ticketSettingsForm.value.description=''">
                                     <mat-icon>close</mat-icon>
                                 </button>
-                            </mat-form-field>
-                            <!-- <mat-form-field class="col-md-12" appearance="outline">
-                                <mat-label>{{ 'ticket.description' | translate }}</mat-label>
-                                <textarea name="" id="" cols="30" rows="10" [value]="this.ticketSettingsForm.value.description" matInput type="text"
-                                formControlName="description"></textarea>
                             </mat-form-field> -->
             
                             <mat-form-field class="col-md-3 col-sm-6 col-xs-12" appearance="outline">
@@ -58,6 +54,11 @@
                                     aria-label="Clear" (click)="this.ticketSettingsForm.value.category=''">
                                     <mat-icon>close</mat-icon>
                                 </button>
+                            </mat-form-field>
+                            <mat-form-field class="col-md-12" appearance="outline">
+                                <mat-label>{{ 'ticket.description' | translate }}</mat-label>
+                                <textarea name="" id="" cols="30" rows="10" [value]="this.ticketSettingsForm.value.description" matInput type="text"
+                                formControlName="description"></textarea>
                             </mat-form-field>
                             <!-- <button class="" style="color: white; background-color: rgb(102, 102, 235);" mat-raised-button (click)="submitTicketSettings('create')">{{ 'ticket.create' | translate }}</button> -->
 

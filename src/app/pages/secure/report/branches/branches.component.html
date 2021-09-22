@@ -11,7 +11,7 @@
 <section>
   <div class="header mt-3 bg-white d-flex justify-content-between align-items-center pr-3">
     <p class="pt-3 px-4 lead">{{ 'branch.headerText' | translate }}</p>
-    <button (click)="openDialog()" class="btn btn-sm text-white filter_btn">Add Branch</button>
+    <button disabled (click)="openDialog()" class="btn btn-sm text-white filter_btn">Add Branch</button>
 </div>
 
   <form class="filter mx-3" [formGroup]="searchFilterForm">

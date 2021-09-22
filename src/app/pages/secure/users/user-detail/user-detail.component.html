@@ -213,7 +213,7 @@
     <mat-list>
       <div class="d-flex justify-content-between ">
         <div class="subHeader" mat-subheader>{{ 'users.loans' | translate }}</div>
-        <button (click)="openDialog(userData)" class="btn btn-sm btn-primary filter_btn mr-2 mb-3">{{ 'users.viewLoanDetails' | translate }}</button>
+        <button disabled (click)="openDialog(userData)" class="btn btn-sm btn-primary filter_btn mr-2 mb-3">{{ 'users.viewLoanDetails' | translate }}</button>
       </div>
       <mat-divider></mat-divider>
       <p *ngIf="userLoanData.length > 0" class="p-3">Total Loans: {{userLoanData.length}}</p>
