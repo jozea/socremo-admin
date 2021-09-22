@@ -60,8 +60,6 @@
 								<th scope="col">{{ 'ticket.name' | translate }}</th>
 								<th scope="col">{{ 'ticket.officerId' | translate }}</th>
 								<th scope="col">{{ 'ticket.date' | translate }}</th>
-								<!-- <th scope="col">{{ 'ticket.updatedBy' | translate }}</th>
-								<th scope="col">{{ 'ticket.deleted' | translate }}</th> -->
 								<th scope="col">{{ 'ticket.action' | translate }}</th>
 							</tr>
 						</thead>
@@ -70,16 +68,14 @@
 								<td class="text_accion_stone">{{item.name}}</td>
 								<td class="text_accion_stone">{{item.officerId}}</td>
 								<td class="text_accion_stone">{{ item.dateTime | date: 'yyyy-MM-dd'}}</td>
-								<!-- <td class="text_accion_stone">{{ item.lastUpdatedBy}}</td>
-								<td class="text_accion_stone">{{ item.isDeleted == true?'YES':'NO'}}</td> -->
 								<td class="text_accion_stone">
-									<button (click)="closeTicket()" type="button" class="btn btn-sm mx-2 text-white my-1" style="background-color: rgb(218, 52, 52);">
+									<button *ngIf="ticketDetails.status =='open' || ticketDetails.status =='processing'" (click)="closeTicket()" type="button" class="btn btn-sm mx-2 text-white my-1" style="background-color: rgb(218, 52, 52);">
 										{{ 'ticket.closed' | translate }}
 									</button>
-									<button type="button" class="btn btn-sm mx-2 text-white my-1" style="background-color: rgb(35, 216, 96);">
+									<button *ngIf="ticketDetails.status =='closed'" type="button" class="btn btn-sm mx-2 text-white my-1" style="background-color: rgb(35, 216, 96);">
 										{{ 'ticket.open' | translate }}
 									</button>
-									<button type="button" (click)="openDialog(item)" class="btn btn-sm mx-2 text-white my-1 accion_stone" >
+									<button *ngIf="ticketDetails.status =='open' || ticketDetails.status =='processing'" type="button" (click)="openDialog(item)" class="btn btn-sm mx-2 text-white my-1 accion_stone" >
 										{{ 'ticket.comment' | translate }}
 									</button>
 									<!-- <button (click)="openActionDialog(problemDetail, item, 'update')" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">
@@ -97,27 +93,25 @@
 					<table class="table table-bordered table-sm mt-3">
 						<thead>
 							<tr>
-								<th scope="col">{{ 'ticket.category' | translate }}</th>
-								<th scope="col">{{ 'ticket.description' | translate }}</th>
-								<th scope="col">{{ 'ticket.created' | translate }}</th>
-								<th scope="col">{{ 'ticket.updatedBy' | translate }}</th>
-								<th scope="col">{{ 'ticket.deleted' | translate }}</th>
-								<th scope="col">{{ 'ticket.action' | translate }}</th>
+								<th scope="col">{{ 'ticket.name' | translate }}</th>
+								<th scope="col">{{ 'ticket.officerId' | translate }}</th>
+								<th scope="col">{{ 'ticket.message' | translate }}</th>
+								<th scope="col">{{ 'ticket.date' | translate }}</th>
+								<!-- <th scope="col">{{ 'ticket.action' | translate }}</th> -->
 							</tr>
 						</thead>
 						<tbody>
-							<tr *ngFor="let item of ticketDetails.Comments;let i = index;">
-								<td class="text_accion_stone">{{item.category}}</td>
-								<td class="text_accion_stone">{{item.description}}</td>
-								<td class="text_accion_stone">{{ item.createdAt | date: 'yyyy-MM-dd'}}</td>
-								<td class="text_accion_stone">{{ item.lastUpdatedBy}}</td>
-								<td class="text_accion_stone">{{ item.isDeleted == true?'YES':'NO'}}</td>
-								<td class="text_accion_stone">
+							<tr *ngFor="let item of ticketDetails.comments;let i = index;">
+								<td class="text_accion_stone">{{item.name}}</td>
+								<td class="text_accion_stone">{{item.officerId}}</td>
+								<td class="text_accion_stone">{{item.message}}</td>
+								<td class="text_accion_stone">{{ item.dateTime | date: 'yyyy-MM-dd'}}</td>
+								<!-- <td class="text_accion_stone">
 									
-									<!-- <button (click)="openActionDialog(problemDetail, item, 'update')" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">
+									<button (click)="openActionDialog(problemDetail, item, 'update')" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">
 										{{ 'ticket.updateCategory' | translate }}
-									</button> -->
-								</td>
+									</button>
+								</td> -->
 							</tr>
 						</tbody>
 					</table>

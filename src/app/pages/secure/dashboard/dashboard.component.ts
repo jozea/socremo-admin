@@ -4,7 +4,7 @@ import { UtilsService } from 'src/app/services/utils/utils.service';
 import { LoanService } from 'src/app/services/loan/loan.service';
 import { TransactionService } from 'src/app/services/transaction/transaction.service';
 import { UserService } from 'src/app/services/user/user.service';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -108,6 +108,8 @@ export class DashboardComponent implements OnInit {
     public transactionService: TransactionService,
     public loanService: LoanService,
     public reportService: ReportService,
+    private cdref: ChangeDetectorRef
+
   ) {
 }
 
@@ -125,6 +127,10 @@ export class DashboardComponent implements OnInit {
     // this.updateBarChart(this.generalRequestModel)
     // this.updatePieChart(this.generalRequestModel)
     // this.updateDashboardTables(this.generalRequestModel)
+  }
+
+  ngAfterContentChecked() {
+    this.cdref.detectChanges();
   }
 
 // DONE 

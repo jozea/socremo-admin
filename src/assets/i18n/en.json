@@ -194,7 +194,9 @@
         "processing": "Processing",
         "enterComment": "Enter Comment",
         "submit": "Submit",
-        "ticketDetail": "Ticket Detail"
+        "ticketDetail": "Ticket Detail",
+        "message": "Message",
+        "close": "Close"
 
     },
     "security": {

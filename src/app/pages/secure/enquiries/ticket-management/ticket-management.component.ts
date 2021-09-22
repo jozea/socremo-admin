@@ -32,6 +32,7 @@ export class TicketManagementComponent implements OnInit {
   isLoadingResults = false;
   ratingCode: ISelection[] = ratingSelectionOptions
   feedbackRequestModel: any = {status:"open"}
+  status: any;
   maxall: number = 1000;
 
 
@@ -60,6 +61,11 @@ export class TicketManagementComponent implements OnInit {
 
   }
 
+  changeStatus(e) {
+    console.log(e)
+    this.status = e
+  }
+
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
@@ -77,7 +83,7 @@ export class TicketManagementComponent implements OnInit {
   }
   async search() {
     this.isLoadingResults = true;
-    let { startDate, endDate, rating, customerName: fullName } = this.enquiryFilterForm.value;
+    let { startDate, endDate, status, customerName: fullName } = this.enquiryFilterForm.value;
     startDate = startDate ? new Date(startDate).toDateString() : ''
     endDate = endDate ? new Date(endDate).toDateString() : ''
 

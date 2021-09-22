@@ -195,7 +195,9 @@
         "processing": "Processamento",
         "enterComment": "Inserir Comentário",
         "submit": "Enviar",
-        "ticketDetail": "Detalhe de bilhetes"
+        "ticketDetail": "Detalhe de bilhetes",
+        "message": "Mensagem",
+        "close": "Fechar"
     },
     "security": {
         "changePassword": "Alterar palavra-passe",
