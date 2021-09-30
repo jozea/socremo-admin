@@ -79,9 +79,10 @@ export class AddBroadcastComponent implements OnInit {
       notification: {
         title: this.broadcastMessageForm.value.title,
         body: this.broadcastMessageForm.value.message,
-        // mobileNumber: this.broadcastMessageForm.value.mobileNumber
       },
-      regToken: this.token
+      data:"", 
+      fBaseToken:""
+      // regToken: this.token
     }
     if (!this.broadcastMessageForm.valid) {
       this.utilService.triggerNotification("Please input data") 
@@ -106,7 +107,8 @@ export class AddBroadcastComponent implements OnInit {
           notification: {
             title: this.broadcastMessageForm.value.title,
             body: this.broadcastMessageForm.value.message,
-          }
+          },
+          data:""
         }
         this.permissionService.sendMessageToAll(model2).subscribe((res: any)=>{
           if (res.status === true ) {
@@ -134,7 +136,7 @@ export class AddBroadcastComponent implements OnInit {
   }
 
   //sent to all {"notification":{ "title":"", "body":""}, "data":""}
-  // send per device {"notification":{ "title":"", "body":""}, "data":"", "fBaseToken":""}
+  // send per device {"notification":{ "title":"", "body":""}, "data":"", "fBaseToken":""}614c10f3a1110a7c785e7155
 
 
 
