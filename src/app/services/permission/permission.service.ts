@@ -67,7 +67,7 @@ getAllPermissions(): Observable<any> {
 
 
 searchUserByMobile(mobileNumber): Observable<any> {
-  return this.http.get<any>(`${this.baseUrl}notif/regToken/${mobileNumber}`);
+  return this.http.get<any>(`${this.baseUrl}notify/fBaseToken/${mobileNumber}`);
 }
 
 

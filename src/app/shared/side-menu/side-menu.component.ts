@@ -48,7 +48,7 @@ export class SideMenuComponent implements OnInit, AfterViewInit {
     // { name: 'Dashboard', permission: 'transaction', link: '/app/dashboard', icon: 'home' },
     // { name: 'Transaction Listing', permission: 'transaction', link: '/app/transactions', icon: 'account_balance' },
     // { name: 'Customer Management', permission: 'users', link: '/app/users', icon: 'person' },
-    // { name: marker('menu.broadCast'), permission: 'users', link: '/app/broadcast', icon: 'cast' },
+    { name: marker('menu.broadCast'), permission: 'users', link: '/app/broadcast', icon: 'cast' },
 
     // { name: 'Card Management', permission: 'users', link: '/app/broadcast', icon: 'payments' },
   ]
