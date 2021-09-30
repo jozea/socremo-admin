@@ -133,4 +133,9 @@ export class AddBroadcastComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  //sent to all {"notification":{ "title":"", "body":""}, "data":""}
+  // send per device {"notification":{ "title":"", "body":""}, "data":"", "fBaseToken":""}
+
+
+
 }

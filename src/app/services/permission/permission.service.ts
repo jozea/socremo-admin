@@ -19,17 +19,17 @@ searchUser(model): Observable<any> {
   return this.http.post<any>(`${this.baseUrl}users/queryUserByMobile`, model);
 }
 
-searchUserByMobile(mobileNumber): Observable<any> {
-  return this.http.post<any>(`${this.baseUrl}notif/regToken/${mobileNumber}`, {});
-}
+// searchUserByMobile(mobileNumber): Observable<any> {
+//   return this.http.post<any>(`${this.baseUrl}notif/regToken/${mobileNumber}`, {});
+// }
 
-sendMessageToAll(model): Observable<any> {
-  return this.http.post<any>(`${this.baseUrl}notif/send`, model);
-}
+// sendMessageToAll(model): Observable<any> {
+//   return this.http.post<any>(`${this.baseUrl}notif/send`, model);
+// }
 
-sendMessageToOne(model): Observable<any> {
-  return this.http.post<any>(`${this.baseUrl}notif`, model)
-}
+// sendMessageToOne(model): Observable<any> {
+//   return this.http.post<any>(`${this.baseUrl}notif`, model)
+// }
 assignUserToRole(model: any): Observable<any> {
   return this.http.post<any>(`${this.baseUrl}permission/assignRole`, model);
 }
@@ -65,7 +65,24 @@ getAllPermissions(): Observable<any> {
 
 
 
+
+searchUserByMobile(mobileNumber): Observable<any> {
+  return this.http.get<any>(`${this.baseUrl}notif/regToken/${mobileNumber}`);
+}
+
+
+sendMessageToAll(model): Observable<any> {
+  return this.http.post<any>(`${this.baseUrl}notify/send`, model);
+}
+
+
+sendMessageToOne(model): Observable<any> {
+  return this.http.post<any>(`${this.baseUrl}notify`, model)
+}
+
 //notify/fBaseToken/61432c602d12497a87744f0c
+//notify/send
+//notify/
 
 
 
