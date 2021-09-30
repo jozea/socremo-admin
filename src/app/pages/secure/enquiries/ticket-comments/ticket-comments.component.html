@@ -1,7 +1,5 @@
 
-<div *ngIf="isLoadingResults" class="col-12 d-flex justify-content-center p-5" >
-	<mat-spinner [diameter]="25" ></mat-spinner>
-</div>
+
 <h2 mat-dialog-title class="text_accion_stone">{{ 'ticket.action' | translate }}</h2>
 <mat-dialog-content style="background-color: rgb(230, 240, 240);">
 
@@ -11,15 +9,19 @@
                 <h3 class="text_accion"> {{ 'ticket.enterComment' | translate }}</h3>
                 <div class="d-flex flex-wrap">
                     
-                    <mat-form-field class="col-md-12" appearance="outline">
+                    <!-- <mat-form-field class="col-md-12" appearance="outline">
                         <mat-label>{{ 'ticket.comment' | translate }}</mat-label>
                         <textarea name="comment" id="" cols="30" rows="10" [(ngModel)]="comment" matInput type="text"></textarea>
-                    </mat-form-field>
+                    </mat-form-field> -->
+                    <ckeditor name="comment" tagName="textarea" [editor]="Editor" [(ngModel)]="comment"></ckeditor>
+
                 </div>
                 <button (click)="commentOnTicket()" class="float-right" style="color: white; background-color: rgb(102, 102, 235);" mat-raised-button >{{ 'ticket.submit' | translate }}</button>
             </mat-card>
         </form>
     </div>
+
+
 
     <!-- <div class="row d-flex flex-column w-80 px-5 py-2 align-items-center" *ngIf="action == 'type'">
         <mat-card class="lign-items-center">
@@ -56,6 +58,9 @@
         Delete Category
       </button> -->
       
+    </div>
+    <div *ngIf="isLoadingResults" class=" d-flex justify-content-center p-5" >
+        <mat-spinner [diameter]="25" ></mat-spinner>
     </div>
     <button mat-button mat-dialog-close (click)="close()">{{ 'ticket.cancel' | translate }}</button>
   </mat-dialog-actions>

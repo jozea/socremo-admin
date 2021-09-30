@@ -28,6 +28,8 @@
     "@angular/router": "~11.2.7",
     "@biesbjerg/ngx-translate-extract": "^7.0.4",
     "@biesbjerg/ngx-translate-extract-marker": "^1.0.0",
+    "@ckeditor/ckeditor5-angular": "^2.0.2",
+    "@ckeditor/ckeditor5-build-classic": "^29.2.0",
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
     "bn-ng-idle": "^1.0.1",

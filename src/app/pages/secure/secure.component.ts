@@ -38,6 +38,7 @@ export class SecureComponent implements OnInit {
 
   useLanguage(language: string): void {
     this.translate.use(language);
+
   }
 
   async handleUserLogout() {
@@ -63,6 +64,8 @@ export class SecureComponent implements OnInit {
       this.mobileNumber = user.user.mobileNumber;
       this.userName = `${user.user.name}`
       // this.userName = `${user.firstName} ${user.lastName}`
+      this.utilService.changeTab("language", "btn", " active-lang")
+
 
       this.bnIdle.startWatching(3600).subscribe((isTimedOut: boolean) => {
         if (isTimedOut) {

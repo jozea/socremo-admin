@@ -56,14 +56,6 @@ getGlobalWalletBalance(model): Observable<any> {
   return this.http.post<any>(`${this.baseUrl}users/admin/global/wallet`, model);
 }
 
-getBranches(limit: number, page: number, model: any): Observable<any> {
-  return this.http.post<any>(`${this.baseUrl}locations/admin/branches?limit=${limit}&page=${page}`, model);
-}
-
-createBranch(model: any): Observable<any> {
-  return this.http.post<any>(`${this.baseUrl}locations/branch/create`, model);
-}
-
 fetchPSRecords(perPage: number, page: number, from: string, to:string, state: string): Observable<any> {
   return this.http.post<any>(`${this.baseUrl}finances/admin/fetchPSRecord?perPage=${perPage}&page=${page}&from=${from}&to=${to}&state=${state}`, {});
 }
@@ -117,5 +109,20 @@ commentOnTicket(model:any): Observable<any> {
   return this.http.post<any>(`${this.baseUrl}ticket/admin/comment`, model);
 }
 
+getBranches(): Observable<any> {
+  return this.http.get<any>(`${this.baseUrl}branch`);
+}
+
+createBranch(model: any): Observable<any> {
+  return this.http.post<any>(`${this.baseUrl}branch`, model);
+}
+
+addBranch(model: any): Observable<any> {
+  return this.http.put<any>(`${this.baseUrl}branch`, model);
+}
+
+updateBranch(model: any): Observable<any> {
+  return this.http.patch<any>(`${this.baseUrl}branch`, model);
+}
 
 }

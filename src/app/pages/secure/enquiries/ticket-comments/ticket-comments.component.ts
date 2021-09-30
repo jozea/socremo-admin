@@ -5,6 +5,8 @@ import { ReportService } from 'src/app/services/report/report.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 @Component({
   selector: 'app-ticket-comments',
   templateUrl: './ticket-comments.component.html',
@@ -12,7 +14,11 @@ import { UtilsService } from 'src/app/services/utils/utils.service';
 })
 export class TicketCommentsComponent implements OnInit {
 
-  comment: any;
+  public Editor = ClassicEditor;
+  public comment = '<p></p>';
+
+
+  // comment: any;
   isLoadingResults: boolean = false;
   ticketDetails: any;
 
@@ -27,7 +33,7 @@ export class TicketCommentsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.data)
+    // console.log(this.data)
     this.ticketDetails = this.data.ticket
 
   }
@@ -41,9 +47,10 @@ export class TicketCommentsComponent implements OnInit {
       ticketId: this.ticketDetails._id,
       message: this.comment
     }
+    // console.log(model)
     this.isLoadingResults = true
     this.report.commentOnTicket(model).subscribe((response: any)=> {
-      console.log(response)
+      // console.log(response)
       if (response.status == true) {
         this.utilService.triggerNotification(response.message)
         this.isLoadingResults = false

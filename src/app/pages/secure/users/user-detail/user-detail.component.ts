@@ -37,7 +37,7 @@ export class UserDetailComponent implements OnInit {
   ngOnInit() {
 
     this.userId = this.activatedRoute.snapshot.paramMap.get('id');
-    console.log(this.userId)
+    // console.log(this.userId)
     // let param = {}
     let param = {primaryTelephone: this.userId}
     this.getSingleUser(param)
@@ -56,18 +56,25 @@ export class UserDetailComponent implements OnInit {
     this.isLoadingResults = true;
     this.userService.getSingleUser(model).subscribe(async (response: any) => {
       this.handleSuccessResponse(response)
-      // console.log(response.data[0].result)
       this.userData = response.data[0].result[0]
-      console.log(this.userData)
-      // this.userDetails.forEach(e => {
-      //   if (this.userId == e._id) {
-      //     this.userData = e
-      //   }
-      // });
+      // console.log(this.userData)
+      this.changeCodes()
       this.userName = `${this.userData.name}`
     }, (error: any) => {
       this.handleFailureResponse(error);
     })
+  }
+
+  changeCodes() {
+    let countryArray = this.utilService.countriesAndCodes
+    countryArray.forEach(e => {
+      let code = e.iso3
+      if (this.userData.countryOfResidence != undefined) {
+        if (code == this.userData.countryOfResidence.toLowerCase()) {
+          this.userData.countryOfResidence = e.name
+        }
+      }
+    });
   }
 
   fetchUserLoanDetail() {

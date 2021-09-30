@@ -196,7 +196,10 @@
         "submit": "Submit",
         "ticketDetail": "Ticket Detail",
         "message": "Message",
-        "close": "Close"
+        "close": "Close",
+        "all": "All",
+        "removeCategory": "Remove Category",
+        "addCategory": "Add Category"
 
     },
     "security": {
@@ -227,7 +230,8 @@
         "admin": "Admin",
         "branchManagement": "Branch Management",
         "branches": "Branches",
-        "productManagement": "Product Management"
+        "productManagement": "Product Management",
+        "broadCast": "Broadcast"
     },
     "nav": {
         "welcome": "Welcome",
@@ -273,7 +277,23 @@
         "region": "Region",
         "area": "Area",
         "contactEmail": "Contact Email",
-        "gpsLocation": "GPS Location"
+        "gpsLocation": "GPS Location",
+        "createBranch": "Create Branch",
+        "addBranch": "Add Branch",
+        "branchInformation": "Branch Information",
+        "branch1": "Branch 1",
+        "removeBranch": "Remove Branch",
+        "submit": "submit",
+        "cancel": "Cancel",
+        "updateBranch": "Update Branch",
+        "openingHour": "Opening Hour",
+        "closingHour": "Closing Hour",
+        "hours": "Hours",
+        "minutes": "Minutes",
+        "am/pm": "Am/Pm",
+        "am": "Am",
+        "pm": "Pm",
+        "enterFields": "Please enter all fields correctly"
     },
     "product": {
         "headerText": "Product Management",

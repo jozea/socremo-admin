@@ -103,6 +103,9 @@ import { ProblemDetailsComponent } from './enquiries/problem-details/problem-det
 import { TicketActionComponent } from './enquiries/ticket-action/ticket-action.component';
 import { TicketCommentsComponent } from './enquiries/ticket-comments/ticket-comments.component';
 
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+
+
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -153,6 +156,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ExportAsModule,
     NgxCsvParserModule,
     MatRadioModule,
+    CKEditorModule,
   ],
   declarations: [
     SecureComponent,

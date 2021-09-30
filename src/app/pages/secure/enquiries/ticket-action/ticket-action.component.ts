@@ -45,7 +45,7 @@ export class TicketActionComponent implements OnInit {
       // })
     })
 
-    console.log(this.data)
+    // console.log(this.data)
     this.problemDetail2 = this.data.typeId
     this.problemDetail = this.data.ticket
     this.categoryId = this.data.ticket
@@ -71,11 +71,11 @@ export class TicketActionComponent implements OnInit {
         }
       }
     }
-    console.log(type, model)
+    // console.log(type, model)
     if (model != undefined && type == 'update') {
       this.isLoadingResults = true
       this.report.updateTicket(model).subscribe((response: any)=> {
-        console.log(response)
+        // console.log(response)
         if (response.status == true) {
           this.utilService.triggerNotification(response.message)
           this.close()
@@ -91,7 +91,7 @@ export class TicketActionComponent implements OnInit {
     }else if (model != undefined && type == 'add') {
       this.isLoadingResults = true
       this.report.addTicket(model).subscribe((response: any)=> {
-        console.log(response)
+        // console.log(response)
         if (response.status == true) {
           this.utilService.triggerNotification(response.message)
           this.close()
@@ -115,7 +115,7 @@ export class TicketActionComponent implements OnInit {
   deleteType() {
     this.isLoadingResults = true
     this.report.deleteProblemType(this.problemDetail._id).subscribe((resp: any)=> {
-      console.log(resp)
+      // console.log(resp)
         if (resp.status == true) {
           this.utilService.triggerNotification(resp.message)
           this.isLoadingResults = false
@@ -133,7 +133,7 @@ export class TicketActionComponent implements OnInit {
   deleteCategory() {
     this.isLoadingResults = true
     this.report.deleteProblemCategory(this.problemDetail2._id, this.categoryId._id).subscribe((resp: any) => {
-      console.log(resp)
+      // console.log(resp)
       if (resp.status == true) {
         this.utilService.triggerNotification(resp.message)
         this.isLoadingResults = false

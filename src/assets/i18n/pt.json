@@ -197,7 +197,10 @@
         "submit": "Enviar",
         "ticketDetail": "Detalhe de bilhetes",
         "message": "Mensagem",
-        "close": "Fechar"
+        "close": "Fechar",
+        "all": "Todos os",
+        "removeCategory": "Remover Categoria",
+        "addCategory": "Adicionar Categoria"
     },
     "security": {
         "changePassword": "Alterar palavra-passe",
@@ -227,7 +230,8 @@
         "admin": "Administrador",
         "branchManagement": "Gestão de Sucursais",
         "branches": "Ramos",
-        "productManagement": "Gestão de Produtos"
+        "productManagement": "Gestão de Produtos",
+        "broadCast": "Transmissão"
     },
     "nav": {
         "welcome": "Bem-vindos",
@@ -272,7 +276,23 @@
         "region": "Região",
         "area": "Área",
         "contactEmail": "Email de contato",
-        "gpsLocation": "Localização GPS"
+        "gpsLocation": "Localização GPS",
+        "createBranch": "Criar Filial",
+        "addBranch": "Adicionar filial",
+        "branchInformation": "Informação do Ramo",
+        "branch1": "Ramo 1",
+        "removeBranch": "Remover Ramo",
+        "submit": "Enviar",
+        "cancel": "Cancelar",
+        "updateBranch": "Atualizar filial",
+        "openingHour": "Hora de Abertura",
+        "closingHour": "Hora de Encerramento",
+        "hours": "Horas",
+        "minutes": "Minutos",
+        "am/pm": "Sou/Pm",
+        "am": "Sou",
+        "pm": "Pm",
+        "enterFields": "Por favor, digite todos os campos corretamente"
     },
     "product": {
         "headerText": "Gestão de Produtos",

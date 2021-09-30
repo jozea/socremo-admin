@@ -48,3 +48,30 @@
 .header {
     background-color: #0b81cf;
 }
+
+.open {
+  background-color: #20b155;
+  color: #fff;
+  padding: 3px 9px;
+  border-radius: 4px;
+}
+.processing {
+  background-color: #5e4a0e;
+  color: #fff;
+  padding: 3px 9px;
+  border-radius: 4px;
+}
+.closed {
+  background-color: red;
+  color: #fff;
+  padding: 3px 9px;
+  border-radius: 4px;
+}
+.status {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.active {
+  text-decoration: overline;
+}

@@ -28,17 +28,17 @@ export class ErrorIntercept implements HttpInterceptor {
                     if (error.error instanceof ErrorEvent) {
                         // client-side error
                         errorMessage.message = error.error.message;
-                        console.log(error)
+                        // console.log(error)
                     }else if (error.status == 429) {
-                        console.log(error)
+                        // console.log(error)
                         sessionStorage.clear();
                         this.router.navigate(['/auth'])
                     } else {
                         // server-side error
-                        console.log(error)
+                        // console.log(error)
                         errorMessage.status = error.status;
                         errorMessage.message = error.error.message ?? error.error;
-                        console.log(errorMessage)
+                        // console.log(errorMessage)
                     }
                     return throwError(errorMessage);
                 })

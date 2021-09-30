@@ -24,7 +24,7 @@ export class LoanDetailComponent implements OnInit {
   ngOnInit() {
     // this.adminFullName = JSON.parse(sessionStorage.getItem('user')).fullName;
     this.loanDetail = this.data.loan;
-    console.log(this.loanDetail)
+    // console.log(this.loanDetail)
   }
 
   close(): void {

@@ -140,7 +140,7 @@ export class OnboardingComponent implements OnInit {
       email:'afritest22019@gmail.com', 
       reference:'76x6p1czwkm9e1gms'
     }
-    console.log(model)
+    // console.log(model)
     this.corporateService.getRepsDetails(model).subscribe((resp: any)=> {
       // console.log(resp)
     })
@@ -200,7 +200,7 @@ export class OnboardingComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.broadcastMessageForm.value)
+    // console.log(this.broadcastMessageForm.value)
     if (this.broadcastMessageForm.valid) {
       this.isLoadingResults = true
       this.corporateService.onBoardUsers(this.broadcastMessageForm.value).then((resp: any)=> {

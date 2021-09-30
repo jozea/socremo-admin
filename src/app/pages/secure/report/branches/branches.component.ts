@@ -20,7 +20,7 @@ import { NgxCsvParser, NgxCSVParserError } from 'ngx-csv-parser';
 export class BranchesComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  displayedColumns: string[] = ['position', 'branchName', 'contactEmail', 'contactNumber', 'region', 'area', 'gpsLocation'];
+  displayedColumns: string[] = ['position', 'branchName', 'contactEmail', 'contactNumber', 'region', 'area', 'openingHour', 'closingHour', 'gpsLocation'];
   dataSource: any = new MatTableDataSource([]);;
   searchFilterForm: FormGroup;
   exportAsConfig: ExportAsConfig = exportConfig('pdf', 'branches_table', 'Referral')
@@ -34,6 +34,9 @@ export class BranchesComponent implements OnInit, AfterViewInit {
   renewalScoreRecord:any;
   submitButton: boolean = false;
   renewalScore: any 
+  isBranchCreated: boolean = false
+
+  branchArray: any;
 
   branchData: any[] = [
     // {branchName:'Baixa',	contactEmail:'Isabel.Augusto@Socremo.com',	contactNumber:'877618804', region:'Maputo',	area:'Baixa',	gpsLocation:'25°58\'16.2"S 32°34\'04.5"E'},
@@ -75,31 +78,56 @@ export class BranchesComponent implements OnInit, AfterViewInit {
       branchCode: new FormControl(''),
       branchName: new FormControl(''),
     });
-    // this.fetchBranches(10, 1, this.requestModel)
+    this.fetchBranches()
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
 
-  openDialog() {
+  openDialog(action) {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.width = '80vw';
     dialogConfig.maxHeight = 'auto';
-    dialogConfig.data = { };
+    dialogConfig.data = {action,branch: this.branchArray };
     const dialogRef = this.dialog.open(AddBranchComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(_ => {
-      
+      this.fetchBranches()
     });
   }
 
-  fetchBranches(limit: number, page: number, model: any) {
-    this.reportService.getBranches(limit, page, model).subscribe(async (response: any) => {
-      this.dataSource = new MatTableDataSource(response.data.docs);
-      this.maxall = response.data.meta.total;
-      this.isLoadingResults = false
+  openDialog2(row,action) {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.width = '80vw';
+    dialogConfig.maxHeight = 'auto';
+    dialogConfig.data = {row,action,branch: this.branchArray };
+    const dialogRef = this.dialog.open(AddBranchComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(_ => {
+      this.fetchBranches()
+    });
+  }
+
+  fetchBranches() {
+    this.isLoadingResults = true
+    this.reportService.getBranches().subscribe(async (response: any) => {
+      // console.log(response.data)
+      if (response.status == true && response.data.length != 0) {
+        this.branchArray = response.data[0]
+        this.dataSource = new MatTableDataSource(response.data[0].branches);
+        this.dataSource.paginator = this.paginator
+        if (response.data[0].branches.length != 0) {
+          this.isBranchCreated = true
+        }
+        // this.maxall = response.data.meta.total;
+        this.isLoadingResults = false
+      }else {
+        this.utilService.triggerNotification(response.message)
+        this.isLoadingResults = false
+      }
     }, (error: any) => {
       this.isLoadingResults = false
       this.utilService.triggerNotification(error.status ? 'Error fetching data' : 'Network Issues. Try again')
@@ -118,12 +146,12 @@ export class BranchesComponent implements OnInit, AfterViewInit {
     this.requestModel.state = state;
     this.requestModel.branchName = branchName;
 
-    this.fetchBranches(10, 1, this.requestModel)
+    // this.fetchBranches(10, 1, this.requestModel)
   }
 
   onPageFired(event) {
     this.isLoadingResults = true;
-    this.fetchBranches(event.pageSize, event.pageIndex + 1, this.requestModel)
+    // this.fetchBranches(event.pageSize, event.pageIndex + 1, this.requestModel)
   }
 
   exportTable(type: any) {
@@ -143,7 +171,7 @@ export class BranchesComponent implements OnInit, AfterViewInit {
     this.ngxCsvParser.parse(files[0], { header: true, delimiter: "," })
       .pipe()
       .subscribe((result: Array<any>) => {
-        console.log(result)
+        // console.log(result)
         this.submitButton = true;
         this.renewalScore = result
         this.renewalScoreRecord = {

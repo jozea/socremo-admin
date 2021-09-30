@@ -97,7 +97,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
     this.isLoadingResults = true;
     this.userService.getAllUsers(limit, page, model).subscribe(async (response: any) => {
       this.handleSuccessResponse(response)
-      console.log(response.data[0].result)
+      // console.log(response.data[0].result)
     }, (error: any) => {
       this.handleFailureResponse(error);
     })

@@ -25,6 +25,8 @@ export class TicketDetailsComponent implements OnInit {
   securityQuestions: any[]=[];
   userDetails:any;
   ticketDetails: any;
+  assignedArr: any[]=[]
+  isAssigned: boolean = false;
 
 
   constructor(
@@ -41,8 +43,19 @@ export class TicketDetailsComponent implements OnInit {
 
   ngOnInit(): void {
 
+    const user = JSON.parse(sessionStorage.user);
+    let userId = user.user._id
+    // console.log(user.user._id)
     this.ticketDetails = this.data.ticket
-    console.log(this.ticketDetails)
+    this.assignedArr = this.ticketDetails.assigned
+    // console.log(this.ticketDetails)
+    if (this.assignedArr.length > 0) {
+      this.assignedArr.forEach(e=> {
+        if (userId == e.officerId) {
+          this.isAssigned = true
+        }
+      })
+    }
     
   }
 
@@ -65,7 +78,7 @@ export class TicketDetailsComponent implements OnInit {
     }
     this.isLoadingResults = true
     this.report.assignTicket(model).subscribe((response: any)=> {
-      console.log(response)
+      // console.log(response)
       if (response.status == true) {
         this.utilService.triggerNotification(response.message)
         this.isLoadingResults = false
@@ -86,7 +99,7 @@ export class TicketDetailsComponent implements OnInit {
     }
     this.isLoadingResults = true
     this.report.closeTicket(model).subscribe((response: any)=> {
-      console.log(response)
+      // console.log(response)
       if (response.status == true) {
         this.utilService.triggerNotification(response.message)
         this.isLoadingResults = false
@@ -103,12 +116,12 @@ export class TicketDetailsComponent implements OnInit {
   }
 
 
-  openDialog(ticket) {
+  openDialog() {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.width = '80vw';
     dialogConfig.height = 'auto';
-    dialogConfig.data = { ticket };
+    dialogConfig.data = { ticket: this.ticketDetails };
     const dialogRef = this.dialog.open(TicketCommentsComponent, dialogConfig);
     // console.log(dialogRef)
 

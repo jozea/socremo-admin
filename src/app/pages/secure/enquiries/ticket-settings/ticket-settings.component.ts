@@ -116,11 +116,11 @@ export class TicketSettingsComponent implements OnInit {
         model = this.ticketSettingsForm.value
       }
     }
-    console.log(type, model)
+    // console.log(type, model)
     if (model != undefined && type == 'create') {
       this.isLoadingResults = true
       this.report.createTicket(model).subscribe((response: any)=> {
-        console.log(response)
+        // console.log(response)
         if (response.status == true) {
           this.utilService.triggerNotification(`${action} Successfully`)
           this.getProblemTypes()
@@ -140,7 +140,7 @@ export class TicketSettingsComponent implements OnInit {
   getProblemTypes() {
     this.isLoadingResults = true
     this.report.getProblemType().subscribe((res: any)=> {
-      console.log(res)
+      // console.log(res)
       if (res.status == true) {
         this.problemDetails = res.data[0].result
         // console.log(this.problemDetails)
@@ -149,7 +149,7 @@ export class TicketSettingsComponent implements OnInit {
 
       }
     },error=> {
-      this.utilService.triggerNotification(error.message)
+      this.utilService.triggerNotification('Error fetching data')
       this.isLoadingResults = false
     })
   }

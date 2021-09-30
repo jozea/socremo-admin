@@ -38,7 +38,7 @@ export class AmendComponent implements OnInit {
   ) {   }
 
   ngOnInit(): void {
-    console.log(this.data)
+    // console.log(this.data)
     this.arr = this.data.details.representativesInfo
     this.corporateInfo = this.data.details
     // console.log(this.arr)

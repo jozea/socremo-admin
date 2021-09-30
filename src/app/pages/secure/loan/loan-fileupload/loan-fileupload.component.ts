@@ -56,9 +56,9 @@ export class LoanFileuploadComponent implements OnInit {
 
   formatUploadDate(date) {
     let newDate = new Date(date);
-    console.log(newDate)
+    // console.log(newDate)
     let d = this.utilService.formatDate(newDate)
-    console.log(d)
+    // console.log(d)
     return d
 
   }

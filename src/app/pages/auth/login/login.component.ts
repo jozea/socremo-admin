@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
 
 
     this.utilService.deleteKeyIfEmpty(this.loginForm.value)
-    console.log(this.loginForm.value)
+    // console.log(this.loginForm.value)
     // if (!this.loginForm.valid) {
     //   this.utilService.triggerNotification('Invalid Login Details');
     //   return;
@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
       // if (response.status === true && response.data == "otp") {
       //   this.showOTP = true;
       // } else 
-      console.log(response)
+      // console.log(response)
       if (response.status === true && response.data ) {
         // const { user } = response.data
         // const { user, permissions } = response.data

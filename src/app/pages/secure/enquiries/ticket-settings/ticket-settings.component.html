@@ -34,7 +34,7 @@
                     <!-- <h3 class="text_accion mt-3" style="font-weight: bold;">Categories:</h3> -->
                     <div formArrayName="categories"
                         *ngFor="let item of ticketSettingsForm.get('categories')['controls']; let i = index;"> 
-                        <!-- <span style="font-weight: bold;">Categories {{i+1}}</span> -->
+                        <span style="font-weight: bold;">Category {{i+1}}</span>
                         <div [formGroupName]="i">
                             <!-- <mat-form-field class="col-md-3 col-sm-6 col-xs-12" appearance="outline">
                                 <mat-label>{{ 'ticket.description' | translate }}</mat-label>
@@ -65,8 +65,8 @@
                         </div>
 
                     </div>
-                    <button style="color: white; background-color: rgb(93, 235, 93);" mat-raised-button type="button" (click)="addItem()">Add Category</button>&nbsp;
-                    <button style="color: white; background-color: rgb(228, 86, 86);" mat-raised-button *ngIf="add" type="button" (click)="removevalue()">Remove Category</button>
+                    <button style="color: white; background-color: rgb(93, 235, 93);" mat-raised-button type="button" (click)="addItem()">{{ 'ticket.addCategory' | translate }}</button>&nbsp;
+                    <button style="color: white; background-color: rgb(228, 86, 86);" mat-raised-button *ngIf="add" type="button" (click)="removevalue()">{{ 'ticket.removeCategory' | translate }}</button>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <button class="float-right" style="color: white; background-color: rgb(102, 102, 235);" mat-raised-button (click)="submitTicketSettings('create')">{{ 'ticket.create' | translate }}</button>
                 </div>

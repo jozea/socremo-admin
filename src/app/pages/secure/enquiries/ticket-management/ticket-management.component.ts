@@ -31,7 +31,7 @@ export class TicketManagementComponent implements OnInit {
   maxDate: Date;
   isLoadingResults = false;
   ratingCode: ISelection[] = ratingSelectionOptions
-  feedbackRequestModel: any = {status:"open"}
+  feedbackRequestModel: any = {}
   status: any;
   maxall: number = 1000;
 
@@ -67,7 +67,7 @@ export class TicketManagementComponent implements OnInit {
   }
 
   changeStatus(e) {
-    console.log(e)
+    // console.log(e)
     this.status = e
   }
 
@@ -76,9 +76,12 @@ export class TicketManagementComponent implements OnInit {
   }
 
   fetchFeedback(model: any) {
+    this.isLoadingResults = true
     this.reportService.getTickets( model).subscribe(async (response: any) => {
-      console.log(response.data[0].result)
+      // console.log(response.data[0].result)
       this.dataSource = await new MatTableDataSource(response.data[0].result);
+
+      this.utilService.changeTab("statusDiv", "status", " active")
       // this.maxall = response.data.meta.total;
       this.isLoadingResults = false
     }, (error: any) => {
@@ -98,6 +101,11 @@ export class TicketManagementComponent implements OnInit {
     this.feedbackRequestModel.fullName = fullName;
 
     this.utilService.deleteKeyIfEmpty(this.feedbackRequestModel)
+    this.fetchFeedback(this.feedbackRequestModel)
+  }
+
+  filterStatus(status) {
+    this.feedbackRequestModel.status = status
     this.fetchFeedback(this.feedbackRequestModel)
   }
 
@@ -124,12 +132,14 @@ export class TicketManagementComponent implements OnInit {
     const dialogRef = this.dialog.open(TicketDetailsComponent, dialogConfig);
     // console.log(dialogRef)
 
-    // dialogRef.afterClosed().subscribe(_ => {
-    //   if (_ === 'refresh') {
-    //     // this.handleLoanRequest(this.limit, this.page, this.loanRequestModel)
+    dialogRef.afterClosed().subscribe(_ => {
+      this.fetchFeedback(this.feedbackRequestModel)
 
-    //   }
-    // });
+      // if (_ === 'refresh') {
+      //   // this.handleLoanRequest(this.limit, this.page, this.loanRequestModel)
+
+      // }
+    });
   }
   
   
