@@ -274,14 +274,17 @@
       type="button" (click)="addItem()">{{ 'branch.addBranch' | translate }}</button>&nbsp;
     <button *ngIf="add && action == 'create'" style="color: white; background-color: rgb(216, 60, 60);"
       mat-raised-button type="button" (click)="removevalue()">{{ 'branch.removeBranch' | translate }}</button>&nbsp;
-    <button *ngIf="action == 'add'" (click)="addBranch()" class="btn btn-sm text-white accion_sand">{{ 'branch.submit' | translate }}</button>
-    <button *ngIf="action == 'create'" (click)="createBranch()"
+    <button *ngIf="action == 'add' && isSubmitted == false" (click)="addBranch()" class="btn btn-sm text-white accion_sand">{{ 'branch.submit' | translate }}</button>
+    <button *ngIf="action == 'create' && isSubmitted == false" (click)="createBranch()"
       class="btn btn-sm text-white accion_sand">{{ 'branch.submit' | translate }}</button>
-    <button *ngIf="action == 'update'" (click)="updateBranch()"
+    <button *ngIf="action == 'update' && isSubmitted == false" (click)="updateBranch()"
       class="btn btn-sm text-white accion_sand">{{ 'branch.submit' | translate }}</button>
+    <div *ngIf="isLoadingResults && isSubmitted == true" class=" d-flex justify-content-center">
+      <mat-spinner [diameter]="25"></mat-spinner>
+    </div>
   </div>
-  <div *ngIf="isLoadingResults" class=" d-flex justify-content-center">
+  <!-- <div *ngIf="isLoadingResults" class=" d-flex justify-content-center">
     <mat-spinner [diameter]="25"></mat-spinner>
-  </div>
+  </div> -->
   <button mat-button mat-dialog-close (click)="close()">{{ 'branch.cancel' | translate }}</button>
 </mat-dialog-actions>

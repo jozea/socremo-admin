@@ -55,6 +55,7 @@ export class AddBranchComponent implements OnInit {
 
   openingHour: any;
   closingHour: any;
+  isSubmitted: boolean = false;
 
 
 
@@ -172,49 +173,64 @@ export class AddBranchComponent implements OnInit {
   }
 
   createBranch() {
-    if (this.branchCreationForm.valid) {
-    this.isLoadingResults = true
+    this.branchCreationForm.value.openingHour = this.openingHour
+    this.branchCreationForm.value.closingHour = this.closingHour
+    if (this.branchCreationForm.valid  && this.openingHour != undefined && this.closingHour != undefined) {
+      this.isSubmitted = true
+      this.isLoadingResults = true
       this.reportService.createBranch(this.branchCreationForm.value).subscribe((res: any)=> {
-        this.isLoadingResults = false;
   
         if (res.status) {
           this.utilService.triggerNotification(res.message)
+          this.isLoadingResults = false;
+          this.isSubmitted = true
           this.dialogRef.close();
         } else {
           this.utilService.triggerNotification(res.message)
+          this.isLoadingResults = false;
+          this.isSubmitted = true
         }
       }, (error) => {
         this.isLoadingResults = false;
+        this.isSubmitted = true
         this.utilService.triggerNotification("Branch creation Failed")
       })
+    }else {
+      this.utilService.triggerNotification('Please enter all fields correctly');
     }
 
   }
 
   addBranch() {
     let branchDetail = this.branchCreationForm.value.branches[0]
-    // this.branchCreationForm.value.branches[0].openingHour = `${this.hour}:${this.minute}${this.time}`
-    // this.branchCreationForm.value.branches[0].closingHour = `${this.hour2}:${this.minute2}${this.time2}`
+    this.branchCreationForm.value.branches[0].openingHour = this.openingHour
+    this.branchCreationForm.value.branches[0].closingHour = this.closingHour
     let model = {
       branchDetails: branchDetail,
       branchId: this.branchId
     }
     console.log(model)
-    if (this.branchCreationForm.valid) {
+    if (this.branchCreationForm.valid && this.openingHour != undefined && this.closingHour != undefined) {
+      this.isSubmitted = true
       this.isLoadingResults = true
       this.reportService.addBranch(model).subscribe((res: any)=> {
-        this.isLoadingResults = false;
-  
         if (res.status) {
           this.utilService.triggerNotification(res.message)
+          this.isLoadingResults = false;
+          this.isSubmitted = true
           this.dialogRef.close();
         } else {
           this.utilService.triggerNotification(res.message)
+          this.isLoadingResults = false;
+          this.isSubmitted = true
         }
       }, (error) => {
         this.isLoadingResults = false;
+        this.isSubmitted = true
         this.utilService.triggerNotification("Branch addition Failed")
       })
+    }else {
+      this.utilService.triggerNotification('Please enter all fields correctly');
     }
 
   }
@@ -305,7 +321,7 @@ export class AddBranchComponent implements OnInit {
     }  
   }
   
-  updateBranch() {    
+  updateBranch() {  
     let model = {
       branchName: this.updateDetails.branchName,
       contactEmail: this.updateDetails.contactEmail,
@@ -316,18 +332,23 @@ export class AddBranchComponent implements OnInit {
     }
     // console.log(model)
     if (model != undefined) {
+      this.isSubmitted = true
       this.isLoadingResults = true
       this.reportService.updateBranch(model).subscribe((res: any)=> {
-        this.isLoadingResults = false;
   
         if (res.status) {
           this.utilService.triggerNotification(res.message)
+          this.isLoadingResults = false;
+          this.isSubmitted = true 
           this.dialogRef.close();
         } else {
           this.utilService.triggerNotification(res.message)
+          this.isLoadingResults = false;
+          this.isSubmitted = true
         }
       }, (error) => {
         this.isLoadingResults = false;
+        this.isSubmitted = true
         this.utilService.triggerNotification("Update Failed")
       })
     }else {
