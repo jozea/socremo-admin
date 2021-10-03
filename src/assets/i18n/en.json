@@ -137,7 +137,9 @@
         "settings": "Settings",
         "gender": "Gender",
         "viewLoanDetails": "View Loan Details",
-        "back": "Back"
+        "back": "Back",
+        "broadcast": "Broadcast",
+        "sendMessage": "Send Message"
     },
     "ticket": {
         "headerText": "Ticket Listing",
@@ -179,6 +181,7 @@
         "addNewCategoryToProblemType": "Add new Category to problem type",
         "qst1": "Are you sure you want to delete this Problem Type?",
         "qst2": "Are you sure you want to delete this Problem Category?",
+        "qst3": "Are you sure you want to close this ticket?",
         "add": "Add",
         "yes": "Yes",
         "no": "No",
@@ -314,6 +317,18 @@
         "productName": "Product Name",
         "productStatus": "Product Status",
         "date": "Date"
+    },
+    "broadcast":{
+        "createBroadcastMessage": "Create Broadcast Message",
+        "messageDetails": "Message Details",
+        "title": "Title",
+        "recipient": "Recipient",
+        "selectRecipient": "Select Recipient",
+        "submit": "Submit",
+        "cancel": "Cancel",
+        "searchUserusingMobileNumber": "Search User using Mobile Number",
+        "selectUser": "Select User",
+        "all": "All"
     }
 }
   

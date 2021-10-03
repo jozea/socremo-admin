@@ -53,6 +53,9 @@ export class AddBranchComponent implements OnInit {
   detailsMinute2: any;
   detailsTime2:any;
 
+  openingHour: any;
+  closingHour: any;
+
 
 
 
@@ -71,8 +74,7 @@ export class AddBranchComponent implements OnInit {
     this.branchCreationForm = this.formBuilder.group({
       branches: this.formBuilder.array([ this.createItem()])
     });
-    // console.log(this.data)
-
+    
     this.action = this.data.action
     this.branchId = this.data.branch._id,
     this.updateDetails = this.data.row
@@ -121,8 +123,8 @@ export class AddBranchComponent implements OnInit {
       contactNumber: new FormControl('', Validators.required),
       area: new FormControl('', Validators.compose([Validators.required])),
       region: new FormControl('', Validators.required),
-      openingHour: new FormControl('', Validators.required),
-      closingHour: new FormControl('', Validators.required),
+      openingHour: new FormControl({value: '', disabled: true}, Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(7)])),
+      closingHour: new FormControl({value: '', disabled: true}, Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(7)])),
       gpsLocation: new FormControl('', Validators.required),
     });
   }
@@ -170,7 +172,6 @@ export class AddBranchComponent implements OnInit {
   }
 
   createBranch() {
-    // console.log(this.branchCreationForm.value)
     if (this.branchCreationForm.valid) {
     this.isLoadingResults = true
       this.reportService.createBranch(this.branchCreationForm.value).subscribe((res: any)=> {
@@ -192,16 +193,15 @@ export class AddBranchComponent implements OnInit {
 
   addBranch() {
     let branchDetail = this.branchCreationForm.value.branches[0]
-    this.branchCreationForm.value.branches[0].openingHour = `${this.hour}:${this.minute}${this.time}`
-    this.branchCreationForm.value.branches[0].closingHour = `${this.hour2}:${this.minute2}${this.time2}`
+    // this.branchCreationForm.value.branches[0].openingHour = `${this.hour}:${this.minute}${this.time}`
+    // this.branchCreationForm.value.branches[0].closingHour = `${this.hour2}:${this.minute2}${this.time2}`
     let model = {
       branchDetails: branchDetail,
       branchId: this.branchId
     }
-    // console.log(model)
+    console.log(model)
     if (this.branchCreationForm.valid) {
       this.isLoadingResults = true
-      // console.log('valid')
       this.reportService.addBranch(model).subscribe((res: any)=> {
         this.isLoadingResults = false;
   
@@ -220,19 +220,17 @@ export class AddBranchComponent implements OnInit {
   }
 
   changeHour(e) {
-    
-
     if (this.action == 'add' || this.action == 'create') {
       this.hour = e
+      this.openingHour = `${this.hour}:${this.minute}${this.time}`
+      console.log(this.hour, this.openingHour)
     }else {
       if(this.hour) {
         this.detailsHour = this.hour
         this.updateDetails.openingHour = `${this.detailsHour}:${this.detailsMinute}${this.detailsTime}`
-        // this.updateDetails.openingHour = `${this.hour}:${this.minute}${this.time}`
       }if(this.hour2) {
         this.detailsHour2 = this.hour2
         this.updateDetails.closingHour = `${this.detailsHour2}:${this.detailsMinute2}${this.detailsTime2}`
-        // this.updateDetails.closingHour = `${this.hour2}:${this.minute2}${this.time2}`
       }
     }  
   }
@@ -240,6 +238,7 @@ export class AddBranchComponent implements OnInit {
   changeMinute(e) {
     if (this.action == 'add' || this.action == 'create') {
       this.minute = e
+      this.openingHour = `${this.hour}:${this.minute}${this.time}`
     }else {
       if(this.minute ) {
         this.detailsMinute = this.minute
@@ -254,6 +253,7 @@ export class AddBranchComponent implements OnInit {
   changeHourOfDay(e) {
     if (this.action == 'add' || this.action == 'create') {
       this.time = e
+      this.openingHour = `${this.hour}:${this.minute}${this.time}`
     }else {
       if(this.time) {
         this.detailsTime = this.time
@@ -269,6 +269,7 @@ export class AddBranchComponent implements OnInit {
 
     if (this.action == 'add' || this.action == 'create') {
       this.hour2 = e
+      this.closingHour = `${this.hour2}:${this.minute2}${this.time2}`
     }else {
       if(this.hour) {
         this.updateDetails.openingHour = `${this.hour}:${this.minute}${this.time}`
@@ -281,6 +282,7 @@ export class AddBranchComponent implements OnInit {
   changeMinute2(e) {
     if (this.action == 'add' || this.action == 'create') {
       this.minute2 = e
+      this.closingHour = `${this.hour2}:${this.minute2}${this.time2}`
     }else {
       if(this.minute ) {
         this.updateDetails.openingHour = `${this.hour}:${this.minute}${this.time}`
@@ -293,6 +295,7 @@ export class AddBranchComponent implements OnInit {
   changeHourOfDay2(e) {
     if (this.action == 'add' || this.action == 'create') {
       this.time2 = e
+      this.closingHour = `${this.hour2}:${this.minute2}${this.time2}`
     }else {
       if(this.time) {
         this.updateDetails.openingHour = `${this.hour}:${this.minute}${this.time}`
@@ -314,7 +317,6 @@ export class AddBranchComponent implements OnInit {
     // console.log(model)
     if (model != undefined) {
       this.isLoadingResults = true
-      // console.log('valid')
       this.reportService.updateBranch(model).subscribe((res: any)=> {
         this.isLoadingResults = false;
   

@@ -8,16 +8,16 @@
   </div>
 </div>
 
-<h2 mat-dialog-title class="text_accion_stone">Create Broadcast Message</h2>
+<h2 mat-dialog-title class="text_accion_stone">{{ 'broadcast.createBroadcastMessage' | translate }}</h2>
 <mat-dialog-content class="mat-typography">
 
   <div class="row">
     <form [formGroup]="broadcastMessageForm" class="d-flex flex-column w-100 mx-3 px-5 py-2">
 
-      <h3 class="text_accion"> Message Details</h3>
+      <h3 class="text_accion"> {{ 'broadcast.messageDetails' | translate }}</h3>
       <div>
         <mat-form-field class="w-100">
-          <mat-label>Title</mat-label>
+          <mat-label>{{ 'broadcast.title' | translate }}</mat-label>
           <input [value]="this.broadcastMessageForm.value.title" matInput type="text" formControlName="title" required>
           <button mat-button *ngIf="this.broadcastMessageForm.value.title" matSuffix mat-icon-button aria-label="Clear"
             (click)="this.broadcastMessageForm.value.title=''">
@@ -25,23 +25,22 @@
           </button>
         </mat-form-field>
 
-        <mat-form-field class="w-100">
+        <!-- <mat-form-field class="w-100">
           <mat-label>Enter Message Here</mat-label>
           <textarea formControlName="message" matInput placeholder="Ex. This is to notify you ... "></textarea>
-        </mat-form-field>
+        </mat-form-field> -->
 
       </div>
 
-      <h3 class="text_accion">Recipient</h3>
+      <h3 class="text_accion">{{ 'broadcast.recipient' | translate }}</h3>
       <div class="w-100">
 
         <mat-form-field class="w-100">
-          <mat-label>Select Recipient</mat-label>
+          <mat-label>{{ 'broadcast.selectRecipient' | translate }}</mat-label>
           <mat-select formControlName="recipientType" (selectionChange)="handleRecipientSelection()" required>
-            <mat-option value="all"> All </mat-option>
-            <!-- <mat-option value="saveBrighta Users"> SaveBrighta Users </mat-option>
-            <mat-option value="wallet Users"> Wallet Users </mat-option> -->
-            <mat-option value="some"> Select User(s) </mat-option>
+            <mat-option value="">{{ 'broadcast.selectRecipient' | translate }}</mat-option>
+            <mat-option *ngIf="all == 'all'" value="all"> {{ 'broadcast.all' | translate }} </mat-option>
+            <mat-option *ngIf="single == 'single'" value="some"> {{ 'broadcast.selectUser' | translate }} </mat-option>
           </mat-select>
         </mat-form-field>
 
@@ -49,11 +48,11 @@
 
           <div class="row">
             <mat-form-field class="col-11">
-              <mat-label>Search User using Mobile Number</mat-label>
-              <input [value]="this.broadcastMessageForm.value.mobileNumber" matInput type="tel"
+              <mat-label>{{ 'broadcast.searchUserusingMobileNumber' | translate }}</mat-label>
+              <input [(ngModel)]="this.broadcastMessageForm.value.mobileNumber" matInput type="tel"
                 formControlName="mobileNumber" required>
               <button mat-button *ngIf="this.broadcastMessageForm.value.mobileNumber" matSuffix mat-icon-button
-                aria-label="Clear" (click)="this.broadcastMessageForm.value.mobileNumber=''">
+                aria-label="Clear" (click)="resetDropdown()">
                 <mat-icon>close</mat-icon>
               </button>
             </mat-form-field>
@@ -71,7 +70,7 @@
           </div>
 
           <mat-form-field *ngIf="userNameList.length" class="w-100">
-            <mat-label>Select User(s)</mat-label>
+            <mat-label>{{ 'broadcast.selectUser' | translate }}</mat-label>
             <mat-select formControlName="selectedUsers" multiple>
               <mat-option *ngFor="let item of userNameList" [value]="item.mobileNumber">{{item.fullName}}</mat-option>
             </mat-select>
@@ -90,9 +89,12 @@
 
 
     </form>
+    <div class="d-flex flex-column w-100 mx-3 px-5 py-2">
+      <ckeditor name="comment" tagName="textarea" [editor]="Editor" [(ngModel)]="comment"></ckeditor>
+    </div>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions class="d-flex justify-content-between">
-  <button (click)="sendMessage()" class="btn btn-sm text-white accion_sand">Submit</button>
-  <button mat-button mat-dialog-close (click)="close()">Cancel</button>
+  <button (click)="sendMessage()" class="btn btn-sm text-white accion_sand">{{ 'broadcast.submit' | translate }}</button>
+  <button mat-button mat-dialog-close (click)="close()">{{ 'broadcast.cancel' | translate }}</button>
 </mat-dialog-actions>

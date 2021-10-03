@@ -138,7 +138,9 @@
         "settings": "Configurações",
         "gender": "Género",
         "viewLoanDetails": "Ver Detalhes do Empréstimo",
-        "back": "Voltar"
+        "back": "Voltar",
+        "broadcast": "Transmissão",
+        "sendMessage": "Enviar mensagem"
     },
     "ticket": {
         "headerText": "Listagem de bilhetes",
@@ -180,6 +182,7 @@
         "addNewCategoryToProblemType": "Adicionar nova categoria ao tipo de problema",
         "qst1": "Tem certeza de que deseja excluir este tipo de problema?",
         "qst2": "Tem certeza de que deseja excluir esta categoria de problema?",
+        "qst3": "Tem certeza que deseja fechar este tíquete?",
         "add": "Adicionar",
         "yes": "Sim",
         "no": "Não",
@@ -313,6 +316,18 @@
         "productName": "Nome do produto",
         "productStatus": "Estado do Produto",
         "date": "Date"
+    },
+    "broadcast": {
+        "createBroadcastMessage": "Criar mensagem de transmissão",
+        "messageDetails": "Detalhes da mensagem",
+        "title": "Título",
+        "recipient": "Destinatário",
+        "selectRecipient": "Selecione Destinatário",
+        "submit": "Enviar",
+        "cancel": "Cancel",
+        "searchUserusingMobileNumber": "Utilizador de pesquisa usando número móvel",
+        "selectUser": "Selecione Utilizador",
+        "all": "Todos os"
     }
     
 

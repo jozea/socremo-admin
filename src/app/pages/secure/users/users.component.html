@@ -9,8 +9,9 @@
 </div>
 
 <section >
-  <div class="header mt-3 text-white">
+  <div class="header mt-3 text-white d-flex justify-content-between align-items-center pr-3">
     <p class="p-3 px-4 lead">{{ 'users.headerText' | translate }}</p>
+    <button disabled (click)="openDialog('all')" class="btn btn-sm text-white filter_btn">{{ 'users.broadcast' | translate }}</button>  
 </div>
 
 <!-- <div class="header px-4 mt-3 d-flex justify-content-between align-items-center">

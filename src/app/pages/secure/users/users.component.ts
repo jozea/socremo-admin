@@ -10,6 +10,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AppVersionComponent } from '../../secure/admin/app-version/app-version.component';
 import { KycTierComponent } from '../admin/kyc-tier/kyc-tier.component';
+import { AddBroadcastComponent } from '../broadcast/add-broadcast/add-broadcast.component';
 
 
 
@@ -179,6 +180,27 @@ export class UsersComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(_ => {
 
     });
+  }
+
+  openDialog(all: string) {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.width = '80vw';
+    dialogConfig.maxHeight = 'auto';
+    dialogConfig.data = {all };
+    const dialogRef = this.dialog.open(AddBroadcastComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(_ => {
+      this.isLoadingResults = false;
+      // this.fetchBroadcastMessages(10,1,{})
+    });
+  }
+  // ngAfterViewInit() {
+  //   this.dataSource.paginator = this.paginator;
+  // }
+
+  assignTerminal(agent) {
+    // console.log(agent)
   }
 
   // openDialog(action,obj) {

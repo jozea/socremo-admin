@@ -8,6 +8,9 @@ import { AgencyService } from 'src/app/services/agency_banking/agency.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 import { PermissionService } from 'src/app/services/permission/permission.service';
 
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { constructorParametersDownlevelTransform } from '@angular/compiler-cli';
+
 
 @Component({
   selector: 'app-add-broadcast',
@@ -16,10 +19,16 @@ import { PermissionService } from 'src/app/services/permission/permission.servic
 })
 export class AddBroadcastComponent implements OnInit {
 
+  public Editor = ClassicEditor;
+  public comment = '<p></p>';
+
   broadcastMessageForm: FormGroup;
   isLoadingResults = false;
   userNameList: string[] = [];
   isLoading=false
+  single: any;
+  all:any;
+  mobileNumber: any;
 
   constructor(
     public dialogRef: MatDialogRef<AddBroadcastComponent>,
@@ -33,13 +42,17 @@ export class AddBroadcastComponent implements OnInit {
 
   ngOnInit() {
 
-      this.broadcastMessageForm = this.formBuilder.group({
-        title: new FormControl('', Validators.required),
-        message: new FormControl('', Validators.required),
-        recipientType: new FormControl('', Validators.required),
-        mobileNumber: new FormControl(''),
-        selectedUsers: new FormControl(''),
-      });
+    this.broadcastMessageForm = this.formBuilder.group({
+      title: new FormControl('', Validators.required),
+      message: new FormControl('<p></p>', Validators.required),
+      recipientType: new FormControl('', Validators.required),
+      mobileNumber: new FormControl(''),
+      selectedUsers: new FormControl(''),
+    });
+    console.log(this.data)
+    this.single = this.data.user
+    this.all = this.data.all 
+    this.mobileNumber = this.data.mobileNumber
   }
 
   showSearchByMobile = false;
@@ -49,10 +62,18 @@ export class AddBroadcastComponent implements OnInit {
   handleRecipientSelection() {
     if(this.broadcastMessageForm.value.recipientType === 'some') {
       this.showSearchByMobile = true;
+      this.broadcastMessageForm.value.mobileNumber = this.mobileNumber
     } else {
       this.showSearchByMobile = false;
     }
 
+  }
+
+  resetDropdown() {
+    this.broadcastMessageForm.reset({
+      recipientType: "",
+      mobileNumber: "",
+    });
   }
 
   token = []
@@ -69,11 +90,16 @@ export class AddBroadcastComponent implements OnInit {
         this.utilService.triggerNotification("No result found for this search")      
       }
     }, err => {
-      this.utilService.triggerNotification("System couldn't fetch users, please try again later")      
+      console.log(err)
+      this.utilService.triggerNotification(err.message)   
+      // this.utilService.triggerNotification("System couldn't fetch users, please try again later")   
+      this.searchingUser = false   
     })
   }
 
   sendMessage() {
+    this.broadcastMessageForm.value.message = this.comment
+    console.log(this.broadcastMessageForm.value)
     
     let model= {
       notification: {
@@ -92,7 +118,7 @@ export class AddBroadcastComponent implements OnInit {
       if(this.broadcastMessageForm.value.recipientType === 'some') {
         this.permissionService.sendMessageToOne(model).subscribe((res: any)=>{
           if (res.status === true ) {
-            this.utilService.triggerNotification("Message sent successfully") 
+            this.utilService.triggerNotification(res.message) 
             this.close()
           }else {
             this.utilService.triggerNotification("Message was not created") 
@@ -112,7 +138,7 @@ export class AddBroadcastComponent implements OnInit {
         }
         this.permissionService.sendMessageToAll(model2).subscribe((res: any)=>{
           if (res.status === true ) {
-            this.utilService.triggerNotification("Message sent successfully") 
+            this.utilService.triggerNotification(res.message) 
             this.close()
           }else {
             this.utilService.triggerNotification("Message was not created") 
@@ -124,8 +150,6 @@ export class AddBroadcastComponent implements OnInit {
         })
       }
     }
-    
-    
 
   }
 

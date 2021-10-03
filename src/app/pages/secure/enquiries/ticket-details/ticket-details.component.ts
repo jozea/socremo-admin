@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { ReportService } from 'src/app/services/report/report.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
+import { TicketActionComponent } from '../ticket-action/ticket-action.component';
 import { TicketCommentsComponent } from '../ticket-comments/ticket-comments.component';
 
 @Component({
@@ -93,27 +94,7 @@ export class TicketDetailsComponent implements OnInit {
 
   }
 
-  closeTicket() {
-    let model = {
-      ticketId: this.ticketDetails._id
-    }
-    this.isLoadingResults = true
-    this.report.closeTicket(model).subscribe((response: any)=> {
-      // console.log(response)
-      if (response.status == true) {
-        this.utilService.triggerNotification(response.message)
-        this.isLoadingResults = false
-      }else {
-        this.utilService.triggerNotification(response.message)
-        this.isLoadingResults = false
-      }
-    },error=> {
-      this.utilService.triggerNotification(error.message)
-      this.isLoadingResults = false
-    })
-
-
-  }
+  
 
 
   openDialog() {
@@ -125,12 +106,32 @@ export class TicketDetailsComponent implements OnInit {
     const dialogRef = this.dialog.open(TicketCommentsComponent, dialogConfig);
     // console.log(dialogRef)
 
-    // dialogRef.afterClosed().subscribe(_ => {
-    //   if (_ === 'refresh') {
-    //     // this.handleLoanRequest(this.limit, this.page, this.loanRequestModel)
+    dialogRef.afterClosed().subscribe(_ => {
+      this.dialogRef.close();
 
-    //   }
-    // });
+      // if (_ === 'refresh') {
+      //   // this.handleLoanRequest(this.limit, this.page, this.loanRequestModel)
+
+      // }
+    });
+  }
+
+  openActionDialog2(action) {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.width = '80vw';
+    dialogConfig.height = 'auto';
+    dialogConfig.data = { ticket: this.ticketDetails, action };
+    const dialogRef = this.dialog.open(TicketActionComponent, dialogConfig);
+    // console.log(dialogRef)
+
+    dialogRef.afterClosed().subscribe(_ => {
+      this.dialogRef.close();
+      if (_ === 'refresh') {
+        // this.handleLoanRequest(this.limit, this.page, this.loanRequestModel)
+
+      }
+    });
   }
   
 

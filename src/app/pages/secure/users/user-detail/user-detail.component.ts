@@ -6,6 +6,7 @@ import { monthNames } from 'src/app/constants/constant';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { UserSettingsComponent } from '../user-settings/user-settings.component';
 import { UtilsService } from 'src/app/services/utils/utils.service';
+import { AddBroadcastComponent } from '../../broadcast/add-broadcast/add-broadcast.component';
 
 
 @Component({
@@ -134,6 +135,20 @@ export class UserDetailComponent implements OnInit {
 
   openDialog(user) {
     this.router.navigate(['/app/loans/management'])
+  }
+
+  openMessageDialog(user: string) {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.width = '80vw';
+    dialogConfig.maxHeight = 'auto';
+    dialogConfig.data = {user, mobileNumber: this.userId };
+    const dialogRef = this.dialog.open(AddBroadcastComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(_ => {
+      this.isLoadingResults = false;
+      // this.fetchBroadcastMessages(10,1,{})
+    });
   }
 
   // openDialog(user) {

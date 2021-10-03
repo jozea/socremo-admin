@@ -115,15 +115,11 @@
               </mat-select>
             </mat-form-field>
 
-            <!-- <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+            <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
               <mat-label>{{ 'branch.openingHour' | translate }}</mat-label>
-              <input [value]="this.branchCreationForm.value.openingHour" matInput type="text"
-                formControlName="openingHour">
-              <button mat-button *ngIf="openingHour" matSuffix mat-icon-button
-                aria-label="Clear" (click)="openingHour=''">
-                <mat-icon>close</mat-icon>
-              </button>
-            </mat-form-field> -->
+              <input [(ngModel)]="openingHour" matInput type="text"
+                formControlName="openingHour" class="text-dark">
+            </mat-form-field>
 
             <h4 class="col-md-12 col-sm-12 col-xs-12 font-weight-bold">{{ 'branch.closingHour' | translate }}</h4>
 
@@ -154,15 +150,11 @@
               </mat-select>
             </mat-form-field>
 
-            <!-- <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+            <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
               <mat-label>{{ 'branch.closingHour' | translate }}</mat-label>
-              <input [(ngModel)]="updateDetails.closingHour" matInput type="text"
-                name="closingHour">
-              <button mat-button *ngIf="closingHour" matSuffix mat-icon-button
-                aria-label="Clear" (click)="closingHour=''">
-                <mat-icon>close</mat-icon>
-              </button>
-            </mat-form-field> -->
+              <input [(ngModel)]="closingHour" matInput type="text"
+                formControlName="closingHour" class="text-dark">
+            </mat-form-field>
 
           </div>
         </div>
@@ -226,7 +218,7 @@
       <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
         <mat-label>{{ 'branch.closingHour' | translate }}</mat-label>
         <input [(ngModel)]="updateDetails.openingHour" matInput type="text"
-          name="openingHour">
+          name="openingHour" disabled class="text-dark">
         <button mat-button *ngIf="openingHour" matSuffix mat-icon-button
           aria-label="Clear" (click)="openingHour=''">
           <mat-icon>close</mat-icon>
@@ -265,7 +257,7 @@
       <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
         <mat-label>{{ 'branch.closingHour' | translate }}</mat-label>
         <input [(ngModel)]="updateDetails.closingHour" matInput type="text"
-          name="closingHour">
+          name="closingHour" disabled class="text-dark">
         <button mat-button *ngIf="closingHour" matSuffix mat-icon-button
           aria-label="Clear" (click)="closingHour=''">
           <mat-icon>close</mat-icon>

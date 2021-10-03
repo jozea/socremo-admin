@@ -38,8 +38,8 @@ export class TicketCommentsComponent implements OnInit {
 
   }
 
-  close() {
-
+  close(): void {
+    this.dialogRef.close();
   }
 
   commentOnTicket() {
@@ -54,6 +54,7 @@ export class TicketCommentsComponent implements OnInit {
       if (response.status == true) {
         this.utilService.triggerNotification(response.message)
         this.isLoadingResults = false
+        this.close();
       }else {
         this.utilService.triggerNotification(response.message)
         this.isLoadingResults = false

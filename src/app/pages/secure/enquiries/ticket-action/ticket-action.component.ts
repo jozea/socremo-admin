@@ -18,6 +18,7 @@ export class TicketActionComponent implements OnInit {
   problemDetail2: any;
   action: any;
   categoryId: any;
+  ticketDetails:any;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -50,6 +51,7 @@ export class TicketActionComponent implements OnInit {
     this.problemDetail = this.data.ticket
     this.categoryId = this.data.ticket
     this.action = this.data.action
+    this.ticketDetails = this.data.ticket
   }
   
   submitTicketSettings(type) {
@@ -146,6 +148,29 @@ export class TicketActionComponent implements OnInit {
       this.utilService.triggerNotification(error.message)
       this.isLoadingResults = false
     })
+  }
+
+  closeTicket() {
+    let model = {
+      ticketId: this.ticketDetails._id
+    }
+    this.isLoadingResults = true
+    this.report.closeTicket(model).subscribe((response: any)=> {
+      // console.log(response)
+      if (response.status == true) {
+        this.utilService.triggerNotification(response.message)
+        this.isLoadingResults = false
+        this.close()
+      }else {
+        this.utilService.triggerNotification(response.message)
+        this.isLoadingResults = false
+      }
+    },error=> {
+      this.utilService.triggerNotification(error.message)
+      this.isLoadingResults = false
+    })
+
+
   }
 
 }

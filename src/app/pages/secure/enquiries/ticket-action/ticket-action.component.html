@@ -7,9 +7,7 @@
 		<div class="spinner-item"></div>
 	</div>
 </div> -->
-<div *ngIf="isLoadingResults" class="col-12 d-flex justify-content-center p-5" >
-	<mat-spinner [diameter]="25" ></mat-spinner>
-</div>
+
 <h2 mat-dialog-title class="text_accion_stone">{{ 'ticket.action' | translate }}</h2>
 <mat-dialog-content style="background-color: rgb(230, 240, 240);">
     <div class="row" *ngIf="action == 'update'">
@@ -91,6 +89,16 @@
             </div>
         </mat-card>
     </div>
+
+    <div class="row d-flex flex-column w-80 px-5 py-2 align-items-center" *ngIf="action == 'closeTicket'">
+        <mat-card class="align-items-center">
+            <span class="mb-3 font-weight-bold">{{ 'ticket.qst3' | translate }}</span><br>
+            <div style="margin-left: 30%; margin-top: 15%;">
+                <button class="align-items-center" style="color: white; background-color: red;" mat-raised-button (click)="closeTicket()">{{ 'ticket.yes' | translate }}</button>&nbsp;
+                <button class="" style="color: white; background-color: blue;" mat-raised-button (click)="close()">{{ 'ticket.no' | translate }}</button>
+            </div>
+        </mat-card>
+    </div>
 </mat-dialog-content>
 <mat-dialog-actions class="d-flex justify-content-between">
     <div>
@@ -107,6 +115,9 @@
         Delete Category
       </button> -->
       
+    </div>
+    <div *ngIf="isLoadingResults" class="ustify-content-center " >
+        <mat-spinner [diameter]="25" ></mat-spinner>
     </div>
     <button mat-button mat-dialog-close (click)="close()">{{ 'ticket.cancel' | translate }}</button>
   </mat-dialog-actions>
