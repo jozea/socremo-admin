@@ -49,7 +49,7 @@ export class AddBroadcastComponent implements OnInit {
       mobileNumber: new FormControl(''),
       selectedUsers: new FormControl(''),
     });
-    console.log(this.data)
+    // console.log(this.data)
     this.single = this.data.user
     this.all = this.data.all 
     this.mobileNumber = this.data.mobileNumber
@@ -90,7 +90,7 @@ export class AddBroadcastComponent implements OnInit {
         this.utilService.triggerNotification("No result found for this search")      
       }
     }, err => {
-      console.log(err)
+      // console.log(err)
       this.utilService.triggerNotification(err.message)   
       // this.utilService.triggerNotification("System couldn't fetch users, please try again later")   
       this.searchingUser = false   
@@ -99,7 +99,7 @@ export class AddBroadcastComponent implements OnInit {
 
   sendMessage() {
     this.broadcastMessageForm.value.message = this.comment
-    console.log(this.broadcastMessageForm.value)
+    // console.log(this.broadcastMessageForm.value)
     
     let model= {
       notification: {

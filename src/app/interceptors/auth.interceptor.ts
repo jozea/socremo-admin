@@ -27,10 +27,22 @@
 import {HttpEvent,HttpHandler,HttpRequest, HttpInterceptor} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { sha512 } from 'js-sha512'; 
+import { crypto } from 'crypto-js'
 
 
 export class AuthIntercept implements HttpInterceptor {
+    
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        // const createHash = async (req: Request): Promise<any> => {
+        //     const API_KEY = 'SCDqGMNKLn_7LDcOOEsG4OQsFbOTVnYRR8T0eVx3Tj4=';
+        //     const body = req.body;
+        //     body['path'] = '/admin/insurance/templates';
+        //     const text = `${API_KEY}|${JSON.stringify(body)}`;
+        //     const hash = crypto.createHash('sha512', API_KEY).update(text).digest('hex');
+        //     return hash;
+        // };
+
+        // let a = createHash(request.body)
         const channel = 'web';
         let apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
         let timestamp = Date.now().toString();

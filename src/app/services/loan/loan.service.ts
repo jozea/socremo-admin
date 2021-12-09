@@ -42,9 +42,7 @@
     return this.http.post<any>(`${this.baseUrl}loans/admin/summary`, model);
   }
   
-  getLoanSettings(): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}loans/settings`, {});
-  }
+  
   
   updateLoanSettings(model: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}loans/admin/settings`, model);
@@ -62,6 +60,37 @@
     return this.http.post<any>(`${this.baseUrl}loans/store-renewal-score`, model);
   }
 
+  getLoanHistory(limit:number, page: number, model: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}admin/loan/history?limit=${limit}&page=${page}`, model);
+  }
+
+
+
+
+
+  getLoanSettings(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}admin/loan/settings/all`);
+  }
+
+  createLoanSettings(model): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}admin/loan/settings`, model);
+  }
+
+  updateLoanSetting(model): Observable<any> {
+    return this.http.patch<any>(`${this.baseUrl}admin/loan/settings`, model);
+  }
+
+  imageUpload(data: any) {
+    return this.http.post<any>(`${this.baseUrl}admin/files/admin/loan-image`, data)
+  }
+
+  assignLoan(loanId, adminId): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}admin/loan/assign-loan/${loanId}/${adminId}`);
+  }
+
+  updateLoanStatus(model): Observable<any> {
+    return this.http.patch<any>(`${this.baseUrl}admin/loan/update-loan-status`, model);
+  }
   
   }
   

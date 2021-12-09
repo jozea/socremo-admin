@@ -40,8 +40,15 @@ export class UserDetailComponent implements OnInit {
     this.userId = this.activatedRoute.snapshot.paramMap.get('id');
     // console.log(this.userId)
     // let param = {}
-    let param = {primaryTelephone: this.userId}
+    // let param = {username: this.userId}
+    let param = {name: this.userId}
     this.getSingleUser(param)
+  }
+
+  async routeToDetails(user) {
+    // console.log(user)
+    const stringifiedUser = JSON.stringify(user)
+    this.router.navigate(['app/ticket/management'])
   }
 
   handleSuccessResponse = async (response) => {

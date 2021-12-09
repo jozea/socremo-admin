@@ -68,7 +68,6 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
       accountNumber: new FormControl('',),
       transactionReference: new FormControl('', Validators.minLength(9)),
     });
-
     // this.fetchAllTransaction(10, 1, this.transactionRequestModel);
   }
 

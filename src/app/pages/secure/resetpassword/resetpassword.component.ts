@@ -6,6 +6,10 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
+import { UserService } from 'src/app/services/user/user.service';
+import { PasswordValidation } from '../../auth/register/password-validator';
+import { PinValidation } from './pin-validator';
+
 
 
 
@@ -19,23 +23,30 @@ export class ResetpasswordComponent implements OnInit {
  
   hide = true;
   cHide = true;
-  loading: boolean = false;
+  isLoading: boolean = false;
   resetForm: FormGroup; 
 
-  currentSetting: any = 1
+  currentSetting: any = 2
   headerText: any = marker('security.changePassword')
   action: any = marker('security.resetPassword')
 
   constructor(
     public formBuilder: FormBuilder,
-    private router: Router,
-    public util: UtilsService
+    private router: Router, private userService: UserService,
+    public util: UtilsService, private utilService: UtilsService
     ) {
     }
 
-  resetPassword(): void {
-    this.loading = true;
-    this.router.navigate(['/auth/login']);
+  resetPassword(value): void {
+    this.isLoading = true;
+    if (value == 1) {
+      // console.log(value)
+    }else if (value == 2) {
+      this.changePin()
+    }else if (value == 3) {
+      // console.log(value)
+    }
+    // this.router.navigate(['/auth/login']);
   }
 
   goBack() {
@@ -46,11 +57,12 @@ export class ResetpasswordComponent implements OnInit {
     this.resetForm = this.formBuilder.group({
       password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(6)])),
       cpassword: new FormControl('', Validators.compose([Validators.required, Validators.minLength(6)])),
-      pin: new FormControl('', Validators.compose([Validators.required, Validators.minLength(4)])),
-      cpin: new FormControl('', Validators.compose([Validators.required, Validators.minLength(4)])),
+      oldPin: new FormControl('', Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(4)])),
+      newPin: new FormControl('', Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(4)])),
+      cPin: new FormControl('', Validators.compose([Validators.required])),
       securityQuetion: new FormControl('', Validators.required),
       securityAnswer: new FormControl('', Validators.required)
-    });    
+    },{ validator: PinValidation.matchPin});   
    }
 
    changesettings(value: any) {
@@ -68,6 +80,27 @@ export class ResetpasswordComponent implements OnInit {
        this.action = marker('security.resetSecurityQuestion')
      }
 
+   }
+
+   changePin() {
+     let model = {
+      newLoginPin:this.resetForm.value.newPin, 
+      oldLoginPin:this.resetForm.value.oldPin
+    }
+    // console.log(model)
+    this.userService.changeAdminPin(model).subscribe((response: any)=> {
+      // console.log(response)
+      if(response.status == true) {
+        this.utilService.triggerNotification(response.message)
+        this.isLoading = false
+      }else {
+        this.utilService.triggerNotification(response.message)
+        this.isLoading = false
+      }
+    }), error=> {
+      this.utilService.triggerNotification(error.error.message)
+      this.isLoading = false
+    }
    }
 
    

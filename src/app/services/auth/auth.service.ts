@@ -16,12 +16,16 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
+  login(loginDetail: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/admin/signin`, loginDetail);
+  }
+
   // login(loginDetail: any): Observable<any> {
-  //   return this.http.post<any>(`${this.baseUrl}users/admin/login`, loginDetail);
+  //   return this.http.post<any>(`${this.baseUrl}auth/signin`, loginDetail);
   // }
 
-  login(loginDetail: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}auth/signin`, loginDetail);
+  adminLogin(loginDetail: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}admin/signin`, loginDetail);
   }
   
   logOutUser(logoutDetail: any): Observable<any> {
@@ -42,6 +46,15 @@ export class AuthService {
 
   updateKycTier(model: any): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}app/updateVersion`, model);
+  }
+
+  createAdmin(model: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}admin/create`, model);
+  }
+
+
+  getSecurityQuestions() {
+    return this.http.get<any>(`${this.baseUrl}auth/security-questions`);
   }
 
 }

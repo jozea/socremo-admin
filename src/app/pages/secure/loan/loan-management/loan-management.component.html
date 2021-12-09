@@ -10,7 +10,7 @@
 
 <section>
   <div class="header px-4 mt-3 d-flex justify-content-between align-items-center">
-    <p class="p-3 px-4 lead text-white">Customer Loan Management</p>
+    <p class="p-3 px-4 lead text-white">Loan Management</p>
     <div class="d-flex align-items-center">
       <!-- <mat-icon routerLink="/app/users" class="mt-1 mx-2 cursor_pointer text-white">arrow_back</mat-icon> -->
       <p routerLink="/app/users" class="mt-1 mx-2 cursor_pointer text-white">Back</p>
@@ -25,12 +25,9 @@
       <mat-tab label="All Loans {{totalLoans}}"></mat-tab>
       <mat-tab label="Pending Loans {{pendingLoan}}"></mat-tab>
       <mat-tab label="Disbursed Loans {{disbursedLoan}}"></mat-tab>
-      <!-- <mat-tab label="Past Due Loan"></mat-tab> -->
-      <mat-tab label="Rejected Loans {{rejectedLoan}}"></mat-tab>
-      <mat-tab label="Repaid Loans {{repaidLoan}}"></mat-tab>
-      <!-- <mat-tab label="Drop-off Loans"></mat-tab> -->
-      <mat-tab label="Expired Loans {{expiredLoan}}"></mat-tab>
-      <!-- <mat-tab label="Renewals"></mat-tab> -->
+      <mat-tab label="Assigned Loans {{assignedLoan}}"></mat-tab>
+      <!-- <mat-tab label="Repaid Loans {{repaidLoan}}"></mat-tab>
+      <mat-tab label="Expired Loans {{expiredLoan}}"></mat-tab> -->
     </mat-tab-group>
     <!-- <div class="col-md-3">
       <p class="p-3 px-4 lead">Total Loans: {{totalCount}}</p>
@@ -178,77 +175,77 @@
 
     <div class=" mat-elevation-z8">
       <div id="loan_table" class="table-container">
-        <table mat-table [dataSource]="loanData" class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
           <ng-container matColumnDef="position">
             <th mat-header-cell *matHeaderCellDef> S/N </th>
             <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="name">
-            <th disableClear mat-header-cell *matHeaderCellDef> Customer Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.customerName}} </td>
+          <ng-container matColumnDef="customerId">
+            <th disableClear mat-header-cell *matHeaderCellDef> Customer Id </th>
+            <td mat-cell *matCellDef="let element"> {{element.customerId}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="phoneNumber">
-            <th mat-header-cell *matHeaderCellDef> Phone Number </th>
-            <td mat-cell *matCellDef="let element"> {{element.mobileNumber}} </td>
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef> Amount </th>
+            <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="channel">
-            <th mat-header-cell *matHeaderCellDef> Channel </th>
-            <td mat-cell *matCellDef="let element"> {{element.channel}} </td>
+          <ng-container matColumnDef="tenure">
+            <th mat-header-cell *matHeaderCellDef> Tenure </th>
+            <td mat-cell *matCellDef="let element"> {{element.tenure}} </td>
           </ng-container>
 
           <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef> Status </th>
-            <td mat-cell *matCellDef="let element"> {{element.applicationStatus}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.status}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="action">
+          <!-- <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef> Action By </th>
             <td mat-cell *matCellDef="let element"> {{element.action}} </td>
-          </ng-container>
+          </ng-container> -->
 
           <ng-container matColumnDef="reason">
             <th mat-header-cell *matHeaderCellDef> Reason </th>
-            <td mat-cell *matCellDef="let element"> {{element.rejectionReason === "" || element.rejectionReason ? element.rejectionReason : element.reason}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.reason}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="amountRequested">
+          <!-- <ng-container matColumnDef="amountRequested">
             <th mat-header-cell *matHeaderCellDef> Requested Amount </th>
             <td mat-cell *matCellDef="let element"> {{ element.requestedAmount}} </td>
-          </ng-container>
+          </ng-container> -->
 
-          <ng-container matColumnDef="amountRecommended">
+          <!-- <ng-container matColumnDef="amountRecommended">
             <th mat-header-cell *matHeaderCellDef> Recommended Amount </th>
             <td mat-cell *matCellDef="let element"> {{ element.recommendedAmount}} </td>
-          </ng-container>
+          </ng-container> -->
 
-          <ng-container matColumnDef="termRequested">
+          <!-- <ng-container matColumnDef="termRequested">
             <th mat-header-cell *matHeaderCellDef> Requested Tenure </th>
             <td mat-cell *matCellDef="let element"> {{element.requestedTenure}} </td>
-          </ng-container>
+          </ng-container> -->
 
-          <ng-container matColumnDef="termRecommended">
+          <!-- <ng-container matColumnDef="termRecommended">
             <th mat-header-cell *matHeaderCellDef> Recommended Tenure </th>
             <td mat-cell *matCellDef="let element"> {{element.recommended ? element.recommended.recommendedTerm : ""}} </td>
-          </ng-container>
+          </ng-container> -->
 
-          <ng-container matColumnDef="creationDate">
+          <ng-container matColumnDef="createdAt">
             <th mat-header-cell *matHeaderCellDef> Application Date </th>
-            <td mat-cell *matCellDef="let element"> {{utilService.formatDateString(element.applicationDate)}} </td>
+            <td mat-cell *matCellDef="let element"> {{utilService.formatDateString(element.createdAt)}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="date">
+          <ng-container matColumnDef="updatedAt">
             <th mat-header-cell *matHeaderCellDef> Updated Date </th>
             <td mat-cell *matCellDef="let element"> {{utilService.formatDateString(element.updatedAt)}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="renew">
+          <!-- <ng-container matColumnDef="renew">
             <th mat-header-cell *matHeaderCellDef> IsRenewal </th>
             <td mat-cell *matCellDef="let element"> {{element.isRenewal}} </td>
-          </ng-container>
+          </ng-container> -->
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="cursor_pointer" (click)="openDialog(row)"></tr>

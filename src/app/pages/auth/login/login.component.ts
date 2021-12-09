@@ -55,7 +55,8 @@ export class LoginComponent implements OnInit {
         // const { user } = response.data
         // const { user, permissions } = response.data
         const user = response.data
-        const authorization = user.auth.accessToken;
+        const authorization = user.customer.auth.accessToken;
+        // const authorization = user.auth.accessToken;
 
         sessionStorage.setItem('authorization', authorization);
         sessionStorage.setItem('user', JSON.stringify({ user }));
@@ -81,7 +82,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      primaryTelephone: new FormControl('', Validators.compose([Validators.required, Validators.minLength(10)])),
+      // primaryTelephone: new FormControl('', Validators.compose([Validators.required, Validators.minLength(10)])),
+      username: new FormControl('', Validators.required),
       loginPin: new FormControl('', Validators.compose([Validators.required, Validators.minLength(4)])),
       otp: new FormControl('', Validators.compose([Validators.minLength(6)])),
       newPassword: new FormControl('', Validators.compose([Validators.required, Validators.minLength(10)])),

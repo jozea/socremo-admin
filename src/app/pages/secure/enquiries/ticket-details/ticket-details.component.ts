@@ -48,7 +48,7 @@ export class TicketDetailsComponent implements OnInit {
     let userId = user.user._id
     // console.log(user.user._id)
     this.ticketDetails = this.data.ticket
-    this.assignedArr = this.ticketDetails.assigned
+    this.assignedArr = this.ticketDetails.assigned    
     // console.log(this.ticketDetails)
     if (this.assignedArr.length > 0) {
       this.assignedArr.forEach(e=> {
@@ -57,6 +57,12 @@ export class TicketDetailsComponent implements OnInit {
         }
       })
     }
+    
+  }
+
+  getComment(str) {
+    let a =  str.replace( '&nbsp;', ' ');
+    return str.replace( /(<([^>]+)>)/ig, '') && a.replace( /(<([^>]+)>)/ig, '')
     
   }
 

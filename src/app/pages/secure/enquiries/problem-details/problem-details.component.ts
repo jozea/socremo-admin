@@ -45,7 +45,7 @@ export class ProblemDetailsComponent implements OnInit {
       })
     })
 
-    console.log(this.data.ticket)
+    // console.log(this.data.ticket)
     this.problemDetail = this.data.ticket
   }
 

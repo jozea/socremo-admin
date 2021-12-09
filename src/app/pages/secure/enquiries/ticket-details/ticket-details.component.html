@@ -41,6 +41,11 @@
                     <p class="text_accion_stone">{{ ticketDetails.reference}}</p>
                 </div>
 
+				<div class="col-4">
+                    <p class="font-weight-bold">Additional Info</p>
+                    <p class="text_accion_stone">{{ getComment(ticketDetails.additionalInfo)}}</p>
+                </div>
+
                 <div class="row px-4 mt-3 flex-wrap col-12">
 					<h3  class="font-weight-500 text_accion_sand">{{ 'ticket.assigned' | translate }}</h3>
                         
@@ -91,7 +96,7 @@
 							<tr *ngFor="let item of ticketDetails.comments;let i = index;">
 								<td class="text_accion_stone">{{item.name}}</td>
 								<td class="text_accion_stone">{{item.officerId}}</td>
-								<td class="text_accion_stone">{{item.message}}</td>
+								<td class="text_accion_stone">{{getComment(item.message)}}</td>
 								<td class="text_accion_stone">{{ item.dateTime | date: 'yyyy-MM-dd'}}</td>
 								<!-- <td class="text_accion_stone">
 									

@@ -90,7 +90,7 @@ deleteProblemType(model: any): Observable<any> {
 }
 
 getTickets(model:any): Observable<any> {
-  return this.http.post<any>(`${this.baseUrl}ticket/admin/fetch`, model);
+  return this.http.post<any>(`${this.baseUrl}admin/tickets`, model);
 }
 
 openTicket(model:any): Observable<any> {
@@ -110,7 +110,7 @@ commentOnTicket(model:any): Observable<any> {
 }
 
 getBranches(): Observable<any> {
-  return this.http.get<any>(`${this.baseUrl}branch`);
+  return this.http.get<any>(`${this.baseUrl}admin/branch`);
 }
 
 createBranch(model: any): Observable<any> {

@@ -43,17 +43,18 @@ export class SecureComponent implements OnInit {
 
   async handleUserLogout() {
     // this.router.navigate(['/login']); 
-    this.authService.logOutUser({ mobileNumber: this.mobileNumber }).subscribe(response => {
-      this.handleNavigationToAuth()
-    }, (err) => {
-      this.handleNavigationToAuth()
-    })
+    this.handleNavigationToAuth()
+    // this.authService.logOutUser({ mobileNumber: this.mobileNumber }).subscribe(response => {
+    //   this.handleNavigationToAuth()
+    // }, (err) => {
+    //   this.handleNavigationToAuth()
+    // })
 
   }
 
   handleNavigationToAuth() {
     sessionStorage.clear();
-    this.bnIdle.stopTimer();
+    // this.bnIdle.stopTimer();
     this.router.navigate(['/auth']);    
   }
 
@@ -62,7 +63,7 @@ export class SecureComponent implements OnInit {
     if (sessionStorage.user) {
       const user = JSON.parse(sessionStorage.user);
       this.mobileNumber = user.user.mobileNumber;
-      this.userName = `${user.user.name}`
+      this.userName = `${user.user.customer.name}`
       // this.userName = `${user.firstName} ${user.lastName}`
       this.utilService.changeTab("language", "btn", " active-lang")
 

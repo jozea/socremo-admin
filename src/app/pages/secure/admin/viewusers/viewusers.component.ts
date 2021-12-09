@@ -89,6 +89,7 @@ export class ViewusersComponent implements OnInit {
     this.selectedData = "All";
     this.checked = true;
     // this.fetchAdmins(10, 1, this.requestModel)
+    this.fetchAllAdmins()
 
   }
 
@@ -190,6 +191,14 @@ export class ViewusersComponent implements OnInit {
 
   selected(event) {
     // console.log(event);
+  }
+
+
+
+  fetchAllAdmins() {
+    this.permissionService.fetchAdmins().subscribe((response: any)=> {
+      console.log(response)
+    })
   }
 
 }

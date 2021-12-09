@@ -1,0 +1,107 @@
+
+
+<h2 mat-dialog-title class="text_accion_stone">Card Details</h2>
+<mat-dialog-content style="background-color: rgb(230, 240, 240);">
+    <div class="card mx-4 mb-3 mt-3 rounded-0">
+        <mat-list>
+            <div class="row px-4 mt-3 flex-wrap">
+                <div class="col-4">
+                    <p class="font-weight-bold">Customer Name</p>
+                    <p class="text_accion_stone">{{cardDetails.name}} </p>
+                </div>
+                <div class="col-4">
+                    <p class="font-weight-bold">Customer Id</p>
+                    <p class="text_accion_stone">{{cardDetails.customerId}}</p>
+                </div>
+
+                <div class="col-4">
+                    <p class="font-weight-bold"> Created </p>
+                    <p class="text_accion_stone">{{ cardDetails.createdAt | date: 'yyyy-MM-dd'}}</p>
+                </div>
+
+                <div class="col-4">
+                    <p class="font-weight-bold">Updated</p>
+                    <p class="text_accion_stone">{{ cardDetails.updatedAt | date: 'yyyy-MM-dd'}}</p>
+                </div>
+
+                <div class="col-4">
+                    <p class="font-weight-bold">Account Number</p>
+                    <p class="text_accion_stone">{{ cardDetails.accountNumber}}</p>
+                </div>
+
+				<div class="col-4">
+                    <p class="font-weight-bold">Status</p>
+                    <p class="text_accion_stone">{{ cardDetails.status}}</p>
+                </div>
+
+				<div class="col-4">
+                    <p class="font-weight-bold">Reference</p>
+                    <p class="text_accion_stone">{{ cardDetails.reference}}</p>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <label for="">Select admin to assign this cheque</label>
+                    <select class="form-control" class="browser-default custom-select" 
+                      (change)="changeAdmin($event.target.value)">
+                      <option [ngValue]="undefined" >Select an admin</option>
+                      <option *ngFor="let admin of allAdmin" [value]="admin.name">{{
+                          admin.name
+                        }}</option>
+                    </select>
+                </div>
+
+
+                <div class="row px-4 mt-3 flex-wrap col-12">
+					<h3  class="font-weight-500 text_accion_sand">{{ 'ticket.assigned' | translate }}</h3>
+                        
+					<table class="table table-bordered table-sm mt-3">
+						<thead>
+							<tr style="background-color: rgb(230, 240, 240);">
+								<th scope="col">{{ 'ticket.name' | translate }}</th>
+								<th scope="col">{{ 'ticket.officerId' | translate }}</th>
+								<th scope="col">{{ 'ticket.date' | translate }}</th>
+								<!-- <th scope="col">{{ 'ticket.action' | translate }}</th> -->
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let item of cardDetails.assigned;let i = index;">
+								<td class="text_accion_stone">{{item.name}}</td>
+								<td class="text_accion_stone">{{item.officerId}}</td>
+								<td class="text_accion_stone">{{ item.dateTime | date: 'yyyy-MM-dd'}}</td>
+								<!-- <td class="text_accion_stone">
+									<button *ngIf="ticketDetails.status =='open' || ticketDetails.status =='processing'" (click)="closeTicket()" type="button" class="btn btn-sm mx-2 text-white my-1" style="background-color: rgb(218, 52, 52);">
+										{{ 'ticket.closed' | translate }}
+									</button>
+									<button *ngIf="ticketDetails.status =='open' || ticketDetails.status =='processing'" type="button" (click)="openDialog(item)" class="btn btn-sm mx-2 text-white my-1 accion_stone" >
+										{{ 'ticket.comment' | translate }}
+									</button> 
+									<button (click)="openActionDialog(problemDetail, item, 'update')" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">
+										{{ 'ticket.updateCategory' | translate }}
+									</button>
+								</td> -->
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				
+            </div>
+        </mat-list>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-content-between">
+    <div>
+        <button *ngIf="cardDetails.assigned.length == 0" type="button" (click)="assignCard()" class="btn btn-sm mx-2 text-white accion_stone my-1">
+            {{ 'ticket.assign' | translate }}
+        </button>
+		<button *ngIf="userId == adminId && (cardDetails.status =='open' || cardDetails.status =='processing')" (click)="openActionDialog2('closeCheque')" type="button" class="btn btn-sm mx-2 text-white my-1" style="background-color: rgb(218, 52, 52);">
+			{{ 'ticket.closed' | translate }}
+		</button>
+		<!-- <button *ngIf="cardDetails.status =='processing'" type="button" (click)="openDialog()" class="btn btn-sm mx-2 text-white my-1 accion_stone" >
+			{{ 'ticket.comment' | translate }}
+		</button>  -->
+    </div>
+	<div *ngIf="isLoadingResults" class="justify-content-center" >
+		<mat-spinner [diameter]="25" ></mat-spinner>
+	</div>
+    <button mat-button mat-dialog-close (click)="close()">{{ 'ticket.cancel' | translate }}</button>
+</mat-dialog-actions>

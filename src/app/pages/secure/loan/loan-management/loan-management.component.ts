@@ -18,29 +18,20 @@ import {forkJoin} from 'rxjs';
 })
 export class LoanManagementComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  displayedColumns: string[] = ['position', 'name', 'phoneNumber','action', 'status', 'amountRequested', 'amountRecommended', 'termRequested',]// 'termRecommended', 'creationDate', 'date', 'renew'];
+  displayedColumns: string[] = ['position', 'customerId', 'amount','tenure', 'status', 'reason', 'createdAt', 'updatedAt',]// 'termRecommended', 'creationDate', 'date', 'renew'];
   dataSource: any = new MatTableDataSource([]);
   exportAsConfig: ExportAsConfig = exportConfig('pdf', 'loan_table', 'Loan')
   loanFilterForm: FormGroup;
   maxDate: Date;
   loading: boolean = false;
   maxall: number = 1000;
-  totalLoans: any = 6;
-  pendingLoan: any = 2;
-  disbursedLoan: any = 2;
+  totalLoans: any;
+  pendingLoan: any;
+  disbursedLoan: any
   rejectedLoan: any = 0;
   repaidLoan: any = 2;
   expiredLoan: any = 0;
-
-  loanData: any[]=[
-    // {customerName: "Joseph",	mobileNumber: "1234567",	action: "John", applicationStatus: "pending",	requestedAmount: "100,000",	recommendedAmount: "100,000",	requestedTenure: "2 Months",	applicationDate: "2021-02-07"},
-    // {customerName: "Joseph",	mobileNumber: "1234567",	action: "John", applicationStatus: "pending",	requestedAmount: "100,000",	recommendedAmount: "100,000",	requestedTenure: "2 Months",	applicationDate: "2021-02-07"},
-    // {customerName: "Joseph",	mobileNumber: "1234567",	action: "John", applicationStatus: "disbursed",	requestedAmount: "100,000",	recommendedAmount: "100,000",	requestedTenure: "2 Months",	applicationDate: "2021-02-07"},
-    // {customerName: "Joseph",	mobileNumber: "1234567",	action: "John", applicationStatus: "disbursed",	requestedAmount: "100,000",	recommendedAmount: "100,000",	requestedTenure: "2 Months",	applicationDate: "2021-02-07"},
-    // {customerName: "Joseph",	mobileNumber: "1234567",	action: "John", applicationStatus: "repaid",	requestedAmount: "100,000",	recommendedAmount: "100,000",	requestedTenure: "2 Months",	applicationDate: "2021-02-07"},
-    // {customerName: "Joseph",	mobileNumber: "1234567",	action: "John", applicationStatus: "repaid",	requestedAmount: "100,000",	recommendedAmount: "100,000",	requestedTenure: "2 Months",	applicationDate: "2021-02-07"}
-
-  ]
+  assignedLoan: any;
 
   actionSelection = allLoanActions;
   channelSelection = allChannels;
@@ -48,7 +39,7 @@ export class LoanManagementComponent implements OnInit {
 
   loanRequestModel: any = {}
   headingText = "Pending Loans";
-  applicationStatus: string = "pending";
+  status: string = "";
 
   limit: number = 10;
   page: number = 1;
@@ -88,12 +79,12 @@ export class LoanManagementComponent implements OnInit {
     });
 
     this.loanRequestModel = {
-      applicationStatus: this.applicationStatus
+      // status: this.status
     }
 
     this.countRequest = {}
 
-    // this.handleLoanRequest(this.limit, this.page, this.loanRequestModel);
+    this.handleLoanRequest(this.limit, this.page, this.loanRequestModel);
     // this.totalLoan(this.limit, this.page, this.countRequest)
 
 
@@ -131,7 +122,7 @@ export class LoanManagementComponent implements OnInit {
   }
 
   renewalButton() {
-    // delete this.loanRequestModel.applicationStatus
+    // delete this.loanRequestModel.status
     // this.loanRequestModel.isRenewal = true
     // this.handleLoanRequest(this.limit, this.page, this.loanRequestModel)
     this.renewals
@@ -164,15 +155,25 @@ export class LoanManagementComponent implements OnInit {
     this.renewalLoans = this.renewals.length
   }
 
+  total:any
   async handleLoanRequest(limit: number, page: number, model: any) {
     this.loading = true;
     this.loanService
-      .getLoanData(limit, page, model).subscribe(async response => {
+      .getLoanHistory(limit, page, model).subscribe(async response => {
         // console.log(response)
-        this.getRenewals(response)
-        this.count = response.data.meta.total
-        this.dataSource = new MatTableDataSource(response.data.docs);
-        this.maxall = response.data.meta.total;
+        // console.log(response.data.result)
+        this.total = response.data.total
+        if (model.status === 'pending') {
+          this.pendingLoan = this.total
+        }else if (model.status === 'disbursed') {
+          this.disbursedLoan = this.total
+        }else if (model.status === 'assigned') {
+          this.assignedLoan = this.total
+        }else {
+          this.totalLoans = this.total
+        }
+        this.dataSource = new MatTableDataSource(response.data.result);
+        this.maxall = response.data.total;
         this.loading = false;
       }, (error: any) => {
         this.utilService.triggerNotification(error.status ? 'Error fetching data' : 'Network Issues. Try again')
@@ -186,6 +187,13 @@ export class LoanManagementComponent implements OnInit {
       this.totalCount = resp.data.meta.total
     })
   }
+
+  // fetchLoanHistory() {
+  //   let model = {}
+  //   this.loanService.getLoanHistory(model).subscribe((res: any)=> {
+  //     console.log(res)
+  //   })
+  // }
 
 
 
@@ -209,45 +217,25 @@ export class LoanManagementComponent implements OnInit {
   tabClick(event: MatTabChangeEvent) {
     this.loading = true;
     switch (event.index) {
-      // case 0:
-      //   this.headingText = "All Loans";
-      //   this.applicationStatus = "";
-      //   break;
       case 0:
-        this.headingText = "Pending Loans";
-        this.applicationStatus = "pending";
+        this.headingText = "All Loans";
+        this.status = "";
         break;
       case 1:
-        this.headingText = "Disbursed Loans";
-        this.applicationStatus = "disbursed";
+        this.headingText = "Pending Loans";
+        this.status = "pending";
         break;
       case 2:
-        this.headingText = "Past Due Loan";
-        this.applicationStatus = "past-due";
+        this.headingText = "Disbursed Loans";
+        this.status = "disbursed";
         break;
       case 3:
-        this.headingText = "Rejected Loans";
-        this.applicationStatus = "rejected";
-        break;
-      case 4:
-        this.headingText = "Repaid Loans";
-        this.applicationStatus = "repaid";
-        break;
-      case 5:
-        this.headingText = "Drop-offs";
-        this.applicationStatus = "inProgress";
-        break;
-      case 6:
-        this.headingText = "Expired Loans";
-        this.applicationStatus = "expired";
-        break;
-      case 7:
-        this.headingText = "Renewals";
-        this.isRenewal = true;
+        this.headingText = "Assigned Loans";
+        this.status = "assigned";
         break;
       default:
         this.headingText = "Loans";
-        this.applicationStatus = "successful";
+        this.status = "successful";
         break;
     }
     this.loanFilterForm.reset({
@@ -262,10 +250,15 @@ export class LoanManagementComponent implements OnInit {
       customerName: "",
       loanID: "",
     });
-    this.loanRequestModel = {
-      applicationStatus: this.applicationStatus,
-      // isRenewal: this.isRenewal 
+    if (this.headingText === "All Loans") {
+      // this.utilService.deleteKeyIfEmpty(this.loanRequestModel)
+      this.loanRequestModel = {}
+    }else {
+      this.loanRequestModel = {
+        status: this.status,
+      }
     }
+    // console.log(this.loanRequestModel)
     this.handleLoanRequest(10, 1, this.loanRequestModel);
     this.dataSource.paginator = this.paginator;
   }

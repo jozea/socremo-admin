@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class PermissionService {
 
-baseUrl: string = environment.baseUrl;
+  baseUrl: string = environment.baseUrl;
 
 constructor(private http: HttpClient) {}
 
@@ -83,6 +83,53 @@ sendMessageToOne(model): Observable<any> {
 //notify/fBaseToken/61432c602d12497a87744f0c
 //notify/send
 //notify/
+
+
+
+createResource(model:any): Observable<any> {
+  return this.http.post<any>(`${this.baseUrl}access-control/resource/`, model)
+}
+
+getResource(): Observable<any> {
+  return this.http.get<any>(`${this.baseUrl}access-control/resource/`)
+}
+
+createNewRole(model: any) {
+  return this.http.post<any>(`${this.baseUrl}access-control/role/`, model)
+}
+
+getNewRole() {
+  return this.http.get<any>(`${this.baseUrl}admin/access-control/roles`)
+}
+
+editResourceName(resourceId, resourceName) {
+  return this.http.patch<any>(`${this.baseUrl}access-control/resource/${resourceId}/${resourceName}`, {})
+}
+
+fetchAdmins() {
+  return this.http.get<any>(`${this.baseUrl}admin/list-admin`)
+}
+
+
+updateRolePermisssion(model, roleId) {
+  return this.http.put<any>(`${this.baseUrl}access-control/role/${roleId}`, model)
+}
+
+editRoleResourcePermission(model) {
+  return this.http.patch<any>(`${this.baseUrl}access-control/role`, model)
+}
+
+disableAndEnableResource(resourceId) {
+  return this.http.delete<any>(`${this.baseUrl}access-control/resource/${resourceId}/true`)
+}
+
+disableAndRestoreRole(state, roleId) {
+  return this.http.delete<any>(`${this.baseUrl}access-control/role/${roleId}/${state}`)
+}
+
+assignRole(roleId, userId) {
+  return this.http.put<any>(`${this.baseUrl}access-control/role/${roleId}/${userId}`, {})
+}
 
 
 

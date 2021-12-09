@@ -1,0 +1,110 @@
+<!-- <div *ngIf="isLoadingResults" class="loader_container">
+	<div class="spinner">
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+		<div class="spinner-item"></div>
+	</div>
+</div> -->
+
+<h2 mat-dialog-title class="text_accion_stone">{{ 'ticket.action' | translate }}</h2>
+<mat-dialog-content style="background-color: rgb(230, 240, 240);">
+    <!-- <div class="row" *ngIf="action == 'update'">
+        <form class="d-flex flex-column w-100 px-5 py-2">
+            <mat-card class="col-sm-12">
+                <h3 class="text_accion"> {{ 'ticket.updateProblemCategory' | translate }}</h3>
+                <div class="d-flex flex-wrap">
+                    
+            
+                    <mat-form-field class="col-md-12" appearance="outline">
+                        <mat-label>{{ 'ticket.category' | translate }}</mat-label>
+                        <input [(ngModel)]="categoryId.category" name="category" matInput type="text">
+                    </mat-form-field>
+                </div>
+                <button class="float-right" style="color: white; background-color: rgb(102, 102, 235);" mat-raised-button (click)="submitTicketSettings('update')">{{ 'ticket.update' | translate }}</button>
+            </mat-card>
+        </form>
+    </div>
+
+    <div class="row" *ngIf="action == 'add'">
+        <form [formGroup]="ticketSettingsForm3" class="d-flex flex-column w-100 px-5 py-2">
+            <mat-card class="col-sm-12">
+                <h3 class="text_accion"> {{ 'ticket.addNewCategoryToProblemType' | translate }}</h3>
+                <div class="d-flex flex-wrap">
+                    
+                            <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+                                <mat-label>{{ 'ticket.category' | translate }}</mat-label>
+                                <input [value]="ticketSettingsForm3.value.category" formControlName="category" matInput type="text">
+                            </mat-form-field>
+
+                            <mat-form-field class="col-md-12" appearance="outline">
+                                <mat-label>{{ 'ticket.description' | translate }}</mat-label>
+                                <textarea name="" id="" cols="30" rows="10" [value]="ticketSettingsForm3.value.description" matInput type="text"
+                                formControlName="description"></textarea>
+                            </mat-form-field>
+                    
+                </div>
+                <button class="float-right" style="color: white; background-color: rgb(102, 102, 235);" mat-raised-button (click)="submitTicketSettings('add')">{{ 'ticket.add' | translate }}</button>
+            </mat-card>
+        </form>
+    </div> -->
+
+    <div class="row d-flex flex-column w-80 px-5 py-2 align-items-center" >
+        <mat-card class="lign-items-center">
+            <span class="mb-3 font-weight-bold">Are you sure you want to close this cheque?</span><br>
+            <form [formGroup]="chequeSettingsForm" class="mt-3">
+
+                <mat-form-field class="col-md-12 col-sm-12 col-xs-12" appearance="outline">
+                    <mat-label>Enter Reason</mat-label>
+                    <input [value]="chequeSettingsForm.value.reason" formControlName="reason" matInput type="text">
+                </mat-form-field>
+            </form>
+            <div style="margin-left: 30%; margin-top: 5%;">
+                <button [disabled]="chequeSettingsForm.value.reason == ''" class="align-items-center" style="color: white; background-color: red;" mat-raised-button (click)="closeChequeBook()">{{ 'ticket.yes' | translate }}</button>&nbsp;
+                <button class="" style="color: white; background-color: blue;" mat-raised-button (click)="close()">{{ 'ticket.no' | translate }}</button>
+            </div>
+        </mat-card>
+    </div>
+
+    <!-- <div class="row d-flex flex-column w-80 px-5 py-2 align-items-center" *ngIf="action == 'category'">
+        <mat-card class="lign-items-center">
+            <span class="mb-3 font-weight-bold">{{ 'ticket.qst2' | translate }}</span><br>
+            <div style="margin-left: 30%; margin-top: 15%;">
+                <button class="align-items-center" style="color: white; background-color: red;" mat-raised-button (click)="deleteCategory()">{{ 'ticket.yes' | translate }}</button>&nbsp;
+                <button class="" style="color: white; background-color: blue;" mat-raised-button (click)="close()">{{ 'ticket.no' | translate }}</button>
+            </div>
+        </mat-card>
+    </div>
+
+    <div class="row d-flex flex-column w-80 px-5 py-2 align-items-center" *ngIf="action == 'closeTicket'">
+        <mat-card class="align-items-center">
+            <span class="mb-3 font-weight-bold">{{ 'ticket.qst3' | translate }}</span><br>
+            <div style="margin-left: 30%; margin-top: 15%;">
+                <button class="align-items-center" style="color: white; background-color: red;" mat-raised-button (click)="closeTicket()">{{ 'ticket.yes' | translate }}</button>&nbsp;
+                <button class="" style="color: white; background-color: blue;" mat-raised-button (click)="close()">{{ 'ticket.no' | translate }}</button>
+            </div>
+        </mat-card>
+    </div> -->
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-content-between">
+    <div>
+      <!-- <button (click)="submitTicketSettings('update')" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">
+        Update Category
+      </button>
+      <button (click)="submitTicketSettings('add')" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">
+        Add new Category
+      </button>
+      <button (click)="submitTicketSettings('update')" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">
+        Delete Type
+      </button>
+      <button (click)="submitTicketSettings('update')" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">
+        Delete Category
+      </button> -->
+      
+    </div>
+    <div *ngIf="isLoadingResults" class="ustify-content-center " >
+        <mat-spinner [diameter]="25" ></mat-spinner>
+    </div>
+    <button mat-button mat-dialog-close (click)="close()">{{ 'ticket.cancel' | translate }}</button>
+  </mat-dialog-actions>

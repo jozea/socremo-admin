@@ -4,7 +4,172 @@
 </mat-dialog-content>
 <mat-dialog-content *ngIf="loanDetail" class="mat-typography">
 
+
+
   <div class="row">
+    <div class="col-6">
+      <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Loan Status</h5>
+        <p class="text-capitalize"> {{loanDetail.status}}</p>
+      </div>
+      <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Customer ID </h5>
+        <p class="text-capitalize"> {{loanDetail.customerId}}</p>
+      </div>
+      <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Amount </h5>
+        <p class="text-capitalize"> N{{loanDetail.amount}}</p>
+      </div>
+      <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Tenure</h5>
+        <p class="text-capitalize">{{loanDetail.tenure}}</p>
+      </div>
+
+      <div  class="d-flex">
+        <h5 class="font-weight-500 mr-3">How Soon</h5>
+        <p class="text-capitalize">{{loanDetail.howSoon}}</p>
+      </div>
+
+      <div  class="d-flex">
+        <h5 class="font-weight-500 mr-3">Assigned to</h5>
+        <p class="text-capitalize">{{loanDetail.assigned[0] != undefined? loanDetail.assigned[0].name: 'Not assigned yet'}}</p>
+      </div>
+
+      
+
+      <!-- <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Loan vendor Name</h5>
+        <p class="text-capitalize">{{loanDetail.otherLoanVendorName }}</p>
+      </div> -->
+
+      <!-- <div *ngIf="loanDetail.actionBy === 'user'" class="d-flex">
+        <h5 class="font-weight-500 mr-3">Reason</h5>
+        <p class="text-capitalize">{{loanDetail.reason}}</p>
+      </div>
+      <div  class="d-flex">
+        <h5 class="font-weight-500 mr-3">Temlate Id</h5>
+        <p class="text-capitalize">{{loanDetail.templateId}} </p>
+      </div>
+      <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Created</h5>
+        <p class="text-capitalize">{{loanDetail.createdAt}} </p>
+      </div>
+      <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Updated</h5>
+        <p class="text-capitalize">{{loanDetail.updatedAt}} </p>
+      </div> -->
+
+    </div>
+
+
+
+    <div class="col-6 mb-5">
+      <!-- <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Loan Status</h5>
+        <p class="text-capitalize"> {{loanDetail.status}}</p>
+      </div>
+      <div *ngIf="loanDetail.disburseId" class="d-flex">
+        <h5 class="font-weight-500 mr-3">Customer ID </h5>
+        <p class="text-capitalize"> {{loanDetail.customerId}}</p>
+      </div>
+      <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Amount </h5>
+        <p class="text-capitalize"> N{{loanDetail.amount}}</p>
+      </div>
+      <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Tenure</h5>
+        <p class="text-capitalize">{{loanDetail.tenure}}</p>
+      </div>
+
+      <div  class="d-flex">
+        <h5 class="font-weight-500 mr-3">How Soon</h5>
+        <p class="text-capitalize">{{loanDetail.howSoon}}</p>
+      </div>
+
+      <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Loan with other vendors</h5>
+        <p class="text-capitalize">{{loanDetail.appliedForLoanWithOtherVendorRecently }}</p>
+      </div>
+
+      <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Other vendor Name</h5>
+        <p class="text-capitalize">{{loanDetail.otherLoanVendorName }}</p>
+      </div> -->
+
+      <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Reason</h5>
+        <p class="text-capitalize">{{loanDetail.reason}}</p>
+      </div>
+      <div  class="d-flex">
+        <h5 class="font-weight-500 mr-3">Temlate Id</h5>
+        <p class="text-capitalize">{{loanDetail.templateId}} </p>
+      </div>
+      <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Created</h5>
+        <p class="text-capitalize">{{loanDetail.createdAt}} </p>
+      </div>
+      <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Updated</h5>
+        <p class="text-capitalize">{{loanDetail.updatedAt}} </p>
+      </div>
+      <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Loan with other vendors</h5>
+        <p class="text-capitalize">{{loanDetail.appliedForLoanWithOtherVendorRecently }}</p>
+      </div>
+      <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Loan vendor Name</h5>
+        <p class="text-capitalize">{{loanDetail.otherLoanVendorName }}</p>
+      </div>
+
+    </div>
+
+    <div *ngIf="!isLoading && loanDetail.status == 'pending'" class="col-12 mb-3">
+      <label for="">Select admin to assign this loan</label>
+      <select class="form-control" class="browser-default custom-select" 
+        (change)="changeRole($event.target.value)">
+        <option [ngValue]="undefined" >Select an admin</option>
+        <option *ngFor="let admin of allAdmin" [value]="admin.name">{{
+            admin.name
+          }}</option>
+      </select>
+    </div>
+
+
+    <!-- <div class="col-6">
+      <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Loan ID</h5>
+        <p class="text-capitalize"></p>
+      </div>
+      <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Offer Accepted</h5>
+        <p class="text-capitalize"></p>
+      </div>
+      <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Action By</h5>
+        <p class="text-capitalize">{{loanDetail.action}}</p>
+      </div>
+      <div *ngIf="loanDetail.loanCompute && loanDetail.loanCompute.score" class="d-flex">
+        <h5 class="font-weight-500 mr-3">Score</h5>
+        <p class="text-capitalize">{{loanDetail.loanCompute.score | number }}</p>
+      </div>
+      <div *ngIf="loanDetail.loanCompute && loanDetail.loanCompute.scoreGrade" class="d-flex">
+        <h5 class="font-weight-500 mr-3">Score Grade</h5>
+        <p class="text-capitalize">{{loanDetail.loanCompute.scoreGrade | uppercase }}</p>
+      </div>
+      <div *ngIf="loanDetail.recommended" class="d-flex">
+        <h5 class="font-weight-500 mr-3">Process</h5>
+        <p class="text-capitalize">{{loanDetail.recommended ? loanDetail.recommended.process : ''}}
+          {{ loanDetail.recommended.recommendedTerm && 'for ' + loanDetail.recommended.recommendedTerm }}</p>
+      </div>
+      <div class="d-flex">
+        <h5 class="font-weight-500 mr-3">Date</h5>
+        <p class="text-capitalize">{{loanDetail.applicationDate | date :'medium'}}</p>
+      </div>
+    </div> -->
+  </div>
+  
+
+  <!-- <div class="row">
     <div class="col-6">
       <div class="d-flex">
         <h5 class="font-weight-500 mr-3">Application Status</h5>
@@ -18,7 +183,7 @@
         <h5 class="font-weight-500 mr-3">Requested </h5>
         <p class="text-capitalize"> N{{loanDetail.requestedAmount}}</p>
       </div>
-      <!-- <div *ngIf="loanDetail.recommended" class="d-flex">
+      <div *ngIf="loanDetail.recommended" class="d-flex">
         <h5 class="font-weight-500 mr-3">Recommended</h5>
         <p class="text-capitalize">
           N{{loanDetail.recommended ?( loanDetail.recommended.recommendedAmount | number ): ''}}
@@ -27,27 +192,27 @@
       <div class="d-flex">
         <h5 class="font-weight-500 mr-3">System Reason</h5>
         <p class="text-capitalize">{{loanDetail.reason}}</p>
-      </div> -->
+      </div>
 
       <div  class="d-flex">
         <h5 class="font-weight-500 mr-3">Amount Requested</h5>
         <p class="text-capitalize">{{loanDetail.requestedAmount}}</p>
       </div>
 
-      <!-- <div *ngIf="loanDetail.loanCompute && loanDetail.loanCompute.strategy" class="d-flex">
+      <div *ngIf="loanDetail.loanCompute && loanDetail.loanCompute.strategy" class="d-flex">
         <h5 class="font-weight-500 mr-3">Strategy</h5>
         <p class="text-capitalize">{{loanDetail.loanCompute.strategy | uppercase }}</p>
-      </div> -->
+      </div>
 
-      <!-- <div class="d-flex">
+      <div class="d-flex">
         <h5 class="font-weight-500 mr-3">Channel</h5>
         <p class="text-capitalize">{{loanDetail.channel }}</p>
-      </div> -->
+      </div>
 
-      <!-- <div *ngIf="loanDetail.actionBy === 'user'" class="d-flex">
+      <div *ngIf="loanDetail.actionBy === 'user'" class="d-flex">
         <h5 class="font-weight-500 mr-3">User Rejection Reason</h5>
         <p class="text-capitalize">{{loanDetail.rejectionReason ? loanDetail.rejectionReason : 'None'}}</p>
-      </div> -->
+      </div>
       <div  class="d-flex">
         <h5 class="font-weight-500 mr-3">Maker</h5>
         <p class="text-capitalize"></p>
@@ -73,11 +238,11 @@
         <h5 class="font-weight-500 mr-3">Action By</h5>
         <p class="text-capitalize">{{loanDetail.action}}</p>
       </div>
-      <!-- <div *ngIf="loanDetail.loanCompute && loanDetail.loanCompute.score" class="d-flex">
+      <div *ngIf="loanDetail.loanCompute && loanDetail.loanCompute.score" class="d-flex">
         <h5 class="font-weight-500 mr-3">Score</h5>
         <p class="text-capitalize">{{loanDetail.loanCompute.score | number }}</p>
-      </div> -->
-      <!-- <div *ngIf="loanDetail.loanCompute && loanDetail.loanCompute.scoreGrade" class="d-flex">
+      </div>
+      <div *ngIf="loanDetail.loanCompute && loanDetail.loanCompute.scoreGrade" class="d-flex">
         <h5 class="font-weight-500 mr-3">Score Grade</h5>
         <p class="text-capitalize">{{loanDetail.loanCompute.scoreGrade | uppercase }}</p>
       </div>
@@ -85,17 +250,17 @@
         <h5 class="font-weight-500 mr-3">Process</h5>
         <p class="text-capitalize">{{loanDetail.recommended ? loanDetail.recommended.process : ''}}
           {{ loanDetail.recommended.recommendedTerm && 'for ' + loanDetail.recommended.recommendedTerm }}</p>
-      </div> -->
+      </div>
       <div class="d-flex">
         <h5 class="font-weight-500 mr-3">Date</h5>
         <p class="text-capitalize">{{loanDetail.applicationDate | date :'medium'}}</p>
       </div>
     </div>
-  </div>
+  </div> -->
 
 
 
-  <h3 class="lead text_accion">Personal information</h3>
+  <!-- <h3 class="lead text_accion">Personal information</h3>
   <table class="table table-bordered  table-sm">
     <thead>
       <tr>
@@ -103,7 +268,6 @@
         <th scope="col">Mobile Number</th>
         <th scope="col">Address</th>
         <th scope="col">Area</th>
-        <!-- <th scope="col">Date of Birth</th> -->
         <th scope="col">Age</th>
         <th scope="col">Gender</th>
         <th scope="col">Education Level</th>
@@ -116,7 +280,6 @@
         <td></td>
         <td></td>
         <td></td>
-        <!-- <td>{{loanDetail.userRequest.dateOfBirth | date :'medium'}}</td> -->
         <td></td>
         <td></td>
         <td></td>
@@ -127,7 +290,6 @@
   <table class="table table-bordered table-sm">
     <thead>
       <tr>
-        <!-- <th scope="col">BVN</th> -->
         <th scope="col">Household Expenses</th>
         <th scope="col">Number of Dependent</th>
         <th scope="col">Know AMFB</th>
@@ -135,15 +297,14 @@
     </thead>
     <tbody>
       <tr>
-        <!-- <td></td> -->
         <td></td>
         <td></td>
         <td></td>
       </tr>
     </tbody>
-  </table>
+  </table> -->
 
-  <h3 class="text_accion">Business information</h3>
+  <!-- <h3 class="text_accion">Business information</h3>
   <table class="table table-bordered table-sm">
     <thead>
       <tr>
@@ -169,9 +330,9 @@
         <td></td>
       </tr>
     </tbody>
-  </table>
+  </table> -->
 
-  <table class="table table-bordered table-sm">
+  <!-- <table class="table table-bordered table-sm">
     <thead>
       <tr>
         <th scope="col">Cost of Goods</th>
@@ -192,11 +353,11 @@
         <td></td>
       </tr>
     </tbody>
-  </table>
+  </table> -->
 
 
 
-  <h3 class="text_accion">Loan Computation</h3>
+  <!-- <h3 class="text_accion">Loan Computation</h3>
   <div *ngFor="let schedule of loanDetail.schedule">
     <h5 class="font-weight-500 text_accion_sand">Fee Information</h5>
     <table class="table table-bordered table-sm">
@@ -253,7 +414,7 @@
 
 
 
-  </div>
+  </div> -->
 
   <!-- <h5 *ngIf="loanDetail.loanCompute" class="font-weight-500 text_accion_sand">MSME Financial Assessment</h5>
   <table *ngIf="loanDetail.loanCompute" class="table table-bordered table-sm">
@@ -459,21 +620,24 @@
 
 </mat-dialog-content>
 <mat-dialog-actions class="d-flex justify-content-between">
-  <!-- <div>
-    <button *ngIf="loanDetail.applicationStatus === 'pending' && loanDetail.manualLoanUpdate" (click)="loanAction('approve')" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">
-      Approve Request
+  <div>
+    <button *ngIf="!isLoading && loanDetail.status == 'pending'" (click)="assignLoan()" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">
+      Assign Loan
     </button>
-    <div *ngIf="loanDetail.recommended && loanDetail.applicationStatus === 'pending' && loanDetail.recommended.process !== 'automatic' && !loanDetail.manualLoanUpdate">
+    <div *ngIf="!isLoading && loanDetail.status === 'assigned' && adminId == loanDetail.assigned[0]._id">
       <span class="text_accion">
         Change Status to
       </span>
-      <button (click)="loanAction('disbursed')" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">
+      <button (click)="updateLoanStatus()" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">
         Disburse
       </button>
-      <button (click)="loanAction('rejected')" type="button" class="btn btn-sm mx-2 text-white accion_sand my-1">
+      <!-- <button (click)="loanAction('rejected')" type="button" class="btn btn-sm mx-2 text-white accion_sand my-1">
         Reject
-      </button>
+      </button> -->
     </div>
-  </div> -->
+  </div>
+  <div *ngIf="isLoading" class="justify-content-center" >
+		<mat-spinner [diameter]="25" ></mat-spinner>
+	</div>
   <button mat-button mat-dialog-close (click)="close()">Cancel</button>
 </mat-dialog-actions>

@@ -1,0 +1,172 @@
+<div *ngIf="isLoadingResults" class="loader_container">
+    <div class="spinner">
+          <div class="spinner-item"></div>
+          <div class="spinner-item"></div>
+          <div class="spinner-item"></div>
+          <div class="spinner-item"></div>
+          <div class="spinner-item"></div>
+      </div>
+  </div>
+  
+  <section >
+
+  <div class="header px-4 mt-3 d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center">
+      <p class="p-3 px-4 lead text-white">Cheque Management</p>
+    </div>
+  </div>
+   
+    <form class="filter mx-3" [formGroup]="enquiryFilterForm">
+      <mat-card class="m-3 p-0 pt-3 px-3 pb-2">
+        <h5 class="font-weight-bold">{{ 'cheque.filterHeader' | translate }}</h5>
+        <div class="d-flex flex-wrap">
+          <mat-form-field
+          appearance="outline">
+            <mat-label>{{ 'cheque.startDate' | translate }}</mat-label>
+            <input formControlName="startDate" matInput [max]="maxDate" [matDatepicker]="startDate">
+            <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+            <mat-datepicker #startDate></mat-datepicker>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'cheque.endDate' | translate }}</mat-label>
+            <input formControlName="endDate" matInput [max]="maxDate" [matDatepicker]="endDate">
+            <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+            <mat-datepicker #endDate></mat-datepicker>
+          </mat-form-field>
+  
+          <!-- <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status" >
+              <mat-option value="open">{{ 'ticket.open' | translate }}</mat-option>
+              <mat-option value="closed">{{ 'ticket.closed' | translate }}</mat-option>
+              <mat-option value="processing">{{ 'ticket.processing' | translate }}</mat-option>
+            </mat-select>
+          </mat-form-field> -->
+  
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'cheque.customerName' | translate }}</mat-label>
+            <input 
+            [value]="this.enquiryFilterForm.value.customerName"
+            formControlName="customerName" 
+            matInput type="text" >
+            <button mat-button 
+            *ngIf="this.enquiryFilterForm.value.customerName"
+            matSuffix mat-icon-button aria-label="Clear" 
+            (click)="this.enquiryFilterForm.value.customerName=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+          <button 
+          (click)="search()"
+          class="btn btn-sm text-white filter_btn"
+           >{{ 'cheque.filter' | translate }}</button>
+        </div>
+  
+  
+      </mat-card>
+  
+    </form>
+    <div class="action mx-3">
+      <mat-card class="px-3 py-3 mx-3">
+        <h5 class="font-weight-bold">{{ 'cheque.action' | translate }}</h5>
+        <div class="d-flex flex-wrap">
+          <button (click)="exportTable('pdf')" type="button" class="btn btn-sm text-white accion_stone my-1">{{ 'cheque.exportPdf' | translate }}</button>
+          <button (click)="exportTable('xlsx')" type="button" class="btn btn-sm mx-2 text-white accion_sand my-1">{{ 'cheque.exportExcel' | translate }}</button>
+          <button (click)="exportTable('csv')" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">{{ 'cheque.exportCsv' | translate }}</button>
+          <button (click)="exportTable('png')" type="button" class="btn btn-sm mx-2 text-white accion_sand my-1">{{ 'cheque.exportPng' | translate }}</button>
+        </div>
+      </mat-card>
+      
+  
+    </div>
+    <div class="action mx-3 mt-3" >
+      <mat-card class="px-3 py-3 mx-3">
+        <!-- <h5 class="font-weight-bold">{{ 'ticket.status' | translate }}</h5> -->
+        <div id="statusDiv" class="d-flex flex-wrap justify-content-center">
+          <span (click)="filterStatus('')" type="text" class="status active text-secondary my-1">{{ 'cheque.all' | translate }}</span>&nbsp;
+          <span style="color: #20b155;" (click)="filterStatus('open')" type="text" class="status  mx-2 my-1">{{ 'cheque.open' | translate }}</span>
+          <span style="color: red;" (click)="filterStatus('closed')" type="text" class="status  mx-2 my-1">{{ 'cheque.closed' | translate }}</span>
+          <span style="color: #5e4a0e;" (click)="filterStatus('processing')" type="text" class="status  mx-2 my-1">{{ 'cheque.processing' | translate }}</span>
+          <!-- <button (click)="filterStatus('')" type="button" class="btn btn-sm text-white accion_stone my-1">{{ 'ticket.all' | translate }}</button>
+          <button style="background-color: #20b155;" (click)="filterStatus('open')" type="button" class="btn btn-sm mx-2 text-white my-1">{{ 'ticket.open' | translate }}</button>
+          <button style="background-color: red;" (click)="filterStatus('closed')" type="button" class="btn btn-sm mx-2 text-white my-1">{{ 'ticket.closed' | translate }}</button>
+          <button style="background-color: #5e4a0e;" (click)="filterStatus('processing')" type="button" class="btn btn-sm mx-2 text-white my-1">{{ 'ticket.processing' | translate }}</button> -->
+        </div>
+      </mat-card>
+      
+  
+    </div>
+  
+    <div class="table_display mx-3">
+  
+      <div class=" mat-elevation-z8">      
+        <div id="feedback_table"  class="table-container p-0">
+        <table 
+        mat-table 
+        [dataSource]="dataSource" 
+        matSort 
+        class="mat-elevation-z8">
+        
+          <ng-container matColumnDef="position">
+            <th  mat-header-cell *matHeaderCellDef> S/N </th>
+            <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </td>
+          </ng-container>
+        
+          <ng-container matColumnDef="customerId">
+            <th disableClear mat-header-cell *matHeaderCellDef>{{ 'cheque.customerId' | translate }} </th>
+            <td  mat-cell *matCellDef="let element"> {{element.customerId}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="customerName">
+            <th disableClear mat-header-cell *matHeaderCellDef>{{ 'cheque.customerName' | translate }}</th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="category">
+            <th mat-header-cell *matHeaderCellDef> Account Number} </th>
+            <td mat-cell *matCellDef="let element"> {{element.accountNumber}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> {{ 'cheque.status' | translate }} </th>
+            <td mat-cell *matCellDef="let element"> 
+              <span [class]="element.status"> {{ element.status }}</span> 
+          </td>
+          </ng-container>
+
+          <ng-container matColumnDef="reference">
+            <th mat-header-cell *matHeaderCellDef> {{ 'cheque.reference' | translate }} </th>
+            <td mat-cell *matCellDef="let element"> {{element.reference}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="createdAt">
+            <th mat-header-cell *matHeaderCellDef> {{ 'cheque.created' | translate }} </th>
+            <td mat-cell *matCellDef="let element"> {{element.createdAt}} </td>
+          </ng-container>
+         
+          <ng-container matColumnDef="updatedAt">
+            <th mat-header-cell *matHeaderCellDef> {{ 'cheque.updated' | translate }} </th>
+            <td mat-cell *matCellDef="let element"> {{element.updatedAt}} </td>
+          </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <!-- <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="cursor_pointer"></tr> -->
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="cursor_pointer" (click)="openDialog(row)"></tr>
+        
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4"> No data</td>
+          </tr>
+        </table>
+      </div>
+     <div class="d-flex justify-content-end align-items-center">
+      <mat-paginator 
+      [pageSizeOptions]="[10, 25, 50, maxall]"  
+      [length] = "maxall"
+      (page)="onPageFired($event)"
+      showFirstLastButtons
+      ></mat-paginator>  
+     </div>
+      </div>
+    </div>
+  </section>

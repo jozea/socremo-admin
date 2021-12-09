@@ -61,4 +61,8 @@ updateUser(model:any): Observable<any> {
   return this.http.post<any>(`${this.baseUrl}users/admin/updateUser`, model);
 }
 
+changeAdminPin(model:any): Observable<any> {
+  return this.http.post<any>(`${this.baseUrl}admin/changePin`, model);
+}
+
 }

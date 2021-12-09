@@ -1,0 +1,416 @@
+<div *ngIf="isLoadingResults" class="loader_container">
+    <div class="spinner">
+        <div class="spinner-item"></div>
+        <div class="spinner-item"></div>
+        <div class="spinner-item"></div>
+        <div class="spinner-item"></div>
+        <div class="spinner-item"></div>
+    </div>
+</div>
+
+<section>
+
+
+    <div class="header py-3 d-flex justify-content-between align-items-center my-3">
+        <p class="px-4 lead text-white">Insurance Setting</p>
+        <!-- <div class="action d-flex justify-content-end">
+        <button (click)="discardChange()"  class="btn accion_stone text-white">Discard changes</button>
+        <button (click)="saveSettingsConfig()" class="btn accion text-white">Save changes</button>
+      </div> -->
+    </div>
+
+
+    <div class="bg-white py-5 px-4 ml-4 mr-2 mb-3">
+
+        <div class="mb-3">
+            <select class="form-control" class="browser-default custom-select"
+                (change)="changeAction($event.target.value)">
+                <option *ngFor="let action of actions" [value]="action">{{
+                    action
+                    }}</option>
+            </select>
+        </div>
+    </div>
+
+    <div *ngIf="insuranceAction == 'update'" class="bg-white py-5 px-4 ml-4 mr-2 mb-3">
+        <div class="mb-3">
+            <select class="form-control" class="browser-default custom-select"
+                (change)="changeTitle($event.target.value)">
+                <option [ngValue]="undefined">Select Title *</option>
+                <option *ngFor="let template of insuranceTemplate" [value]="template.title">{{
+                    template.title
+                    }}</option>
+            </select>
+        </div>
+    </div>
+
+    <div *ngIf="insuranceAction == 'create'" class="bg-white py-5 px-4 ml-4 mr-2 mb-5">
+        <form [formGroup]="insuranceForm">
+            <div class="row">
+
+                <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+                    <mat-label>Title</mat-label>
+                    <input [value]="this.insuranceForm.value.title" matInput type="text" formControlName="title">
+                    <button mat-button *ngIf="this.insuranceForm.value.title" matSuffix mat-icon-button
+                        aria-label="Clear" (click)="this.insuranceForm.value.title=''">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+                <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+                    <mat-label>Subtitle</mat-label>
+                    <input [value]="this.insuranceForm.value.subtitle" matInput type="text" formControlName="subtitle">
+                    <button mat-button *ngIf="this.insuranceForm.value.subtitle" matSuffix mat-icon-button
+                        aria-label="Clear" (click)="this.insuranceForm.value.subtitle=''">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+
+            </div>
+
+            <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+                <mat-label>Header</mat-label>
+                <input [value]="this.insuranceForm.value.header" matInput type="text" formControlName="header">
+                <button mat-button *ngIf="this.insuranceForm.value.header" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="this.insuranceForm.value.header=''">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+
+            <div formArrayName="limits" *ngFor="let item of insuranceForm.get('limits')['controls']; let i = index;">
+                <span style="font-weight: bold;">Limits {{i+1}}</span>
+                <div [formGroupName]="i" class="row">
+
+                    <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+                        <mat-label>Beneficiary </mat-label>
+                        <input [value]="this.insuranceForm.value.beneficiary" matInput type="text"
+                            formControlName="beneficiary">
+                        <button mat-button *ngIf="this.insuranceForm.value.beneficiary" matSuffix mat-icon-button
+                            aria-label="Clear" (click)="this.insuranceForm.value.beneficiary=''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+                        <mat-label>Benefit </mat-label>
+                        <input [value]="this.insuranceForm.value.benefit" matInput type="text"
+                            formControlName="benefit">
+                        <button mat-button *ngIf="this.insuranceForm.value.benefit" matSuffix mat-icon-button
+                            aria-label="Clear" (click)="this.insuranceForm.value.benefit=''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+
+            </div>
+            <div class="mb-4">
+                <span class="cursor_pointer" (click)="addItem()">
+                    <mat-icon style="color: rgb(93, 235, 93);"> add_circle</mat-icon>
+                    Add
+                </span>&nbsp;
+
+                <span class="cursor_pointer" style="color: rgb(228, 86, 86);" *ngIf="add" (click)="removevalue()">
+                    <mat-icon>remove_circle</mat-icon>
+                    Remove
+                </span>
+            </div>
+
+
+            <div formArrayName="coverages"
+                *ngFor="let item of insuranceForm.get('coverages')['controls']; let i = index;">
+                <span style="font-weight: bold;">Coverage {{i+1}}</span>
+                <div [formGroupName]="i">
+
+                    <mat-form-field class="col-md-12 col-sm-12 col-xs-12" appearance="outline">
+                        <mat-label>Coverage </mat-label>
+                        <input [value]="this.insuranceForm.value.coverage" matInput type="text"
+                            formControlName="coverage">
+                        <button mat-button *ngIf="this.insuranceForm.value.coverage" matSuffix mat-icon-button
+                            aria-label="Clear" (click)="this.insuranceForm.value.coverage=''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+
+            </div>
+            <div class="mb-4">
+                <span class="cursor_pointer" (click)="addItemCoverage()">
+                    <mat-icon style="color: rgb(93, 235, 93);"> add_circle</mat-icon>
+                    Add
+                </span>&nbsp;&nbsp;
+                <span class="cursor_pointer" style="color: rgb(228, 86, 86);" *ngIf="addCoverage"
+                    (click)="removevalueCoverage()">
+                    <mat-icon>remove_circle</mat-icon>
+                    Remove
+                </span>
+            </div>
+
+
+            <div formArrayName="requirements"
+                *ngFor="let item of insuranceForm.get('requirements')['controls']; let i = index;">
+                <span style="font-weight: bold;">Requirement {{i+1}}</span>
+                <div [formGroupName]="i">
+
+                    <mat-form-field class="col-md-12 col-sm-12 col-xs-12" appearance="outline">
+                        <mat-label>Requirement </mat-label>
+                        <input [value]="this.insuranceForm.value.requirement" matInput type="text"
+                            formControlName="requirement">
+                        <button mat-button *ngIf="this.insuranceForm.value.requirement" matSuffix mat-icon-button
+                            aria-label="Clear" (click)="this.insuranceForm.value.requirement=''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+
+            </div>
+            <span class="cursor_pointer" (click)="addItemReq()">
+                <mat-icon style="color: rgb(93, 235, 93);"> add_circle</mat-icon>
+                Add
+            </span>&nbsp;&nbsp;
+            <span class="cursor_pointer" style="color: rgb(228, 86, 86);" *ngIf="addNewReq" (click)="removevalueReq()">
+                <mat-icon>remove_circle</mat-icon>
+                Remove
+            </span>
+
+
+        </form>
+
+        <button (click)="createInsurance()" class="float-right mt-4 mb-5 "
+            style="color: white; background-color: rgb(102, 102, 235);" mat-raised-button>Submit</button>
+
+    </div>
+
+
+
+
+
+    <div *ngIf="insuranceData && insuranceAction == 'update'" class="bg-white py-5 px-4 ml-4 mr-2 mb-5">
+        <form class="mb-5">
+            <div class="row">
+
+                <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+                    <mat-label>Title</mat-label>
+                    <input [(ngModel)]="insuranceData.title" matInput type="text" name="title">
+                </mat-form-field>
+                <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+                    <mat-label>Subtitle</mat-label>
+                    <input disabled [(ngModel)]="insuranceData.subtitle" matInput type="text" name="subtitle">
+                </mat-form-field>
+
+            </div>
+
+            <div class="mt-5 col-md-12 col-sm-12 col-xs-12">
+                <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+                    <mat-label>Header</mat-label>
+                    <input disabled [(ngModel)]="insuranceData.body.header" matInput type="text" name="header">
+                </mat-form-field>
+                <div class="mb-3 col-md-6 col-sm-6 col-xs-12">
+                    <select class="form-control" class="browser-default custom-select"
+                        (change)="changeLimit($event.target.value)">
+                        <option [ngValue]="undefined">Select Limit </option>
+                        <option *ngFor="let limit of insuranceLimit; let i=index;" [value]="limit.beneficiary">{{
+                            limit.beneficiary
+                            }}</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+                        <mat-label>Beneficiary</mat-label>
+                        <input disabled [(ngModel)]="beneficiary" matInput type="text" name="beneficiary">
+                        <button mat-button *ngIf="beneficiary" matSuffix mat-icon-button aria-label="Clear"
+                            (click)="beneficiary=''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+                        <mat-label>Benefit</mat-label>
+                        <input disabled [(ngModel)]="benefit" matInput type="text" name="benefit">
+                        <button mat-button *ngIf="benefit" matSuffix mat-icon-button aria-label="Clear"
+                            (click)="benefit=''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+                <button class="float-right" style="color: white; background-color: rgb(20, 187, 84);" mat-raised-button (click)="addPoint()">Update Limit</button>
+            </div>
+
+            <div class="mt-5 col-md-12 col-sm-12 col-xs-12">
+                <div class=" col-md-6 col-sm-6 col-xs-12">
+                    <select class="form-control" class="browser-default custom-select"
+                        (change)="changeCoverage($event.target.value)">
+                        <option [ngValue]="undefined">Select Coverage </option>
+                        <option *ngFor="let coverage of insuranceCoverage; let i=index;" [value]="coverage">{{
+                            coverage
+                            }}</option>
+                    </select>
+                </div>
+                <mat-form-field class="mt-3 col-md-12 col-sm-12 col-xs-12" appearance="outline">
+                    <mat-label>Coverage</mat-label>
+                    <input disabled [(ngModel)]="coverage" matInput type="text" name="coverage">
+                    <button mat-button *ngIf="coverage" matSuffix mat-icon-button aria-label="Clear"
+                        (click)="coverage=''">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+                <button class="float-right mb-5 " style="color: white; background-color: rgb(20, 187, 84);"
+                    mat-raised-button (click)="addCov()">Update Coverage</button>
+            </div>
+
+            <div class="mt-5 col-md-12 col-sm-12 col-xs-12">
+                <div class=" col-md-6 col-sm-6 col-xs-12">
+                    <select class="form-control" class="browser-default custom-select"
+                        (change)="changeRequirement($event.target.value)">
+                        <option [ngValue]="undefined">Select Requirement </option>
+                        <option *ngFor="let req of insuranceRequirements; let i=index;" [value]="req">{{
+                            req
+                            }}</option>
+                    </select>
+                </div>
+                <mat-form-field class="mt-3 col-md-12 col-sm-12 col-xs-12" appearance="outline">
+                    <mat-label>Requirement</mat-label>
+                    <input disabled [(ngModel)]="requirement" matInput type="text" name="requirement">
+                    <button mat-button *ngIf="requirement" matSuffix mat-icon-button aria-label="Clear"
+                        (click)="requirement=''">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+                <button class="float-right mb-5 " style="color: white; background-color: rgb(20, 187, 84);"
+                    mat-raised-button (click)="addReq()">Update Reequirement</button>
+            </div>
+
+
+        </form>
+
+        <button (click)="updateInsurance()" class="mt-4 mb-5 " style="color: white; background-color: rgb(102, 102, 235);" mat-raised-button >Update</button>
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- <div *ngIf="loanSettings && loanAction == 'update'" class="bg-white py-5 px-4 ml-4 mr-2 mb-5">
+      <form >
+        <div class="row">
+    
+          <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+            <mat-label>Title</mat-label>
+            <input disabled [(ngModel)]="loanSettings.title" matInput type="text" name="title" >
+           
+          </mat-form-field>
+          <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+            <mat-label>Subtitle</mat-label>
+            <input disabled [(ngModel)]="loanSettings.subtitle" matInput type="text" name="subtitle" >
+            
+          </mat-form-field>
+    
+    
+          <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+            <mat-label>Preocessing Fee</mat-label>
+            <input [(ngModel)]="loanSettings.processingFee" matInput type="number" name="processingFee" >
+            <button mat-button *ngIf="loanSettings.processingFee" matSuffix mat-icon-button
+              aria-label="Clear" (click)="loanSettings.processingFee=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+          <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+            <mat-label>Minimum Amount</mat-label>
+            <input disabled [(ngModel)]="loanSettings.minAmount" matInput type="number" name="minAmount" >
+            
+          </mat-form-field>
+          <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+            <mat-label>Maximum Amount</mat-label>
+            <input disabled [(ngModel)]="loanSettings.maxAmount" matInput type="number" name="maxAmount">
+           
+          </mat-form-field>
+          <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+            <mat-label>Minimum Tenure</mat-label>
+            <input disabled [(ngModel)]="loanSettings.minTenure" matInput type="number" name="minTenure" >
+            
+          </mat-form-field>
+          <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+            <mat-label>Maximum Tenure</mat-label>
+            <input disabled [(ngModel)]="loanSettings.maxTenure" matInput type="number" name="maxTenure">
+            
+          </mat-form-field>
+          <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+            <mat-label>Interest Rate</mat-label>
+            <input disabled [(ngModel)]="loanSettings.interestRate" matInput type="number" name="interestRate">
+            
+          </mat-form-field>
+          <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+            <mat-label>Footer</mat-label>
+            <input disabled [(ngModel)]="loanSettings.footer" matInput type="text" name="footer" >
+            
+          </mat-form-field>
+  
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+              <mat-label>Header</mat-label>
+              <input [(ngModel)]="loanSettings.body.header" matInput type="text" name="header" >
+              <button mat-button *ngIf="loanSettings.body.header" matSuffix mat-icon-button aria-label="Clear"
+                (click)="loanSettings.body.header=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+            <div class="mb-3 col-md-6 col-sm-6 col-xs-12">
+              <select class="form-control" class="browser-default custom-select"
+                (change)="changePoint($event.target.value)">
+                <option [ngValue]="undefined" >Select Point </option>
+                <option *ngFor="let point of loanSettingsPoints; let i=index;" [value]="point">{{
+                    point
+                  }}</option>
+              </select>
+            </div>
+            <mat-form-field class="col-md-12 col-sm-12 col-xs-12" appearance="outline">
+              <mat-label>Point</mat-label>
+              <input [(ngModel)]="point" matInput type="text" name="point" >
+              <button mat-button *ngIf="point" matSuffix mat-icon-button aria-label="Clear"
+                (click)="point=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+            <button class="float-right mb-5 " style="color: white; background-color: rgb(20, 187, 84);" mat-raised-button (click)="addPoint()">Update Point</button>
+          </div>
+  
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="mb-3 col-md-6 col-sm-6 col-xs-12">
+              <select class="form-control" class="browser-default custom-select"
+                (change)="changeRequirement($event.target.value)">
+                <option [ngValue]="undefined" >Select Requirement </option>
+                <option *ngFor="let req of loanSettingsRequirements; let i=index;" [value]="req">{{
+                    req
+                  }}</option>
+              </select>
+            </div>
+            <mat-form-field class="col-md-12 col-sm-12 col-xs-12" appearance="outline">
+              <mat-label>Requirement</mat-label>
+              <input [(ngModel)]="requirement" matInput type="text" name="requirement" >
+              <button mat-button *ngIf="requirement" matSuffix mat-icon-button aria-label="Clear"
+                (click)="requirement=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+            <button class="float-right mb-5 " style="color: white; background-color: rgb(20, 187, 84);" mat-raised-button (click)="addReq()">Update Reequirement</button>
+          </div>
+    
+        </div>
+    
+      </form>
+      <button (click)="updateLoanSettings()" class="float-right mt-4 mb-5 " style="color: white; background-color: rgb(102, 102, 235);" mat-raised-button >Update</button>
+  
+    </div> -->
+
+
+
+
+
+</section>

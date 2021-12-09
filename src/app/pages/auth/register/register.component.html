@@ -1,3 +1,13 @@
+<div *ngIf="isLoading" class="loader_container">
+    <div class="spinner">
+          <div class="spinner-item"></div>
+          <div class="spinner-item"></div>
+          <div class="spinner-item"></div>
+          <div class="spinner-item"></div>
+          <div class="spinner-item"></div>
+      </div>
+  </div>
+
 <body class="inventory-body">
     <div class="register-page">
         <div class=" px-4 d-flex justify-content-between align-items-center">
@@ -19,52 +29,65 @@
                     <form [formGroup]="registerForm">
                         <div class="d-flex flex-column">
                             <div class="row">
-                                <mat-form-field class="col-md-4" appearance="outline">
+                                <mat-form-field class="col-md-6" appearance="outline">
                                     <mat-label>{{ 'register.firstName' | translate }}</mat-label>
                                     <input matInput placeholder="" formControlName="firstName" required>
                                 </mat-form-field>
-                                <mat-form-field class="col-md-4" appearance="outline">
-                                    <mat-label>{{ 'register.middleName' | translate }}</mat-label>
-                                    <input matInput placeholder="" formControlName="middleName" required>
-                                </mat-form-field>
-                                <mat-form-field class="col-md-4" appearance="outline">
+                                
+                                <mat-form-field class="col-md-6" appearance="outline">
                                     <mat-label>{{ 'register.lastName' | translate }}</mat-label>
                                     <input matInput placeholder="" formControlName="lastName" required>
                                 </mat-form-field>
                             </div>
                 
                             <div class="row">
-                                <mat-form-field class="col-md-4" appearance="outline">
-                                    <mat-label>{{ 'register.gender' | translate }}</mat-label>
-                                    <input matInput placeholder="" formControlName="gender" required>
+                                <mat-form-field class="col-md-6" appearance="outline">
+                                    <mat-label>Gender</mat-label>
+                                    <mat-select formControlName="sex" required>
+                                        <mat-option *ngFor="let gender of genders" [value]="gender.id">
+                                        {{gender.value}}
+                                        </mat-option>
+                                    </mat-select>
                                 </mat-form-field>
-                                <mat-form-field class="col-md-4" appearance="outline">
+                                <mat-form-field class="col-md-6" appearance="outline">
                                     <mat-label>{{ 'register.dob' | translate }}</mat-label>
-                                    <input matInput placeholder="" formControlName="dob" required>
-                                </mat-form-field>
-                                <mat-form-field class="col-md-4" appearance="outline">
-                                    <mat-label>{{ 'register.mobileNumber' | translate }}</mat-label>
-                                    <input matInput placeholder="" formControlName="mobileNumber" required>
+                                    <input matInput placeholder="" formControlName="birthdate" required [max]="maxDate" [matDatepicker]="birthdate">
+                                    <mat-datepicker-toggle matSuffix [for]="birthdate"></mat-datepicker-toggle>
+                                    <mat-datepicker #birthdate></mat-datepicker>
                                 </mat-form-field>
                             </div>
-        
-                            <mat-form-field appearance="outline">
-                                <mat-label>{{ 'register.address' | translate }}</mat-label>
-                                <input matInput placeholder="" formControlName="address" required>
-                            </mat-form-field>
-        
+
                             <div class="row">
                                 <mat-form-field class="col-md-6" appearance="outline">
-                                    <mat-label>{{ 'register.id' | translate }}</mat-label>
-                                    <input matInput placeholder="" formControlName="id" required>
+                                    <mat-label>Username</mat-label>
+                                    <input matInput placeholder="" formControlName="username" required>
                                 </mat-form-field>
                                 <mat-form-field class="col-md-6" appearance="outline">
-                                    <mat-label>{{ 'register.designation' | translate }}</mat-label>
-                                    <input matInput placeholder="" formControlName="designation" required>
+                                    <mat-label>Role</mat-label>
+                                    <mat-select formControlName="role" required>
+                                        <mat-option *ngFor="let role of roles" [value]="role._id">
+                                        {{role.name}}
+                                        </mat-option>
+                                    </mat-select>
                                 </mat-form-field>
+                                <!-- <mat-form-field class="col-md-6" appearance="outline">
+                                    <mat-label>Role</mat-label>
+                                    <input matInput placeholder="" formControlName="role" required>
+                                </mat-form-field> -->
                             </div>
+        
+                            <!-- <div class="row">
+                                <mat-form-field class="col-md-6" appearance="outline">
+                                    <mat-label>Username</mat-label>
+                                    <input matInput placeholder="" formControlName="username" required>
+                                </mat-form-field>
+                                <mat-form-field class="col-md-6" appearance="outline">
+                                    <mat-label>Pin</mat-label>
+                                    <input matInput placeholder="" formControlName="pin" required>
+                                </mat-form-field>
+                            </div> -->
                     
-                            <div class="row">
+                            <!-- <div class="row">
                                 <mat-form-field class="col-md-6" appearance="outline">
                                     <mat-label>{{ 'register.password' | translate }}</mat-label>
                                     <input matInput [type]="hide ? 'password' : 'text' " formControlName="password" autocomplete="on"
@@ -83,13 +106,13 @@
                                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                     </button>
                                 </mat-form-field>
-                            </div>
+                            </div> -->
                     
                             <div class="row">
                                 <mat-form-field class="col-md-6" appearance="outline">
                                     <mat-label>{{ 'register.pin' | translate }}</mat-label>
-                                    <input matInput [type]="hide ? 'password' : 'text' " formControlName="pin" autocomplete="on"
-                                        required>
+                                    <input matInput [type]="hide ? 'password' : 'text' " formControlName="loginPin" autocomplete="on"
+                                        required minlength="4" maxlength="4">
                                     <button mat-icon-button matSuffix (mouseup)="hide = !hide" (mousedown)="hide = !hide"
                                         [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -99,7 +122,8 @@
                                     <mat-label>{{ 'register.confirmPin' | translate }}</mat-label>
                                     <input matInput [type]="hide ? 'password' : 'text' " formControlName="confirmPin" autocomplete="on"
                                         required>
-                                    <button mat-icon-button matSuffix (mouseup)="hide = !hide" (mousedown)="hide = !hide"
+                                        <mat-error *ngIf="registerForm.controls['confirmPin'].pristine || registerForm.controls['confirmPin'].errors?.MatchPassword">Pin does not match</mat-error>
+                                        <button mat-icon-button matSuffix (mouseup)="hide = !hide" (mousedown)="hide = !hide"
                                         [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                     </button>
@@ -107,9 +131,17 @@
                             </div>
                     
                             <div class="row">
-                                <mat-form-field class="col-md-6" appearance="outline">
+                                <!-- <mat-form-field class="col-md-6" appearance="outline">
                                     <mat-label>{{ 'register.securityQuestion' | translate }}</mat-label>
                                     <input matInput placeholder="" formControlName="securityQuestion" required>
+                                </mat-form-field> -->
+                                <mat-form-field class="col-md-6" appearance="outline">
+                                    <mat-label>{{ 'register.securityQuestion' | translate }}</mat-label>
+                                    <mat-select formControlName="securityQuestion" required>
+                                        <mat-option *ngFor="let question of securityQuestions" [value]="question.key">
+                                        {{question.value}}
+                                        </mat-option>
+                                    </mat-select>
                                 </mat-form-field>
                                 <mat-form-field class="col-md-6" appearance="outline">
                                     <mat-label>{{ 'register.securityAnswer' | translate }}</mat-label>
@@ -131,7 +163,7 @@
                 
                 </mat-card-content>
                 <mat-card-actions class="">
-                    <button style="background-color: #006891;" mat-button value="Submit" class="text-white" >{{ 'register.register' | translate }}</button>
+                    <button style="background-color: #006891;" mat-button (click)="createNewAdmin()" value="Submit" class="float-right text-white" >{{ 'register.register' | translate }}</button>
                     <!-- <button class="float-right text-white accion_sand" mat-button routerLink="/auth">{{ 'register.back' | translate }}</button> -->
                 </mat-card-actions>
             </mat-card>

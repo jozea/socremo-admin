@@ -104,6 +104,13 @@ import { TicketActionComponent } from './enquiries/ticket-action/ticket-action.c
 import { TicketCommentsComponent } from './enquiries/ticket-comments/ticket-comments.component';
 
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { ChequeManagementComponent } from './cheque/cheque-management/cheque-management.component';
+import { InsuranceManagementComponent } from './insurance/insurance-management/insurance-management.component';
+import { CardManagementComponent } from './cards/card-management/card-management.component';
+import { CardDetailsComponent } from './cards/card-details/card-details.component';
+import { ChequeDetailsComponent } from './cheque/cheque-details/cheque-details.component';
+import { ChequeActionComponent } from './cheque/cheque-action/cheque-action.component';
+import { CardActionComponent } from './cards/card-action/card-action.component';
 
 
 
@@ -224,6 +231,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProblemDetailsComponent,
     TicketActionComponent,
     TicketCommentsComponent,
+    ChequeManagementComponent,
+    InsuranceManagementComponent,
+    CardManagementComponent,
+    CardDetailsComponent,
+    ChequeDetailsComponent,
+    ChequeActionComponent,
+    CardActionComponent,
   ],
   providers: [SidenavService, MatDatepickerModule, AuthImagePipe, BnNgIdleService],
   entryComponents: [

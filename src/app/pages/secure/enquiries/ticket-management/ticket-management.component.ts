@@ -10,7 +10,7 @@ import { exportConfig, ratingSelectionOptions } from 'src/app/constants/constant
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TicketDetailsComponent } from '../ticket-details/ticket-details.component';
 import { TicketSettingsComponent } from '../ticket-settings/ticket-settings.component';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -34,6 +34,8 @@ export class TicketManagementComponent implements OnInit {
   feedbackRequestModel: any = {}
   status: any;
   maxall: number = 1000;
+  userId: any;
+  userArray: any[]=[];
 
 
   constructor(
@@ -43,11 +45,14 @@ export class TicketManagementComponent implements OnInit {
     private utilService: UtilsService,
     private router: Router,
     public dialog: MatDialog,
-    private cdref: ChangeDetectorRef
+    private cdref: ChangeDetectorRef,
+    private activatedRoute: ActivatedRoute
     ) {
     }
 
   ngOnInit() {
+    this.userId = this.activatedRoute.snapshot.paramMap.get('id');
+    // console.log(this.userId)
 
     const currentYear = new Date();
     this.maxDate = new Date(currentYear);
@@ -78,11 +83,18 @@ export class TicketManagementComponent implements OnInit {
   fetchFeedback(model: any) {
     this.isLoadingResults = true
     this.reportService.getTickets( model).subscribe(async (response: any) => {
-      // console.log(response.data[0].result)
-      this.dataSource = await new MatTableDataSource(response.data[0].result);
+      // console.log(response.data.result)
 
       this.utilService.changeTab("statusDiv", "status", " active")
       // this.maxall = response.data.meta.total;
+      response.data.result.forEach(async (e) => {
+        if (e.customerId == this.userId) {
+          this.userArray.push(e)
+          this.dataSource = await new MatTableDataSource(this.userArray);
+        }else {
+          this.dataSource = await new MatTableDataSource(response.data.result);
+        }
+      });
       this.isLoadingResults = false
     }, (error: any) => {
       this.isLoadingResults = false

@@ -25,7 +25,8 @@
     <mat-list>
       <div class="d-flex justify-content-between ">
         <div class="subHeader" mat-subheader>{{ 'users.personalInformation' | translate }}</div>
-        <button disabled (click)="openMessageDialog('single')" class="btn btn-sm text-white filter_btn mr-2 mb-3">{{ 'users.sendMessage' | translate }}</button>  
+        <!-- <button [routerLink]="[ userData.customerId]">View Tickets</button> -->
+        <button (click)="openMessageDialog('single')" class="btn btn-sm text-white filter_btn mr-2 mb-3">{{ 'users.sendMessage' | translate }}</button>  
         <!-- <button (click)="openDialog(userData)" class="btn btn-sm btn-primary filter_btn mr-2 mb-3">Settings</button> -->
       </div>
       <mat-divider></mat-divider>

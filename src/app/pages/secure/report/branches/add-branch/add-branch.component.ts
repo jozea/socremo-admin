@@ -209,7 +209,7 @@ export class AddBranchComponent implements OnInit {
       branchDetails: branchDetail,
       branchId: this.branchId
     }
-    console.log(model)
+    // console.log(model)
     if (this.branchCreationForm.valid && this.openingHour != undefined && this.closingHour != undefined) {
       this.isSubmitted = true
       this.isLoadingResults = true
@@ -239,7 +239,7 @@ export class AddBranchComponent implements OnInit {
     if (this.action == 'add' || this.action == 'create') {
       this.hour = e
       this.openingHour = `${this.hour}:${this.minute}${this.time}`
-      console.log(this.hour, this.openingHour)
+      // console.log(this.hour, this.openingHour)
     }else {
       if(this.hour) {
         this.detailsHour = this.hour

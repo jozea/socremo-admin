@@ -41,6 +41,9 @@ import { RegisterComponent } from '../auth/register/register.component';
 import { TicketManagementComponent } from './enquiries/ticket-management/ticket-management.component';
 import { ProductManagementComponent } from './product/product-management/product-management.component';
 import { TicketSettingsComponent } from './enquiries/ticket-settings/ticket-settings.component';
+import { ChequeManagementComponent } from './cheque/cheque-management/cheque-management.component';
+import { CardManagementComponent } from './cards/card-management/card-management.component';
+import { InsuranceManagementComponent } from './insurance/insurance-management/insurance-management.component';
 
 const routes: Routes = [{
   path: '',
@@ -130,11 +133,11 @@ const routes: Routes = [{
           component: ResetpasswordComponent, 
           // canActivate: [AuthenticationGuard, RoleGuard], data: { allowedPermissions: ['change_password'] }
         },
-        // {
-        //   path: 'permission', 
-        //   component: PermissionsComponent, 
-        //   // canActivate: [AuthenticationGuard, RoleGuard], data: { allowedPermissions: ['roles_permissions'] }
-        // },
+        {
+          path: 'permission', 
+          component: PermissionsComponent, 
+          // canActivate: [AuthenticationGuard, RoleGuard], data: { allowedPermissions: ['roles_permissions'] }
+        },
         {
           path: 'admin-user', 
           component: ViewusersComponent, 
@@ -163,6 +166,36 @@ const routes: Routes = [{
         {
           path: 'settings', 
           component: TicketSettingsComponent, 
+          // canActivate: [AuthenticationGuard, RoleGuard], data: { allowedPermissions: ['change_password'] }
+        },
+      ]
+    },
+    {
+      path: 'cheque',
+      children: [
+        {
+          path: 'management', 
+          component: ChequeManagementComponent, 
+          // canActivate: [AuthenticationGuard, RoleGuard], data: { allowedPermissions: ['change_password'] }
+        },
+      ]
+    },
+    {
+      path: 'card',
+      children: [
+        {
+          path: 'management', 
+          component: CardManagementComponent, 
+          // canActivate: [AuthenticationGuard, RoleGuard], data: { allowedPermissions: ['change_password'] }
+        },
+      ]
+    },
+    {
+      path: 'insurance',
+      children: [
+        {
+          path: 'management', 
+          component: InsuranceManagementComponent, 
           // canActivate: [AuthenticationGuard, RoleGuard], data: { allowedPermissions: ['change_password'] }
         },
       ]

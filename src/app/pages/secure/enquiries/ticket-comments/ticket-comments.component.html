@@ -13,7 +13,7 @@
                         <mat-label>{{ 'ticket.comment' | translate }}</mat-label>
                         <textarea name="comment" id="" cols="30" rows="10" [(ngModel)]="comment" matInput type="text"></textarea>
                     </mat-form-field> -->
-                    <ckeditor name="comment" tagName="textarea" [editor]="Editor" [(ngModel)]="comment"></ckeditor>
+                    <ckeditor class="col-sm-12" name="comment" tagName="textarea" [editor]="Editor" [(ngModel)]="comment"></ckeditor>
 
                 </div>
                 <button (click)="commentOnTicket()" class="float-right" style="color: white; background-color: rgb(102, 102, 235);" mat-raised-button >{{ 'ticket.submit' | translate }}</button>

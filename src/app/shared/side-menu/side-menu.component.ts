@@ -44,7 +44,7 @@ export class SideMenuComponent implements OnInit, AfterViewInit {
     { name:  marker('menu.dashboard'), link: '/app/dashboard', icon: 'home' },
     { name: marker('menu.transactionListing'), link: '/app/transactions', icon: 'account_balance' },
     { name: marker('menu.customerManagement'), link: '/app/users', icon: 'person' },
-    { name: marker('menu.productManagement'), link: '/app/product/management', icon: 'business' },
+    // { name: marker('menu.productManagement'), link: '/app/product/management', icon: 'business' },
     // { name: 'Dashboard', permission: 'transaction', link: '/app/dashboard', icon: 'home' },
     // { name: 'Transaction Listing', permission: 'transaction', link: '/app/transactions', icon: 'account_balance' },
     // { name: 'Customer Management', permission: 'users', link: '/app/users', icon: 'person' },
@@ -120,6 +120,42 @@ export class SideMenuComponent implements OnInit, AfterViewInit {
       ]
     },
     // {
+    //   title: 'Cheque Management',
+    //   icon: 'g_translate',
+    //   list: [
+    //     {
+    //       name: 'Cheque Management',
+    //       permission: 'referral',
+    //       link: "/app/cheque/management",
+    //       icon: "assignment_turned_in"
+    //     },
+    //   ]
+    // },
+    // {
+    //   title: 'Card Management',
+    //   icon: 'book',
+    //   list: [
+    //     {
+    //       name: 'Card Management',
+    //       permission: 'referral',
+    //       link: "/app/card/management",
+    //       icon: "card_travel"
+    //     },
+    //   ]
+    // },
+    // {
+    //   title: 'Insurance Management',
+    //   icon: 'table_chart',
+    //   list: [
+    //     {
+    //       name: 'Insurance Management',
+    //       permission: 'referral',
+    //       link: "/app/insurance/management",
+    //       icon: "build"
+    //     },
+    //   ]
+    // },
+    // {
     //   title: 'Enquiries',
     //   icon: 'inbox',
     //   list: [
@@ -137,22 +173,22 @@ export class SideMenuComponent implements OnInit, AfterViewInit {
     //     },
     //   ]
     // },
-    // {
-    //   title: 'Loan Management',
-    //   icon: 'monetization_on',
-    //   list: [
+    {
+      title: 'Loan Management',
+      icon: 'monetization_on',
+      list: [
         // {
         //   name: "Analytics",
         //   permission: 'loan_dashboard',
         //   link: "/app/loans/dashboard",
         //   icon: "graphic_eq"
         // },
-        // {
-        //   name: "Loan Management",
-        //   // permission: 'loan_management',
-        //   link: "/app/loans/management",
-        //   icon: "developer_board"
-        // },
+        {
+          name: "Loan Management",
+          // permission: 'loan_management',
+          link: "/app/loans/management",
+          icon: "developer_board"
+        },
         // {
         //   name: "Loan Card",
         //   permission: 'loan_management',
@@ -171,14 +207,14 @@ export class SideMenuComponent implements OnInit, AfterViewInit {
         //   link: "/app/loans/fileUpload",
         //   icon: "get_app"
         // },
-      //   {
-      //     name: "Settings",
-      //     // permission: 'loan_settings',
-      //     link: "/app/loans/settings",
-      //     icon: "enhanced_encryption"
-      //   },
-      // ]
-    // },
+        {
+          name: "Settings",
+          // permission: 'loan_settings',
+          link: "/app/loans/settings",
+          icon: "enhanced_encryption"
+        },
+      ]
+    },
     // {
     //   title: 'Investment Listing',
     //   icon: 'money',
@@ -261,12 +297,12 @@ export class SideMenuComponent implements OnInit, AfterViewInit {
         //   link: "/app/setting/audit",
         //   icon: "account_box"
         // },
-        // {
-        //   name: "Permissions and Roles",
-        //   permission: 'roles_permissions',
-        //   link: "/app/setting/permission",
-        //   icon: "enhanced_encryption"
-        // },
+        {
+          name: "Permissions and Roles",
+          permission: 'roles_permissions',
+          link: "/app/setting/permission",
+          icon: "enhanced_encryption"
+        },
         // {
         //   name: marker('menu.admin'),
         //   permission: 'roles_permissions',

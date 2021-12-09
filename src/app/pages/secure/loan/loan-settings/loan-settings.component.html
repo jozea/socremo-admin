@@ -11,53 +11,341 @@
 <section>
 
 
-  <div class="header py-3 d-flex justify-content-between align-items-center my-3 bg-white">
-    <p class="px-4 lead">Loan Setting</p>
-    <div class="action d-flex justify-content-end">
+  <div class="header py-3 d-flex justify-content-between align-items-center my-3">
+    <p class="px-4 lead text-white">Loan Setting</p>
+    <!-- <div class="action d-flex justify-content-end">
       <button (click)="discardChange()"  class="btn accion_stone text-white">Discard changes</button>
       <button (click)="saveSettingsConfig()" class="btn accion text-white">Save changes</button>
+    </div> -->
+  </div>
+
+
+  <div class="bg-white py-5 px-4 ml-4 mr-2 mb-3">
+
+    <div class="mb-3">
+      <select class="form-control" class="browser-default custom-select"
+        (change)="changeAction($event.target.value)">
+        <option *ngFor="let action of actions" [value]="action">{{
+            action
+          }}</option>
+      </select>
     </div>
   </div>
 
-  <div class="bg-white py-5 px-4 ml-4 mr-2">
-   <form [formGroup]="loanSettingsForm">
-    <div class="row">
-      <div class="col-12 col-md-4">
-        <label class="font-weight-bold" for="interestRate">Interest Rate</label>
-        <div class="input-group mb-3">
-          <input formControlName="interestRate" [readonly]="editInterestRate" type="text" class="form-control" aria-label="Percent (to the nearest decimal)">
-          <div class="input-group-append ">
-            <span class="input-group-text accion text-white">%</span>
-          </div>
-          <button (click)="handleButtonEdit('interest')" class="ml-3 btn accion_sand text-white">{{editInterestRate ? 'Edit' : 'Disable'}}</button>
-        </div>
-      </div>
-
-      <div class="col-12 col-md-4">
-        <label class="font-weight-bold" for="adminFee">Administrative Charges</label>
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text accion text-white" id="adminFee">N</span>
-          </div>
-          <input [readonly]="editAdminFee"  formControlName="adminFee" type="text" class="form-control" aria-label="Amount (to the nearest naira)">
-          <button (click)="handleButtonEdit('admin')" class="ml-3 btn accion_sand text-white">{{editAdminFee ? 'Edit' : 'Disable'}}</button>
-        </div>
-      </div>
-
-      <div class="col-12 col-md-4">
-        <label class="font-weight-bold" for="insuranceFee">Insurance Charges</label>
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text accion text-white" id="insuranceFee">N</span>
-          </div>
-          <input [readonly]="editInsuranceFee"  formControlName="insuranceFee"  type="text" class="form-control" aria-label="Amount (to the nearest naira)">
-          <button (click)="handleButtonEdit('insurance')" class="ml-3 btn accion_sand text-white">{{editInsuranceFee ? 'Edit' : 'Disable'}}</button>
-        </div>
-      </div>
-
+  <div *ngIf="loanAction == 'update'" class="bg-white py-5 px-4 ml-4 mr-2 mb-3">
+    <div class="mb-3">
+      <select class="form-control" class="browser-default custom-select"
+        (change)="changeTitle($event.target.value)">
+        <option [ngValue]="undefined" >Select Title *</option>
+        <option *ngFor="let settings of allLoanSettings" [value]="settings.title">{{
+            settings.title
+          }}</option>
+      </select>
     </div>
+  </div>
 
-   </form>
+  <div *ngIf="loanAction == 'create'" class="bg-white py-5 px-4 ml-4 mr-2 mb-5">
+    <form [formGroup]="loanSettingsForm" >
+      <div class="row">
+
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Title</mat-label>
+          <input [value]="this.loanSettingsForm.value.title" matInput type="text" formControlName="title">
+          <button mat-button *ngIf="this.loanSettingsForm.value.title" matSuffix mat-icon-button aria-label="Clear"
+            (click)="this.loanSettingsForm.value.title=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Subtitle</mat-label>
+          <input [value]="this.loanSettingsForm.value.subtitle" matInput type="text" formControlName="subtitle">
+          <button mat-button *ngIf="this.loanSettingsForm.value.subtitle" matSuffix mat-icon-button aria-label="Clear"
+            (click)="this.loanSettingsForm.value.subtitle=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+  
+        <mat-radio-group class="col-md-6 col-sm-6 col-xs-12 mb-2" aria-label="Select an option" (change)="changeStatus($event)">
+          <mat-label class="mr-3 mb-2 font-weight-bold">Disable Loan</mat-label>
+          <mat-radio-button class="mr-2" value="true">Yes</mat-radio-button>
+          <mat-radio-button value="false">No</mat-radio-button>
+        </mat-radio-group>
+
+        <div class="col-md-6 col-sm-6 col-xs-12 mb-2">
+          <input type="file" name="file" id="file" (change)="onFileChanged($event)" />
+        </div>
+  
+  
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Preocessing Fee</mat-label>
+          <input [value]="this.loanSettingsForm.value.processingFee" matInput type="number" formControlName="processingFee">
+          <button mat-button *ngIf="this.loanSettingsForm.value.processingFee" matSuffix mat-icon-button
+            aria-label="Clear" (click)="this.loanSettingsForm.value.processingFee=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Minimum Amount</mat-label>
+          <input [value]="this.loanSettingsForm.value.minAmount" matInput type="number" formControlName="minAmount">
+          <button mat-button *ngIf="this.loanSettingsForm.value.minAmount" matSuffix mat-icon-button aria-label="Clear"
+            (click)="this.loanSettingsForm.value.minAmount=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Maximum Amount</mat-label>
+          <input [value]="this.loanSettingsForm.value.maxAmount" matInput type="number" formControlName="maxAmount">
+          <button mat-button *ngIf="this.loanSettingsForm.value.maxAmount" matSuffix mat-icon-button aria-label="Clear"
+            (click)="this.loanSettingsForm.value.maxAmount=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Minimum Tenure</mat-label>
+          <input [value]="this.loanSettingsForm.value.minTenure" matInput type="number" formControlName="minTenure">
+          <button mat-button *ngIf="this.loanSettingsForm.value.minTenure" matSuffix mat-icon-button aria-label="Clear"
+            (click)="this.loanSettingsForm.value.minTenure=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Maximum Tenure</mat-label>
+          <input [value]="this.loanSettingsForm.value.maxTenure" matInput type="number" formControlName="maxTenure">
+          <button mat-button *ngIf="this.loanSettingsForm.value.maxTenure" matSuffix mat-icon-button aria-label="Clear"
+            (click)="this.loanSettingsForm.value.maxTenure=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Interest Rate</mat-label>
+          <input [value]="this.loanSettingsForm.value.interestRate" matInput type="number" formControlName="interestRate">
+          <button mat-button *ngIf="this.loanSettingsForm.value.interestRate" matSuffix mat-icon-button aria-label="Clear"
+            (click)="this.loanSettingsForm.value.interestRate=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Footer</mat-label>
+          <input [value]="this.loanSettingsForm.value.footer" matInput type="text" formControlName="footer">
+          <button mat-button *ngIf="this.loanSettingsForm.value.footer" matSuffix mat-icon-button aria-label="Clear"
+            (click)="this.loanSettingsForm.value.footer=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+  
+      </div>
+
+      <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+        <mat-label>Header</mat-label>
+        <input [value]="this.loanSettingsForm.value.header" matInput type="text" formControlName="header">
+        <button mat-button *ngIf="this.loanSettingsForm.value.header" matSuffix mat-icon-button aria-label="Clear"
+          (click)="this.loanSettingsForm.value.header=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <div formArrayName="points" *ngFor="let item of loanSettingsForm.get('points')['controls']; let i = index;">
+        <span style="font-weight: bold;">Point {{i+1}}</span>
+        <div [formGroupName]="i">
+      
+          <mat-form-field class="col-md-12 col-sm-12 col-xs-12" appearance="outline">
+            <mat-label>Point </mat-label>
+            <input [value]="this.loanSettingsForm.value.point" matInput type="text" formControlName="point">
+            <button mat-button *ngIf="this.loanSettingsForm.value.point" matSuffix mat-icon-button aria-label="Clear"
+              (click)="this.loanSettingsForm.value.point=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>      
+        </div>
+      
+      </div>
+      <div class="mb-4">
+        <span class="cursor_pointer" (click)="addItem()">
+          <mat-icon style="color: rgb(93, 235, 93);"> add_circle</mat-icon>
+          Add
+        </span>&nbsp;
+        
+        <span class="cursor_pointer" style="color: rgb(228, 86, 86);" *ngIf="add"  (click)="removevalue()">
+          <mat-icon>remove_circle</mat-icon>
+          Remove
+        </span>
+      </div>
+
+
+      <div formArrayName="requirements" *ngFor="let item of loanSettingsForm.get('requirements')['controls']; let i = index;">
+        <span style="font-weight: bold;">Requirement {{i+1}}</span>
+        <div [formGroupName]="i">
+      
+          <mat-form-field class="col-md-12 col-sm-12 col-xs-12" appearance="outline">
+            <mat-label>Requirement </mat-label>
+            <input [value]="this.loanSettingsForm.value.requirement" matInput type="text" formControlName="requirement">
+            <button mat-button *ngIf="this.loanSettingsForm.value.requirement" matSuffix mat-icon-button aria-label="Clear"
+              (click)="this.loanSettingsForm.value.requirement=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>      
+        </div>
+      
+      </div>
+      <!-- <button style="color: white; background-color: rgb(93, 235, 93);" mat-raised-button type="button" (click)="addItemReq()">Add requirement</button> -->
+      <span class="cursor_pointer" (click)="addItemReq()">
+        <mat-icon style="color: rgb(93, 235, 93);"> add_circle</mat-icon>
+        Add
+      </span>&nbsp;&nbsp;
+      <span class="cursor_pointer" style="color: rgb(228, 86, 86);" *ngIf="addNewReq"  (click)="removevalueReq()">
+        <mat-icon>remove_circle</mat-icon>
+        Remove
+      </span>
+      <!-- <button style="color: white; background-color: rgb(228, 86, 86);" mat-raised-button *ngIf="addNewReq" type="button" (click)="removevalueReq()">Remove requirement</button> -->
+
+  
+    </form>
+
+    <button (click)="createLoanSettings()" class="float-right mt-4 mb-5 " style="color: white; background-color: rgb(102, 102, 235);" mat-raised-button >Submit</button>
+  
+  </div>
+
+
+
+  <div *ngIf="loanSettings && loanAction == 'update'" class="bg-white py-5 px-4 ml-4 mr-2 mb-5">
+    <form >
+      <div class="row">
+  
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Title</mat-label>
+          <input disabled [(ngModel)]="loanSettings.title" matInput type="text" name="title" >
+          <!-- <button mat-button *ngIf="loanSettings.title" matSuffix mat-icon-button aria-label="Clear"
+            (click)="loanSettings.title=''">
+            <mat-icon>close</mat-icon>
+          </button> -->
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Subtitle</mat-label>
+          <input disabled [(ngModel)]="loanSettings.subtitle" matInput type="text" name="subtitle" >
+          <!-- <button mat-button *ngIf="loanSettings.subtitle" matSuffix mat-icon-button aria-label="Clear"
+            (click)="loanSettings.subtitle=''">
+            <mat-icon>close</mat-icon>
+          </button> -->
+        </mat-form-field>
+  
+        <!-- <mat-radio-group class="col-md-12 col-sm-12 col-xs-12 mb-2" aria-label="Select an option">
+          <mat-label class="mr-3 mb-2 font-weight-bold">Disable Loan</mat-label>
+          <mat-radio-button class="mr-2" value="true">Yes</mat-radio-button>
+          <mat-radio-button value="false">No</mat-radio-button>
+        </mat-radio-group> -->
+  
+  
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Preocessing Fee</mat-label>
+          <input [(ngModel)]="loanSettings.processingFee" matInput type="number" name="processingFee" >
+          <button mat-button *ngIf="loanSettings.processingFee" matSuffix mat-icon-button
+            aria-label="Clear" (click)="loanSettings.processingFee=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Minimum Amount</mat-label>
+          <input disabled [(ngModel)]="loanSettings.minAmount" matInput type="number" name="minAmount" >
+          <!-- <button mat-button *ngIf="loanSettings.minAmount" matSuffix mat-icon-button aria-label="Clear"
+            (click)="loanSettings.minAmount=''">
+            <mat-icon>close</mat-icon>
+          </button> -->
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Maximum Amount</mat-label>
+          <input disabled [(ngModel)]="loanSettings.maxAmount" matInput type="number" name="maxAmount">
+          <!-- <button mat-button *ngIf="loanSettings.maxAmount" matSuffix mat-icon-button aria-label="Clear"
+            (click)="loanSettings.maxAmount=''">
+            <mat-icon>close</mat-icon>
+          </button> -->
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Minimum Tenure</mat-label>
+          <input disabled [(ngModel)]="loanSettings.minTenure" matInput type="number" name="minTenure" >
+          <!-- <button mat-button *ngIf="loanSettings.minTenure" matSuffix mat-icon-button aria-label="Clear"
+            (click)="loanSettings.minTenure=''">
+            <mat-icon>close</mat-icon>
+          </button> -->
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Maximum Tenure</mat-label>
+          <input disabled [(ngModel)]="loanSettings.maxTenure" matInput type="number" name="maxTenure">
+          <!-- <button mat-button *ngIf="loanSettings.maxTenure" matSuffix mat-icon-button aria-label="Clear"
+            (click)="loanSettings.maxTenure=''">
+            <mat-icon>close</mat-icon>
+          </button> -->
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Interest Rate</mat-label>
+          <input disabled [(ngModel)]="loanSettings.interestRate" matInput type="number" name="interestRate">
+          <!-- <button mat-button *ngIf="loanSettings.interestRate" matSuffix mat-icon-button aria-label="Clear"
+            (click)="loanSettings.interestRate=''">
+            <mat-icon>close</mat-icon>
+          </button> -->
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>Footer</mat-label>
+          <input disabled [(ngModel)]="loanSettings.footer" matInput type="text" name="footer" >
+          <!-- <button mat-button *ngIf="loanSettings.footer" matSuffix mat-icon-button aria-label="Clear"
+            (click)="loanSettings.footer=''">
+            <mat-icon>close</mat-icon>
+          </button> -->
+        </mat-form-field>
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+            <mat-label>Header</mat-label>
+            <input [(ngModel)]="loanSettings.body.header" matInput type="text" name="header" >
+            <button mat-button *ngIf="loanSettings.body.header" matSuffix mat-icon-button aria-label="Clear"
+              (click)="loanSettings.body.header=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+          <div class="mb-3 col-md-6 col-sm-6 col-xs-12">
+            <select class="form-control" class="browser-default custom-select"
+              (change)="changePoint($event.target.value)">
+              <option [ngValue]="undefined" >Select Point </option>
+              <option *ngFor="let point of loanSettingsPoints; let i=index;" [value]="point">{{
+                  point
+                }}</option>
+            </select>
+          </div>
+          <mat-form-field class="col-md-12 col-sm-12 col-xs-12" appearance="outline">
+            <mat-label>Point</mat-label>
+            <input [(ngModel)]="point" matInput type="text" name="point" >
+            <button mat-button *ngIf="point" matSuffix mat-icon-button aria-label="Clear"
+              (click)="point=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+          <button class="float-right mb-5 " style="color: white; background-color: rgb(20, 187, 84);" mat-raised-button (click)="addPoint()">Update Point</button>
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="mb-3 col-md-6 col-sm-6 col-xs-12">
+            <select class="form-control" class="browser-default custom-select"
+              (change)="changeRequirement($event.target.value)">
+              <option [ngValue]="undefined" >Select Requirement </option>
+              <option *ngFor="let req of loanSettingsRequirements; let i=index;" [value]="req">{{
+                  req
+                }}</option>
+            </select>
+          </div>
+          <mat-form-field class="col-md-12 col-sm-12 col-xs-12" appearance="outline">
+            <mat-label>Requirement</mat-label>
+            <input [(ngModel)]="requirement" matInput type="text" name="requirement" >
+            <button mat-button *ngIf="requirement" matSuffix mat-icon-button aria-label="Clear"
+              (click)="requirement=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+          <button class="float-right mb-5 " style="color: white; background-color: rgb(20, 187, 84);" mat-raised-button (click)="addReq()">Update Reequirement</button>
+        </div>
+  
+      </div>
+  
+    </form>
+    <button (click)="updateLoanSettings()" class="float-right mt-4 mb-5 " style="color: white; background-color: rgb(102, 102, 235);" mat-raised-button >Update</button>
 
   </div>
 
