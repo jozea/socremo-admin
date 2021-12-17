@@ -11,4 +11,6 @@ export const environment = {
   // baseUrl: 'https://api.accionmfb.com/api/v1/',
   corporateUrl: 'http://167.172.100.241:3000/api/v1/',
   copUrl: 'http://40.118.188.252:3000/api/v1/',
+  adminToken: 'ADSCDqGMNKLn_7LDcOOEsG4OQsFbOTVnYRR8T0eVx3Tj4='
+
 };
