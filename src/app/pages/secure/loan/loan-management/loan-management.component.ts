@@ -10,6 +10,8 @@ import { LoanService } from 'src/app/services/loan/loan.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 import { LoanDetailComponent } from '../loan-detail/loan-detail.component';
 import {forkJoin} from 'rxjs';
+import {MatSort} from '@angular/material/sort';
+
 
 @Component({
   selector: 'app-loan-management',
@@ -18,6 +20,7 @@ import {forkJoin} from 'rxjs';
 })
 export class LoanManagementComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   displayedColumns: string[] = ['position', 'customerId', 'amount','tenure', 'status', 'reason', 'createdAt', 'updatedAt',]// 'termRecommended', 'creationDate', 'date', 'renew'];
   dataSource: any = new MatTableDataSource([]);
   exportAsConfig: ExportAsConfig = exportConfig('pdf', 'loan_table', 'Loan')
@@ -121,43 +124,15 @@ export class LoanManagementComponent implements OnInit {
     // this.getRenewals(this.limit, this.page, this.countRequest);
   }
 
-  renewalButton() {
-    // delete this.loanRequestModel.status
-    // this.loanRequestModel.isRenewal = true
-    // this.handleLoanRequest(this.limit, this.page, this.loanRequestModel)
-    this.renewals
-    this.dataSource = new MatTableDataSource(this.renewals);
-    this.maxall = this.renewalMeta.meta.total;
-    this.loading = false;
-  }
-
-  getRenewals(response) {
-    this.loading = true;
-    let renewalData = response.data.docs
-    this.renewalMeta = response.data
-    if (renewalData.length !== 0) {
-      renewalData.forEach(e => {
-        if (e.isRenewal) {
-          this.renewals.push(e)
-          this.loading = false;
-          // console.log('there is renewal')
-          // console.log(this.renewals)
-        }else {
-          // console.log('no renewal')
-          this.loading = false;
-        }
-      });
-    }else {
-      // console.log('no value')
-      this.loading = false;
-    }
-    // console.log(this.renewals.length)
-    this.renewalLoans = this.renewals.length
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   total:any
   async handleLoanRequest(limit: number, page: number, model: any) {
     this.loading = true;
+    this.totalLoans = 0;this.pendingLoan = 0;this.disbursedLoan = 0;this.assignedLoan = 0
     this.loanService
       .getLoanHistory(limit, page, model).subscribe(async response => {
         // console.log(response)
@@ -187,13 +162,6 @@ export class LoanManagementComponent implements OnInit {
       this.totalCount = resp.data.meta.total
     })
   }
-
-  // fetchLoanHistory() {
-  //   let model = {}
-  //   this.loanService.getLoanHistory(model).subscribe((res: any)=> {
-  //     console.log(res)
-  //   })
-  // }
 
 
 

@@ -21,6 +21,8 @@
     },
     "login": {
         "id": "Digite o seu número de identificação",
+        "username": "Entre com seu nome de usuário",
+        "loginPin": "Digite seu PIN de login",
         "password": "Coloque sua senha",
         "otp": "Insira seu OTP",
         "newPassword": "Insira a nova senha",
@@ -28,6 +30,7 @@
         "securityAnswer": "Digite sua resposta de segurança",
         "rememberMe": "Lembre de mim",
         "forgotPassword": "Esqueceu sua senha",
+        "forgptPin": "Esqueci o PIN",
         "createProfile": "Criar perfil",
         "rp": "Eu sei minha senha",
         "login": "Conecte-se"

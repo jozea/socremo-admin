@@ -84,6 +84,7 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.formBuilder.group({
       // primaryTelephone: new FormControl('', Validators.compose([Validators.required, Validators.minLength(10)])),
       username: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(4)])),
       loginPin: new FormControl('', Validators.compose([Validators.required, Validators.minLength(4)])),
       otp: new FormControl('', Validators.compose([Validators.minLength(6)])),
       newPassword: new FormControl('', Validators.compose([Validators.required, Validators.minLength(10)])),
@@ -98,7 +99,7 @@ export class LoginComponent implements OnInit {
   }
 
   forgotPassword() {
-    this.showForgotPassword = true
+    // this.showForgotPassword = true
   }
 
   rememberPassword() {

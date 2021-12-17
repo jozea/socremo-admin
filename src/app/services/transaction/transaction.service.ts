@@ -13,13 +13,13 @@ baseUrl: string = environment.baseUrl;
 
 constructor(private http: HttpClient) { }
 
-getAllTransactions(
-  limit: number,
-  page: number,
-  model: any,
-): Observable<any> {
-  return this.http.post<any>(`${this.baseUrl}transactions/admin/filter?limit=${limit}&page=${page}`, model);
-}
+// getAllTransactions(
+//   limit: number,
+//   page: number,
+//   model: any,
+// ): Observable<any> {
+//   return this.http.post<any>(`${this.baseUrl}transactions/admin/filter?limit=${limit}&page=${page}`, model);
+// }
 
 
 getTransactionByUserId(user: any): Observable<any> {
@@ -47,4 +47,14 @@ getTransactionStatus(model: any): Observable<any> {
   return this.http.post<any>(`${this.baseUrl}transactions/admin/transactionStatus`, model);
 }
 
+
+
+
+getAllTransactions(
+  limit: number,
+  page: number,
+  model: any,
+): Observable<any> {
+  return this.http.post<any>(`${this.baseUrl}admin/transactions?limit=${limit}&page=${page}`, model);
+}
 }

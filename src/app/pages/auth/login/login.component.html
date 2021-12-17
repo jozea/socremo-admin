@@ -15,12 +15,12 @@
           </div>
           <div class="d-flex flex-column">
             <mat-form-field appearance="legacy">
-              <mat-label>{{ 'login.id' | translate }}</mat-label>
+              <mat-label>{{ 'login.username' | translate }}</mat-label>
               <input matInput placeholder="" formControlName="username" required>
             </mat-form-field>
             <mat-form-field *ngIf="!showForgotPassword" appearance="legacy">
               <mat-label>{{ 'login.password' | translate }}</mat-label>
-              <input matInput [type]="hide ? 'password' : 'text' " formControlName="loginPin" autocomplete="on"
+              <input matInput [type]="hide ? 'password' : 'text' " formControlName="password" autocomplete="on"
                 required>
               <button mat-icon-button matSuffix (mouseup)="hide = !hide" (mousedown)="hide = !hide"
                 [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
@@ -68,7 +68,7 @@
           </div>
 
           <div *ngIf="!showForgotPassword" class="d-flex justify-content-center container-login100-form-btn">
-            <span class="link-font" (click)="forgotPassword()">{{ 'login.forgotPassword' | translate }} </span>
+            <span class="link-font" (click)="forgotPassword()">{{ 'login.forgotPin' | translate }} </span>
             <!-- <span class="link-font" routerLink="/register">{{ 'login.createProfile' | translate }}</span> -->
           </div>
           <div *ngIf="showForgotPassword" class="d-flex justify-content-center container-login100-form-btn">

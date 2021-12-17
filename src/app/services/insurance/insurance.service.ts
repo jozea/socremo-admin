@@ -12,11 +12,11 @@ export class InsuranceService {
   
   constructor(private http: HttpClient) { }
 
-  fetchAllInsurance(model): Observable<any> {
+  fetchAllInsuranceTemplate(model): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}admin/insurance/templates/all`, model);
   }
 
-  fetchInsuranceById(insuranceId): Observable<any> {
+  fetchInsuranceTemplateById(insuranceId): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}admin/insurance/templates/${insuranceId}`, {});
   }
 
@@ -31,4 +31,12 @@ export class InsuranceService {
   assignInsurance(insuranceId, adminId): Observable<any>{
     return this.http.put<any>(`${this.baseUrl}admin/insurance/assign/${insuranceId}/${adminId}`, {})
   } 
+
+  closeInsurance(insuranceId): Observable<any>{
+    return this.http.patch<any>(`${this.baseUrl}admin/insurance/close/${insuranceId}`, {})
+  } 
+
+  fetchAllInsurance(model): Observable<any>{
+    return this.http.post<any>(`${this.baseUrl}admin/insurance`, model)
+  }
 }

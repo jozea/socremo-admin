@@ -22,6 +22,8 @@
     },
     "login": {
         "id": "Enter your ID number",
+        "username": "Enter your Username",
+        "loginPin": "Enter your Login pin",
         "password": "Enter your password",
         "otp": "Enter your OTP",
         "newPassword": "Enter new password",
@@ -29,6 +31,7 @@
         "securityAnswer": "Enter your Security Answer",
         "rememberMe": "Remember me",
         "forgotPassword": "Forgot Password",
+        "forgotPin": "Forgot Pin",
         "createProfile": "Create Profile",
         "rp": "I Know my Password",
         "login": "Login"

@@ -28,6 +28,7 @@ import {HttpEvent,HttpHandler,HttpRequest, HttpInterceptor} from '@angular/commo
 import { Observable } from 'rxjs';
 import { sha512 } from 'js-sha512'; 
 import { crypto } from 'crypto-js'
+import { environment } from 'src/environments/environment';
 
 
 export class AuthIntercept implements HttpInterceptor {
@@ -43,11 +44,17 @@ export class AuthIntercept implements HttpInterceptor {
         // };
 
         // let a = createHash(request.body)
-        const channel = 'web';
-        let apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
+
+        const path = request.url.split(/:\d{4}\/api/)[1]
+        const text = `${environment.adminToken}|${JSON.stringify({...request.body, path})}`
+        const hash = sha512.update(text).hex();
+
+
+        // const channel = 'web';
+        // let apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
         let timestamp = Date.now().toString();
-        const text = `${apiKey}|${channel}|${timestamp}`;
-        const hash = sha512(text);
+        // const text = `${apiKey}|${channel}|${timestamp}`;
+        // const hash = sha512(text);
         let addon
         // if (request.url.includes('users/wakandax-onboard') || 
         //     request.url.includes('users?limit') ||
@@ -60,7 +67,7 @@ export class AuthIntercept implements HttpInterceptor {
         // }
         request = request.clone({
             headers: request.headers.set('Authorization', `Bearer ${sessionStorage.getItem('authorization')}`)
-                    .set('x-timestamp', `${timestamp}`)
+                    // .set('x-timestamp', `${timestamp}`)
                     .set('api-key', hash),
             // body:{ ...request.body, ...addon }
             

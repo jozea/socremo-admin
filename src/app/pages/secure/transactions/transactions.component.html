@@ -50,14 +50,14 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <!-- <mat-form-field appearance="outline">
           <mat-label>{{ 'transactions.accountType' | translate }}</mat-label>
           <mat-select formControlName="accountType">
             <mat-option *ngFor="let item of allAccountType" [value]="item.value">
               {{item.name}}
             </mat-option>
           </mat-select>
-        </mat-form-field> 
+        </mat-form-field>  -->
 
         <mat-form-field appearance="outline">
           <mat-label>{{ 'transactions.transactionReference' | translate }}</mat-label>
@@ -68,23 +68,23 @@
           </button>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <!-- <mat-form-field appearance="outline">
           <mat-label>{{ 'transactions.minimumAmount' | translate }}</mat-label>
           <input [value]="this.transactionFilterForm.value.minAmount" formControlName="minAmount" matInput type="number">
           <button mat-button *ngIf="this.transactionFilterForm.value.minAmount" matSuffix mat-icon-button aria-label="Clear"
             (click)="this.transactionFilterForm.value.minAmount=''">
             <mat-icon>close</mat-icon>
           </button>
-        </mat-form-field>
+        </mat-form-field> -->
 
-        <mat-form-field appearance="outline">
+        <!-- <mat-form-field appearance="outline">
           <mat-label>{{ 'transactions.maximumAmount' | translate }}</mat-label>
           <input [value]="this.transactionFilterForm.value.maxAmount" formControlName="maxAmount" matInput type="number">
           <button mat-button *ngIf="this.transactionFilterForm.value.maxAmount" matSuffix mat-icon-button aria-label="Clear"
             (click)="this.transactionFilterForm.value.maxAmount=''">
             <mat-icon>close</mat-icon>
           </button>
-        </mat-form-field>
+        </mat-form-field> -->
 
         <mat-form-field appearance="outline">
           <mat-label>{{ 'transactions.customerName' | translate }}</mat-label>
@@ -147,28 +147,28 @@
       </ng-container>
 
       <ng-container matColumnDef="name" >
-        <th disableClear mat-header-cell *matHeaderCellDef> {{ 'transactions.customerName' | translate }} </th>
-        <td mat-cell *matCellDef="let element"> {{element.sender.fullName}} </td>
+        <th disableClear mat-header-cell *matHeaderCellDef> Customer Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.beneficiary.name}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="provider">
-        <th mat-header-cell *matHeaderCellDef> {{ 'transactions.provider' | translate }} </th>
-        <td mat-cell *matCellDef="let element"> {{element.provider}} </td>
+      <ng-container matColumnDef="beneficiary">
+        <th mat-header-cell *matHeaderCellDef> Beneficiary Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.requestData.creditAccountName}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="transactionId">
-        <th mat-header-cell *matHeaderCellDef> {{ 'transactions.transactionId' | translate }} </th>
-        <td mat-cell *matCellDef="let element"> {{element.transactionData && element.transactionData.reference ? element.transactionData.reference : element.transactionData && element.transactionData.responseData && element.transactionData.responseData.content ? element.transactionData.responseData.content.transactions.transactionId :element.transactionData && element.transactionData.paymentReference ? element.transactionData.paymentReference : '' }} &nbsp; &nbsp; </td>
+      <ng-container matColumnDef="message">
+        <th mat-header-cell *matHeaderCellDef> Message </th>
+        <td mat-cell *matCellDef="let element"> {{element.message}} &nbsp; &nbsp; </td>
       </ng-container>
 
-      <ng-container matColumnDef="reference">
-        <th mat-header-cell *matHeaderCellDef> {{ 'transactions.reference' | translate }} </th>
-        <td mat-cell *matCellDef="let element"> {{element.reference}} </td>
+      <ng-container matColumnDef="narration">
+        <th mat-header-cell *matHeaderCellDef> Narration </th>
+        <td mat-cell *matCellDef="let element"> {{element.narration}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="type">
-        <th mat-header-cell *matHeaderCellDef> {{ 'transactions.transactionType' | translate }} </th>
-        <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+      <ng-container matColumnDef="product">
+        <th mat-header-cell *matHeaderCellDef>Product </th>
+        <td mat-cell *matCellDef="let element"> {{element.product}} </td>
       </ng-container>
 
       <ng-container matColumnDef="status">
@@ -178,9 +178,9 @@
         </span> </td>
       </ng-container>
 
-      <ng-container matColumnDef="channel">
-        <th mat-header-cell *matHeaderCellDef> Transaction Channel </th>
-        <td mat-cell *matCellDef="let element"> {{element.channel}} </td>
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef> Transaction Type </th>
+        <td mat-cell *matCellDef="let element"> {{element.type}} </td>
       </ng-container>
 
       <ng-container matColumnDef="amount">
@@ -188,85 +188,35 @@
         <td mat-cell *matCellDef="let element"> {{element.amount | number}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="state">
-        <th mat-header-cell *matHeaderCellDef> Completed? </th>
-        <td mat-cell *matCellDef="let element"> {{element.state == 'complete' ? 'yes' : 'no'}} </td>
+      <ng-container matColumnDef="creditAccount">
+        <th mat-header-cell *matHeaderCellDef> Credit Account </th>
+        <td mat-cell *matCellDef="let element"> {{element.requestData.creditAccount}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="charge">
-        <th mat-header-cell *matHeaderCellDef> Charge </th>
+      <ng-container matColumnDef="debitAccount">
+        <th mat-header-cell *matHeaderCellDef> Debit Account </th>
         <td mat-cell *matCellDef="let element">
-          {{ element.charge }}
+          {{ element.debitAccount }}
         </td>
       </ng-container>
-      <ng-container matColumnDef="fees">
-        <th mat-header-cell *matHeaderCellDef> Fees </th>
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> Transaction Id </th>
         <td mat-cell *matCellDef="let element">
-          {{ element.commission }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="accion">
-        <th mat-header-cell *matHeaderCellDef> Accion Share </th>
-        <td mat-cell *matCellDef="let element">
-          {{  element.AMFB ? (+element.AMFB).toFixed(2) : 'N/A' }}        
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="rubik">
-        <th mat-header-cell *matHeaderCellDef> RubikPay Share </th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.RP ? (+element.RP).toFixed(2) : 'N/A' }}        
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef> Date </th>
-        <td mat-cell *matCellDef="let element"> {{utilService.formatDateString(element.updatedAt)}} </td>
-      </ng-container>
-      <ng-container matColumnDef="beneficiaryName">
-        <th mat-header-cell *matHeaderCellDef> Beneficiary Name </th>
-        <td mat-cell *matCellDef="let element">
-          {{element.requestData.beneficiaryName ? element.requestData.beneficiaryName : ''}} </td>
-      </ng-container>
-      <ng-container matColumnDef="beneficiaryMobile">
-        <th mat-header-cell *matHeaderCellDef> Beneficiary Phone Number </th>
-        <td mat-cell *matCellDef="let element">
-          {{element.requestData.mobileNumber ? element.requestData.mobileNumber : ''}} </td>
-      </ng-container>
-      <ng-container matColumnDef="beneficiaryAccountNumber">
-        <th mat-header-cell *matHeaderCellDef> Account Number </th>
-        <td mat-cell *matCellDef="let element">
-          {{element.requestData.debitAccountNumber ? element.requestData.debitAccountNumber : element.requestData.debitAccount ? element.requestData.debitAccount : 'N/A'}} </td>
-      </ng-container>
-      <ng-container matColumnDef="balanceBefore">
-        <th mat-header-cell *matHeaderCellDef> Account Balance Before </th>
-        <td mat-cell *matCellDef="let element">
-          {{element.balanceHistory ? element.balanceHistory.balanceBefore : "N/A"}} </td>
-      </ng-container>
-      <ng-container matColumnDef="balanceAfter">
-        <th mat-header-cell *matHeaderCellDef> Account Balance After </th>
-        <td mat-cell *matCellDef="let element">
-          {{element.balanceHistory ? element.balanceHistory.balanceAfter : "N/A"}} </td>
-      </ng-container>
-
-
-
-      <ng-container matColumnDef="message">
-        <th mat-header-cell *matHeaderCellDef> Message </th>
-        <td mat-cell *matCellDef="let element">
-          {{element.message}}       
+          {{ element._id }}
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="serviceID">
-        <th mat-header-cell *matHeaderCellDef> Service ID </th>
+      <ng-container matColumnDef="imei">
+        <th mat-header-cell *matHeaderCellDef> Imei </th>
         <td mat-cell *matCellDef="let element">
-          {{element.requestData.serviceID}}       
+          {{ element.imei }}
         </td>
       </ng-container>
-      <ng-container matColumnDef="beneficiary">
-        <th mat-header-cell *matHeaderCellDef> Beneficiary </th>
+
+      <ng-container matColumnDef="reference">
+        <th mat-header-cell *matHeaderCellDef> Reference Id </th>
         <td mat-cell *matCellDef="let element">
-          {{element.beneficiary}}       
+          {{ element.reference }}
         </td>
       </ng-container>
 
@@ -284,16 +234,38 @@
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="isCredit">
-        <th mat-header-cell *matHeaderCellDef> Debit/Credit Status </th>
+      <!-- <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef> Date </th>
+        <td mat-cell *matCellDef="let element"> {{utilService.formatDateString(element.updatedAt)}} </td>
+      </ng-container> -->
+      <!-- <ng-container matColumnDef="beneficiaryName">
+        <th mat-header-cell *matHeaderCellDef> Beneficiary Name </th>
         <td mat-cell *matCellDef="let element">
-          {{  element.isCredit ? 'Credit' : 'Debit'  }}       
-        </td>
+          {{element.requestData.beneficiaryName ? element.requestData.beneficiaryName : ''}} </td>
+      </ng-container> -->
+    
+      <!-- <ng-container matColumnDef="beneficiaryAccountNumber">
+        <th mat-header-cell *matHeaderCellDef> Account Number </th>
+        <td mat-cell *matCellDef="let element">
+          {{element.requestData.debitAccountNumber ? element.requestData.debitAccountNumber : element.requestData.debitAccount ? element.requestData.debitAccount : 'N/A'}} </td>
       </ng-container>
+      <ng-container matColumnDef="balanceBefore">
+        <th mat-header-cell *matHeaderCellDef> Account Balance Before </th>
+        <td mat-cell *matCellDef="let element">
+          {{element.balanceHistory ? element.balanceHistory.balanceBefore : "N/A"}} </td>
+      </ng-container>
+      <ng-container matColumnDef="balanceAfter">
+        <th mat-header-cell *matHeaderCellDef> Account Balance After </th>
+        <td mat-cell *matCellDef="let element">
+          {{element.balanceHistory ? element.balanceHistory.balanceAfter : "N/A"}} </td>
+      </ng-container> -->
+
+      
 
 
 
-  <!-- <ng-container matColumnDef="expandedDetail">
+
+  <ng-container matColumnDef="expandedDetail">
     <td style="display: none;" mat-cell *matCellDef="let element; let i = index;" [attr.colspan]="columnsToDisplay.length">
       <div class="transaction-detail"
            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
@@ -303,8 +275,8 @@
               <p class="text_accion_stone">{{element.message}}</p>
             </div>
             <div class="col-6 col-md-2 mx-2 d-flex">
-              <p class="font-weight-bold">Service ID:&nbsp;</p>
-              <p class="text_accion_stone">{{element.requestData.serviceID}}</p>
+              <p class="font-weight-bold">Amount:&nbsp;</p>
+              <p class="text_accion_stone">{{element.requestData.amount}}</p>
             </div>
             <div class="col-6 col-md-2 mx-2 d-flex">
               <p class="font-weight-bold">Beneficiary:&nbsp;</p>
@@ -320,12 +292,12 @@
             </div>
             <div class="col-6 col-md-2 mx-2 d-flex">
               <p class="font-weight-bold">Status:&nbsp;</p>
-              <p class="text_accion_stone">{{element.isCredit ? 'Credit' : 'Debit'}}</p>
+              <p class="text_accion_stone">{{element.status}}</p>
             </div>
            </div>
       </div>
     </td>
-  </ng-container> -->
+  </ng-container>
 
   <tr  mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
   <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
@@ -338,7 +310,7 @@
       No data
     </td>
   </tr>
-  <!-- <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="transaction-detail-row"></tr> -->
+  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="transaction-detail-row"></tr>
 </table>
       </div>
       <div class="d-flex justify-content-end align-items-center">

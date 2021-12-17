@@ -25,8 +25,10 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  columnsToDisplay: string[] = ['position', 'name', 'transactionId', 'reference', 'type', 'status', 'amount']//, 'state', 'charge', 'fees', 'accion', 'rubik', 'date', 'beneficiaryName', 'beneficiaryMobile', 'beneficiaryAccountNumber', 'balanceBefore', 'balanceAfter', 'message', 'serviceID', 'beneficiary', 'createdAt', 'updatedAt', 'isCredit'];
+  columnsToDisplay: string[] = ['position', 'name', 'beneficiary', 'message', 'narration', 'product', 'status', 'type', 'amount', 'creditAccount', 'debitAccount', 'imei', 'reference', 'createdAt', 'updatedAt']
+  //['position', 'name', 'transactionId', 'reference', 'type', 'status', 'amount']//, 'state', 'charge', 'fees', 'accion', 'rubik', 'date', 'beneficiaryName', 'beneficiaryMobile', 'beneficiaryAccountNumber', 'balanceBefore', 'balanceAfter', 'message', 'serviceID', 'beneficiary', 'createdAt', 'updatedAt', 'isCredit'];
 
+  
   dataSourceUnSorted: any = [];
   dataSource: any = [];
   expandedElement: any;
@@ -68,20 +70,22 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
       accountNumber: new FormControl('',),
       transactionReference: new FormControl('', Validators.minLength(9)),
     });
-    // this.fetchAllTransaction(10, 1, this.transactionRequestModel);
+    this.fetchAllTransaction(10, 1, this.transactionRequestModel);
   }
 
   fetchAllTransaction(
     limit: number, page: number, model: Object,
   ) {
     this.isLoadingResults = true;
-    this.transactionService.getAllTransactions(limit, page, model)
+    this.transactionService.getAllTransactions(limit, page, {})
       .subscribe(async (response: any) => {
-        // console.log(response)
-        this.dataSourceUnSorted = response.data.docs;
-        this.dataSource = await new MatTableDataSource(response.data.docs);
-        this.maxall = response.data.meta.total;
-        this.isLoadingResults = false;
+        console.log(response)
+        if (response.status == true) {
+          this.dataSourceUnSorted = response.data.docs;
+          this.dataSource = await new MatTableDataSource(response.data.result);
+          this.maxall = response.data.total;
+          this.isLoadingResults = false;
+        }
       }, (error: any) => {
         this.isLoadingResults = false;
         this.utilService.triggerNotification(error.status ? 'Error fetching data' : 'Network Issues. Try again')

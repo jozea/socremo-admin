@@ -7,6 +7,7 @@ import { LoanService } from 'src/app/services/loan/loan.service';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { PermissionService } from 'src/app/services/permission/permission.service';
 
 @Component({
   selector: 'app-insurance-management',
@@ -24,8 +25,8 @@ export class InsuranceManagementComponent implements OnInit {
   public Editor = ClassicEditor;
   public comment = '<p></p>';
 
-  actions=['create', 'update']
-  insuranceAction = 'create'
+  actions=['Create', 'Update', 'Assign', 'Close']
+  insuranceAction = 'Create'
   insuranceData: any;
   isLoanDisabled: boolean;
   allLoanSettings: any;
@@ -39,12 +40,29 @@ export class InsuranceManagementComponent implements OnInit {
   addNewReq:boolean = false
   addCoverage: boolean = false
   insuranceTemplate: any
+  adminId:  any
+  allAdmin: any
+
+  insuranceLimit: any;
+  insuranceRequirements: any;
+  insuranceCoverage: any;
+  templateId: any;
+  updatedLimit: any;
+  beneficiary: any;
+  benefit: any;
+  updatedRequirement: any;
+  newLimit: any
+  newRequirement: any
+  updatedCoverage: any
+  coverage: any
+  newCoverage: any
 
   constructor(
     private insuranceService: InsuranceService,
     private utilService: UtilsService,
     public formBuilder: FormBuilder,
     public loanService: LoanService,
+    private permissionSercice: PermissionService
   ) { }
 
   ngOnInit() {
@@ -58,7 +76,17 @@ export class InsuranceManagementComponent implements OnInit {
 
     });
     this.fetchInsuranceTemplates()
+    this.fetchAdmins()
+    this.getAllInsurance()
 
+  }
+
+  fetchAdmins() {
+    this.permissionSercice.fetchAdmins().subscribe((response: any)=>  {
+      if (response.status == true) {
+        this.allAdmin = response.data.result
+      }
+    })
   }
 
   createInsurance() {
@@ -96,8 +124,8 @@ export class InsuranceManagementComponent implements OnInit {
 
 
   fetchInsuranceTemplates() {
-    this.insuranceService.fetchAllInsurance({}).subscribe((response: any)=> {
-      // console.log(response)
+    this.insuranceService.fetchAllInsuranceTemplate({}).subscribe((response: any)=> {
+      console.log(response)
       if (response.status == true) {
         this.insuranceTemplate = response.data
         this.isLoadingResults =false
@@ -125,6 +153,44 @@ export class InsuranceManagementComponent implements OnInit {
       this.isLoadingResults = false
     })
 
+  }
+
+  closeInsurance() {
+    this.isLoadingResults =true
+    this.insuranceService.closeInsurance(this.templateId).subscribe((response: any)=> {
+      if (response.status == true) {
+        this.utilService.triggerNotification(response.message)
+        this.isLoadingResults = false
+      }
+    }, error=>{
+      this.utilService.triggerNotification(error.message)
+      this.isLoadingResults = false
+    })
+  }
+
+  assignInsurance() {
+    this.isLoadingResults =true
+    this.insuranceService.assignInsurance(this.templateId, this.adminId).subscribe((response: any)=> {
+      if (response.status == true) {
+        this.utilService.triggerNotification(response.message)
+        this.isLoadingResults = false
+      }
+    }, error=>{
+      this.utilService.triggerNotification(error.message)
+      this.isLoadingResults = false
+    })
+  }
+
+  getAllInsurance() {
+    let model = {
+      status:"open", 
+      customerId:"6155f5d9ac6a386aa1ce56b1", 
+      reference:"18832397400146", 
+      insuranceId:"61b473e34383de57d46c4806"
+    }
+    this.insuranceService.fetchAllInsurance({}).subscribe((response: any)=> {
+      console.log(response)
+    })
   }
 
 
@@ -195,15 +261,11 @@ export class InsuranceManagementComponent implements OnInit {
 
   changeAction(event) {
     this.insuranceAction = event
-    if (this.insuranceAction == 'create') {
+    if (this.insuranceAction == 'Create') {
       this.insuranceTitle = ''
     }
   }
 
-  insuranceLimit
-  insuranceRequirements
-  insuranceCoverage
-  templateId
   changeTitle(event) {
     this.insuranceTitle = event
     this.insuranceTemplate.forEach(e => {
@@ -211,9 +273,11 @@ export class InsuranceManagementComponent implements OnInit {
         this.insuranceData = e
         // console.log(e)
         this.templateId = this.insuranceData._id
-        this.insuranceLimit = this.insuranceData.body.limits
-        this.insuranceRequirements = this.insuranceData.requirements;
-        this.insuranceCoverage = this.insuranceData.coverage;
+        if (this.insuranceAction == 'Update') {
+          this.insuranceLimit = this.insuranceData.body.limits
+          this.insuranceRequirements = this.insuranceData.requirements;
+          this.insuranceCoverage = this.insuranceData.coverage;
+        }
       }
     });
   }
@@ -227,9 +291,6 @@ export class InsuranceManagementComponent implements OnInit {
     }
   }
 
-  updatedLimit
-  beneficiary
-  benefit
   changeLimit(event) {
     this.limit = event
     this.updatedLimit = event
@@ -242,14 +303,12 @@ export class InsuranceManagementComponent implements OnInit {
     
     // console.log(this.insuranceLimit)
   }
-
-  updatedRequirement
+  
   changeRequirement(event) {
     this.requirement = event
     this.updatedRequirement = event
   }
-
-  newLimit: any
+  
   addPoint() {
     this.newLimit = this.limit
     let newArr = this.insuranceLimit.map(e => {
@@ -262,8 +321,7 @@ export class InsuranceManagementComponent implements OnInit {
     this.insuranceLimit = newArr
     // console.log(this.insuranceLimit)
   }
-
-  newRequirement: any
+ 
   addReq() {
     this.newRequirement = this.requirement
     let newArr = this.insuranceRequirements.map(e => {
@@ -274,15 +332,12 @@ export class InsuranceManagementComponent implements OnInit {
     });
     this.insuranceRequirements = newArr
   }
-
-  updatedCoverage
-  coverage
+  
   changeCoverage(event) {
     this.coverage = event
     this.updatedCoverage = event
   }
-
-  newCoverage: any
+  
   addCov() {
     this.newCoverage = this.coverage
     let newArr = this.insuranceCoverage.map(e => {
@@ -292,6 +347,14 @@ export class InsuranceManagementComponent implements OnInit {
       return e
     });
     this.insuranceCoverage = newArr
+  }
+
+  changeAdmin(name) {
+    this.allAdmin.forEach(e => {
+      if (e.name == name) {
+        this.adminId = e._id
+      }
+    });
   }
 
 

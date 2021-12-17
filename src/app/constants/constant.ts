@@ -185,16 +185,18 @@ export const agentTopTabs = {
 }
 
 export const transactionTypes = [
-  {value: 'airtime', name: 'Airtime'},
-  {value: 'transfer', name: 'Transfer'},
-  {value: 'electricity', name: 'Electricity'},
-  {value: 'insurance', name: 'Insurance'},
-  {value: 'fund-wallet', name: 'Fund Wallet'},
-  {value: 'cableTV', name: 'Cable TV'},
-  {value: 'waec-result', name: 'WAEC Result'},
-  {value: 'waec-registration', name: 'WAEC Registration'},
-  {value: 'data', name: 'Data'},
-  {value: '', name: 'All'},
+  {value: 'intrabank', name: 'Intra Bank'},
+  {value: 'interbank', name: 'Inter Bank'},
+  // {value: 'airtime', name: 'Airtime'},
+  // {value: 'transfer', name: 'Transfer'},
+  // {value: 'electricity', name: 'Electricity'},
+  // {value: 'insurance', name: 'Insurance'},
+  // {value: 'fund-wallet', name: 'Fund Wallet'},
+  // {value: 'cableTV', name: 'Cable TV'},
+  // {value: 'waec-result', name: 'WAEC Result'},
+  // {value: 'waec-registration', name: 'WAEC Registration'},
+  // {value: 'data', name: 'Data'},
+  // {value: '', name: 'All'},
 ];
 export const agentTransactionTypes = [
   {value: 'airtime', name: 'Airtime'},
@@ -215,8 +217,10 @@ export const agentTransactionTypes = [
   {value: 'tin', name: 'TIN'},
 ];
 export const transactionStatus = [
-  {value: 'approved', name: 'Approved'},
-  {value: 'pending', name: 'Pending'},
+  {value: 'success', name: 'Success'},
+  {value: 'failed', name: 'Failed'},
+  // {value: 'approved', name: 'Approved'},
+  // {value: 'pending', name: 'Pending'},
   // {value: 'abandoned', name: 'Abandoned'},
   {value: '', name: 'All'}
 ];
