@@ -44,6 +44,7 @@ import { TicketSettingsComponent } from './enquiries/ticket-settings/ticket-sett
 import { ChequeManagementComponent } from './cheque/cheque-management/cheque-management.component';
 import { CardManagementComponent } from './cards/card-management/card-management.component';
 import { InsuranceManagementComponent } from './insurance/insurance-management/insurance-management.component';
+import { InsuranceListingComponent } from './insurance/insurance-listing/insurance-listing.component';
 
 const routes: Routes = [{
   path: '',
@@ -196,6 +197,11 @@ const routes: Routes = [{
         {
           path: 'management', 
           component: InsuranceManagementComponent, 
+          // canActivate: [AuthenticationGuard, RoleGuard], data: { allowedPermissions: ['change_password'] }
+        },
+        {
+          path: 'listing', 
+          component: InsuranceListingComponent, 
           // canActivate: [AuthenticationGuard, RoleGuard], data: { allowedPermissions: ['change_password'] }
         },
       ]

@@ -77,7 +77,6 @@ export class InsuranceManagementComponent implements OnInit {
     });
     this.fetchInsuranceTemplates()
     this.fetchAdmins()
-    this.getAllInsurance()
 
   }
 
@@ -165,31 +164,6 @@ export class InsuranceManagementComponent implements OnInit {
     }, error=>{
       this.utilService.triggerNotification(error.message)
       this.isLoadingResults = false
-    })
-  }
-
-  assignInsurance() {
-    this.isLoadingResults =true
-    this.insuranceService.assignInsurance(this.templateId, this.adminId).subscribe((response: any)=> {
-      if (response.status == true) {
-        this.utilService.triggerNotification(response.message)
-        this.isLoadingResults = false
-      }
-    }, error=>{
-      this.utilService.triggerNotification(error.message)
-      this.isLoadingResults = false
-    })
-  }
-
-  getAllInsurance() {
-    let model = {
-      status:"open", 
-      customerId:"6155f5d9ac6a386aa1ce56b1", 
-      reference:"18832397400146", 
-      insuranceId:"61b473e34383de57d46c4806"
-    }
-    this.insuranceService.fetchAllInsurance({}).subscribe((response: any)=> {
-      console.log(response)
     })
   }
 

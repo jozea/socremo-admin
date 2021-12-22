@@ -111,6 +111,8 @@ import { CardDetailsComponent } from './cards/card-details/card-details.componen
 import { ChequeDetailsComponent } from './cheque/cheque-details/cheque-details.component';
 import { ChequeActionComponent } from './cheque/cheque-action/cheque-action.component';
 import { CardActionComponent } from './cards/card-action/card-action.component';
+import { InsuranceListingComponent } from './insurance/insurance-listing/insurance-listing.component';
+import { InsuranceDetailsComponent } from './insurance/insurance-details/insurance-details.component';
 
 
 
@@ -238,6 +240,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ChequeDetailsComponent,
     ChequeActionComponent,
     CardActionComponent,
+    InsuranceListingComponent,
+    InsuranceDetailsComponent,
   ],
   providers: [SidenavService, MatDatepickerModule, AuthImagePipe, BnNgIdleService],
   entryComponents: [

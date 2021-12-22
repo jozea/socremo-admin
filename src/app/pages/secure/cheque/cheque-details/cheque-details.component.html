@@ -1,6 +1,6 @@
 
 
-<h2 mat-dialog-title class="text_accion_stone">Cheque Details</h2>
+<h2 mat-dialog-title class="text_accion_stone">{{ 'cheque.chequeDetails' | translate }}</h2>
 <mat-dialog-content style="background-color: rgb(230, 240, 240);">
     <div class="card mx-4 mb-3 mt-3 rounded-0">
         <mat-list>
@@ -8,41 +8,41 @@
             <!-- <mat-divider></mat-divider> -->
             <div class="row px-4 mt-3 flex-wrap">
                 <div class="col-4">
-                    <p class="font-weight-bold">Customer Name</p>
+                    <p class="font-weight-bold">{{ 'cheque.customerName' | translate }}</p>
                     <p class="text_accion_stone">{{chequeDetail.name}} </p>
                 </div>
                 <div class="col-4">
-                    <p class="font-weight-bold">Customer Id</p>
+                    <p class="font-weight-bold">{{ 'cheque.customerId' | translate }}</p>
                     <p class="text_accion_stone">{{chequeDetail.customerId}}</p>
                 </div>
 
                 <div class="col-4">
-                    <p class="font-weight-bold"> Created </p>
+                    <p class="font-weight-bold"> {{ 'cheque.created' | translate }} </p>
                     <p class="text_accion_stone">{{ chequeDetail.createdAt | date: 'yyyy-MM-dd'}}</p>
                 </div>
 
                 <div class="col-4">
-                    <p class="font-weight-bold">Updated</p>
+                    <p class="font-weight-bold">{{ 'cheque.update' | translate }}</p>
                     <p class="text_accion_stone">{{ chequeDetail.updatedAt | date: 'yyyy-MM-dd'}}</p>
                 </div>
 
                 <div class="col-4">
-                    <p class="font-weight-bold">Account Number</p>
+                    <p class="font-weight-bold">{{ 'cheque.accountNumber' | translate }}</p>
                     <p class="text_accion_stone">{{ chequeDetail.accountNumber}}</p>
                 </div>
 
 				<div class="col-4">
-                    <p class="font-weight-bold">Status</p>
+                    <p class="font-weight-bold">{{ 'cheque.status' | translate }}</p>
                     <p class="text_accion_stone">{{ chequeDetail.status}}</p>
                 </div>
 
 				<div class="col-4">
-                    <p class="font-weight-bold">Reference</p>
+                    <p class="font-weight-bold">{{ 'cheque.reference' | translate }}</p>
                     <p class="text_accion_stone">{{ chequeDetail.reference}}</p>
                 </div>
 
-                <div class="col-12 mb-3">
-                    <label for="">Select admin to assign this cheque</label>
+                <div *ngIf="chequeDetail.assigned.length == 0" class="col-12 mb-3">
+                    <label for="">{{ 'cheque.selectAdmin' | translate }}</label>
                     <select class="form-control" class="browser-default custom-select" 
                       (change)="changeAdmin($event.target.value)">
                       <option [ngValue]="undefined" >Select an admin</option>
@@ -94,7 +94,7 @@
         <button *ngIf="chequeDetail.assigned.length == 0" type="button" (click)="assignChequeBook()" class="btn btn-sm mx-2 text-white accion_stone my-1">
             {{ 'ticket.assign' | translate }}
         </button>
-		<button *ngIf="userId == adminId && (chequeDetail.status =='open' || chequeDetail.status =='processing')" (click)="openActionDialog2('closeCheque')" type="button" class="btn btn-sm mx-2 text-white my-1" style="background-color: rgb(218, 52, 52);">
+		<button *ngIf="userId == adminId && chequeDetail.status =='processing'" (click)="openActionDialog2('closeCheque')" type="button" class="btn btn-sm mx-2 text-white my-1" style="background-color: rgb(218, 52, 52);">
 			{{ 'ticket.closed' | translate }}
 		</button>
 		<!-- <button *ngIf="chequeDetail.status =='processing'" type="button" (click)="openDialog()" class="btn btn-sm mx-2 text-white my-1 accion_stone" >

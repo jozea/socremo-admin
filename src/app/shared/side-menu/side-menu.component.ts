@@ -42,7 +42,7 @@ export class SideMenuComponent implements OnInit, AfterViewInit {
 
   pages: any = [
     { name:  marker('menu.dashboard'), link: '/app/dashboard', icon: 'home' },
-    { name: marker('menu.transactionListing'), link: '/app/transactions', icon: 'account_balance' },
+    // { name: marker('menu.transactionListing'), link: '/app/transactions', icon: 'account_balance' },
     { name: marker('menu.customerManagement'), link: '/app/users', icon: 'person' },
     // { name: marker('menu.productManagement'), link: '/app/product/management', icon: 'business' },
     // { name: 'Dashboard', permission: 'transaction', link: '/app/dashboard', icon: 'home' },
@@ -119,24 +119,24 @@ export class SideMenuComponent implements OnInit, AfterViewInit {
         // },
       ]
     },
+    {
+      title: marker('menu.chequeManagement'),
+      icon: 'g_translate',
+      list: [
+        {
+          name: marker('menu.chequeManagement'),
+          permission: 'referral',
+          link: "/app/cheque/management",
+          icon: "assignment_turned_in"
+        },
+      ]
+    },
     // {
-    //   title: 'Cheque Management',
-    //   icon: 'g_translate',
-    //   list: [
-    //     {
-    //       name: 'Cheque Management',
-    //       permission: 'referral',
-    //       link: "/app/cheque/management",
-    //       icon: "assignment_turned_in"
-    //     },
-    //   ]
-    // },
-    // {
-    //   title: 'Card Management',
+    //   title: marker('menu.cardManagement'),
     //   icon: 'book',
     //   list: [
     //     {
-    //       name: 'Card Management',
+    //       name: marker('menu.cardManagement'),
     //       permission: 'referral',
     //       link: "/app/card/management",
     //       icon: "card_travel"
@@ -144,11 +144,17 @@ export class SideMenuComponent implements OnInit, AfterViewInit {
     //   ]
     // },
     // {
-    //   title: 'Insurance Management',
+    //   title: marker('menu.insuranceManagement'),
     //   icon: 'table_chart',
     //   list: [
     //     {
-    //       name: 'Insurance Management',
+    //       name: marker('menu.insuranceListing'),
+    //       permission: 'referral',
+    //       link: "/app/insurance/listing",
+    //       icon: "assignment"
+    //     },
+    //     {
+    //       name: marker('menu.insuranceManagement'),
     //       permission: 'referral',
     //       link: "/app/insurance/management",
     //       icon: "build"
@@ -174,7 +180,7 @@ export class SideMenuComponent implements OnInit, AfterViewInit {
     //   ]
     // },
     {
-      title: 'Loan Management',
+      title: marker('menu.loanManagement'),
       icon: 'monetization_on',
       list: [
         // {
@@ -184,7 +190,7 @@ export class SideMenuComponent implements OnInit, AfterViewInit {
         //   icon: "graphic_eq"
         // },
         {
-          name: "Loan Management",
+          name: marker('menu.loanManagement'),
           // permission: 'loan_management',
           link: "/app/loans/management",
           icon: "developer_board"
@@ -208,7 +214,7 @@ export class SideMenuComponent implements OnInit, AfterViewInit {
         //   icon: "get_app"
         // },
         {
-          name: "Settings",
+          name: marker('menu.loanSettings'),
           // permission: 'loan_settings',
           link: "/app/loans/settings",
           icon: "enhanced_encryption"
@@ -298,7 +304,7 @@ export class SideMenuComponent implements OnInit, AfterViewInit {
         //   icon: "account_box"
         // },
         {
-          name: "Permissions and Roles",
+          name: marker('menu.permissions'),
           permission: 'roles_permissions',
           link: "/app/setting/permission",
           icon: "enhanced_encryption"

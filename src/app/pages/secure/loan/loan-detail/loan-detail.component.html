@@ -1,4 +1,4 @@
-<h2 mat-dialog-title class="text_accion_stone">Loan Details</h2>
+<h2 mat-dialog-title class="text_accion_stone">{{ 'loans.loanDetails' | translate }}</h2>
 <mat-dialog-content *ngIf="!loanDetail" class="mat-typography">
   <mat-spinner [diameter]="100"></mat-spinner>
 </mat-dialog-content>
@@ -9,29 +9,29 @@
   <div class="row">
     <div class="col-6">
       <div class="d-flex">
-        <h5 class="font-weight-500 mr-3">Loan Status</h5>
+        <h5 class="font-weight-500 mr-3">{{ 'loans.loanStatus' | translate }}</h5>
         <p class="text-capitalize"> {{loanDetail.status}}</p>
       </div>
       <div class="d-flex">
-        <h5 class="font-weight-500 mr-3">Customer ID </h5>
+        <h5 class="font-weight-500 mr-3">{{ 'loans.customerId' | translate }} </h5>
         <p class="text-capitalize"> {{loanDetail.customerId}}</p>
       </div>
       <div class="d-flex">
-        <h5 class="font-weight-500 mr-3">Amount </h5>
+        <h5 class="font-weight-500 mr-3">{{ 'loans.amount' | translate }} </h5>
         <p class="text-capitalize"> N{{loanDetail.amount}}</p>
       </div>
       <div class="d-flex">
-        <h5 class="font-weight-500 mr-3">Tenure</h5>
+        <h5 class="font-weight-500 mr-3">{{ 'loans.tenure' | translate }}</h5>
         <p class="text-capitalize">{{loanDetail.tenure}}</p>
       </div>
 
       <div  class="d-flex">
-        <h5 class="font-weight-500 mr-3">How Soon</h5>
+        <h5 class="font-weight-500 mr-3">{{ 'loans.howSoon' | translate }}</h5>
         <p class="text-capitalize">{{loanDetail.howSoon}}</p>
       </div>
 
       <div  class="d-flex">
-        <h5 class="font-weight-500 mr-3">Assigned to</h5>
+        <h5 class="font-weight-500 mr-3">{{ 'loans.assignedTo' | translate }}</h5>
         <p class="text-capitalize">{{loanDetail.assigned[0] != undefined? loanDetail.assigned[0].name: 'Not assigned yet'}}</p>
       </div>
 
@@ -97,34 +97,34 @@
       </div> -->
 
       <div class="d-flex">
-        <h5 class="font-weight-500 mr-3">Reason</h5>
+        <h5 class="font-weight-500 mr-3">{{ 'loans.reason' | translate }}</h5>
         <p class="text-capitalize">{{loanDetail.reason}}</p>
       </div>
       <div  class="d-flex">
-        <h5 class="font-weight-500 mr-3">Temlate Id</h5>
+        <h5 class="font-weight-500 mr-3">{{ 'loans.templateId' | translate }}</h5>
         <p class="text-capitalize">{{loanDetail.templateId}} </p>
       </div>
       <div class="d-flex">
-        <h5 class="font-weight-500 mr-3">Created</h5>
+        <h5 class="font-weight-500 mr-3">{{ 'loans.created' | translate }}</h5>
         <p class="text-capitalize">{{loanDetail.createdAt}} </p>
       </div>
       <div class="d-flex">
-        <h5 class="font-weight-500 mr-3">Updated</h5>
+        <h5 class="font-weight-500 mr-3">{{ 'loans.update' | translate }}</h5>
         <p class="text-capitalize">{{loanDetail.updatedAt}} </p>
       </div>
       <div class="d-flex">
-        <h5 class="font-weight-500 mr-3">Loan with other vendors</h5>
+        <h5 class="font-weight-500 mr-3">{{ 'loans.otherLoans' | translate }}</h5>
         <p class="text-capitalize">{{loanDetail.appliedForLoanWithOtherVendorRecently }}</p>
       </div>
       <div class="d-flex">
-        <h5 class="font-weight-500 mr-3">Loan vendor Name</h5>
+        <h5 class="font-weight-500 mr-3">{{ 'loans.vendorName' | translate }}</h5>
         <p class="text-capitalize">{{loanDetail.otherLoanVendorName }}</p>
       </div>
 
     </div>
 
     <div *ngIf="!isLoading && loanDetail.status == 'pending'" class="col-12 mb-3">
-      <label for="">Select admin to assign this loan</label>
+      <label for="">{{ 'loans.selectAdmin' | translate }}</label>
       <select class="form-control" class="browser-default custom-select" 
         (change)="changeRole($event.target.value)">
         <option [ngValue]="undefined" >Select an admin</option>
@@ -622,7 +622,7 @@
 <mat-dialog-actions class="d-flex justify-content-between">
   <div>
     <button *ngIf="!isLoading && loanDetail.status == 'pending'" (click)="assignLoan()" type="button" class="btn btn-sm mx-2 text-white accion_stone my-1">
-      Assign Loan
+      {{ 'loans.assignLoan' | translate }}
     </button>
     <div *ngIf="!isLoading && loanDetail.status === 'assigned' && adminId == loanDetail.assigned[0]._id">
       <span class="text_accion">

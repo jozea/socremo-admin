@@ -65,27 +65,27 @@ export class RegisterComponent implements OnInit {
       birthdate: Number(birthdate),
       roleId: value.role,
       username: value.username,
-      loginPin: value.loginPin,
+      password: value.loginPin,
       security:{
         key: Number(value.securityQuestion), 
         value: value.securityAnswer
       }
     }
     this.clear()
-    // this.isLoading = true
-    // this.auth.createAdmin(model).subscribe((response: any)=> {
-    //   console.log(response)
-    //   if(response.status == true) {
-    //     this.utilService.triggerNotification(response.message)
-    //     this.isLoading = false
-    //   }else {
-    //     this.utilService.triggerNotification(response.message)
-    //     this.isLoading = false
-    //   }
-    // }), error=> {
-    //   this.utilService.triggerNotification(error.error.message)
-    //   this.isLoading = false
-    // }
+    this.isLoading = true
+    this.auth.createAdmin(model).subscribe((response: any)=> {
+      console.log(response)
+      if(response.status == true) {
+        this.utilService.triggerNotification(response.message)
+        this.isLoading = false
+      }else {
+        this.utilService.triggerNotification(response.message)
+        this.isLoading = false
+      }
+    }, error=> {
+      this.utilService.triggerNotification(error.message)
+      this.isLoading = false
+    })
   }
 
   clear() {

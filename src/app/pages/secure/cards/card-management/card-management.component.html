@@ -12,7 +12,7 @@
 
   <div class="header px-4 mt-3 d-flex justify-content-between align-items-center">
     <div class="d-flex align-items-center">
-      <p class="p-3 px-4 lead text-white">Card Management</p>
+      <p class="p-3 px-4 lead text-white">{{'card.headerText' | translate }}</p>
     </div>
   </div>
    
@@ -124,7 +124,7 @@
           </ng-container>
       
           <ng-container matColumnDef="category">
-            <th mat-header-cell *matHeaderCellDef> {{ 'ticket.category' | translate }} </th>
+            <th mat-header-cell *matHeaderCellDef> {{ 'card.accountNumber' | translate }} </th>
             <td mat-cell *matCellDef="let element"> {{element.accountNumber}} </td>
           </ng-container>
 

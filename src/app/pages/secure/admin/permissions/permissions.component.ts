@@ -484,7 +484,7 @@ export class PermissionsComponent implements OnInit {
         this.isLoading = false
       }
     }, error=> {
-      this.utilService.triggerNotification(error.error.message)
+      this.utilService.triggerNotification(error.message)
       this.isLoading = false
     })
   }
@@ -518,7 +518,7 @@ export class PermissionsComponent implements OnInit {
         this.loadingState = false
       }
     }, error=> {
-      this.utilService.triggerNotification(error.error.message)
+      this.utilService.triggerNotification(error.message)
       this.loadingState = false
     })
 
@@ -559,7 +559,7 @@ export class PermissionsComponent implements OnInit {
         location.reload()
       }
     }, error=> {
-      this.utilService.triggerNotification(error.error.message)
+      this.utilService.triggerNotification(error.message)
       this.loadingState = false
     })
 
@@ -577,7 +577,7 @@ export class PermissionsComponent implements OnInit {
         this.loadingState = false
       }
     }, error=> {
-      this.utilService.triggerNotification(error.error.message)
+      this.utilService.triggerNotification(error.message)
       this.loadingState = false
     })
   }
@@ -687,7 +687,7 @@ export class PermissionsComponent implements OnInit {
     //     this.roleId =''
     //   }
     // }, error=> {
-    //   this.utilService.triggerNotification(error.error.message) 
+    //   this.utilService.triggerNotification(error.message) 
     //   this.loadingState = false
     // })
   }
@@ -723,7 +723,7 @@ export class PermissionsComponent implements OnInit {
         this.loadingState = false
       }
     }, error=> {
-      this.utilService.triggerNotification(error.error.message)
+      this.utilService.triggerNotification(error.message)
       this.loadingState = false
     })
   }

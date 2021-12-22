@@ -148,12 +148,12 @@
 
       <ng-container matColumnDef="name" >
         <th disableClear mat-header-cell *matHeaderCellDef> Customer Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.beneficiary.name}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.beneficiary !== undefined?element.beneficiary.name:""}} </td>
       </ng-container>
 
       <ng-container matColumnDef="beneficiary">
         <th mat-header-cell *matHeaderCellDef> Beneficiary Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.requestData.creditAccountName}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.requestData !== undefined?element.requestData.creditAccountName: ""}} </td>
       </ng-container>
 
       <ng-container matColumnDef="message">
@@ -185,12 +185,12 @@
 
       <ng-container matColumnDef="amount">
         <th mat-header-cell *matHeaderCellDef> Amount </th>
-        <td mat-cell *matCellDef="let element"> {{element.amount | number}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.requestData !== undefined?element.requestData.amount:"" | number}} </td>
       </ng-container>
 
       <ng-container matColumnDef="creditAccount">
         <th mat-header-cell *matHeaderCellDef> Credit Account </th>
-        <td mat-cell *matCellDef="let element"> {{element.requestData.creditAccount}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.requestData !== undefined?element.requestData.creditAccount: ""}} </td>
       </ng-container>
 
       <ng-container matColumnDef="debitAccount">
@@ -276,7 +276,7 @@
             </div>
             <div class="col-6 col-md-2 mx-2 d-flex">
               <p class="font-weight-bold">Amount:&nbsp;</p>
-              <p class="text_accion_stone">{{element.requestData.amount}}</p>
+              <p class="text_accion_stone">{{element.requestData !== undefined?element.requestData.amount:"" | number}}</p>
             </div>
             <div class="col-6 col-md-2 mx-2 d-flex">
               <p class="font-weight-bold">Beneficiary:&nbsp;</p>

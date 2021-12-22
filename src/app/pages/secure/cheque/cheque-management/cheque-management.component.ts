@@ -76,6 +76,7 @@ export class ChequeManagementComponent implements OnInit {
     this.chequeService.fetchCheckBooks(model).subscribe(async (response:any)=> {
       // console.log(response)
       if (response.status == true) {
+        this.utilService.changeTab("statusDiv", "status", " active")
         this.dataSource = await new MatTableDataSource(response.data.result);
         this.utilService.triggerNotification(response.message)
         this.isLoadingResults = false
