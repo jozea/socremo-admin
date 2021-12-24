@@ -83,7 +83,19 @@
         "transactionId": "Transaction ID",
         "reference": "Reference",
         "transactionType": "Transaction Type",
-        "status": "Status"
+        "status": "Status",
+        "beneficiaryName": "Beneficiary Name",
+        "message": "Message",
+        "narration": "Narration",
+        "product": "Product",
+        "amount":"Amount",
+        "creditAccount": "Credit Account",
+        "debitAccount": "Debit Account",
+        "imei": "imei",
+        "referenceId": "Reference Id",
+        "createdDate": "Created Date",
+        "updatedDate": "Updated Date",
+        "all":"All"
     },
     "users": {
         "headerText": "Customer Management",
@@ -488,5 +500,32 @@
         "remove":"Remove",
         "submit":"Submit",
         "subtitle":"Subtitle"
+    },
+    "transaction": {
+        "headerText": "Transaction Management",
+        "filterHeader": "Filter/Sort by",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "customerName": "Customer Name",
+        "filter": "Filter",
+        "action": "Action",
+        "exportPdf": "Export Pdf",
+        "exportExcel": "Export Excel",
+        "exportCsv": "Export CSV",
+        "exportPng": "Export PNG",
+        "beneficiaryName": "Beneficiary Name",
+        "message": "Message",
+        "narration": "Narration",
+        "product": "Product",
+        "status":"Status",
+        "transactionType":"Transaction Type",
+        "amount":"Amount",
+        "creditAccount": "Credit Account",
+        "debitAccount": "Debit Account",
+        "imei": "imei",
+        "referenceId": "Reference Id",
+        "createdDate": "Created Date",
+        "updatedDate": "Updated Date",
+        "all":"All"
     }
 }

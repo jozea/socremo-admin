@@ -82,8 +82,20 @@
         "provider": "Provedor",
         "transactionId": "ID de transação",
         "reference": "Referência",
+        "beneficiaryName": "Nome beneficiário",
+        "message": "Mensagem",
+        "narration": "Narração",
+        "product": "Produto",
         "transactionType": "Tipo de Transação",
-        "status": "Estado"
+        "status": "Estado",
+        "amount": "Montante",
+        "creditAccount": "Conta crédito",
+        "debitAccount": "Conta de Débito",
+        "imei": "imei",
+        "referenceId": "Id de referência",
+        "createdDate": "Data Criada",
+        "updatedDate": "Data atualizada",
+        "all": "Todos os"
         
     },
     "users": {
@@ -471,5 +483,32 @@
         "cardDetails": "Detalhes do cartão",
         "created":"Criado",
         "updated":"Atualizado"
+    },
+    "transaction": {
+        "headerText": "Gestão de Cartões",
+        "filterHeader": "Filtro/Ordenar por",
+        "startDate": "Data de Início",
+        "endDate": "Data de Fim",
+        "customerName": "Nome do Cliente",
+        "filter": "Filtro",
+        "action": "Ação",
+        "exportPdf": "Exportação pdf",
+        "exportExcel": "Exportação Excel",
+        "exportCsv": "Exportação CSV",
+        "exportPng": "PNG de exportação",
+        "beneficiaryName": "Nome beneficiário",
+        "message": "Mensagem",
+        "narration": "Narração",
+        "product": "Produto",
+        "status": "Estado",
+        "transactionType": "Tipo de Transação",
+        "amount": "Montante",
+        "creditAccount": "Conta crédito",
+        "debitAccount": "Conta de Débito",
+        "imei": "imei",
+        "referenceId": "Id de referência",
+        "createdDate": "Data Criada",
+        "updatedDate": "Data atualizada",
+        "all": "Todos os"
     }
 }

@@ -1,0 +1,163 @@
+
+<h2 mat-dialog-title class="text_accion_stone">
+    Faq
+  </h2>
+  <mat-dialog-content class="mat-typography">
+  
+  
+  
+    <div class="row">
+      <form [formGroup]="faqForm" class="d-flex flex-column w-100 mx-3 px-5 py-2">
+  
+        <h3 class="text_accion">Faq Details</h3>
+            <div class="row">
+  
+              <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+                <mat-label>Question</mat-label>
+                <input [value]="this.faqForm.value.question" matInput type="text"
+                  formControlName="question">
+                <button mat-button *ngIf="this.faqForm.value.question" matSuffix mat-icon-button
+                  aria-label="Clear" (click)="this.faqForm.value.question=''">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+  
+              <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+                <mat-label>Answer</mat-label>
+                <input [value]="this.faqForm.value.answer" matInput type="text"
+                  formControlName="answer">
+                <button mat-button *ngIf="this.faqForm.value.answer" matSuffix mat-icon-button
+                  aria-label="Clear" (click)="this.faqForm.value.answer=''">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+        </div>
+  
+      </form>
+    </div>
+  
+  
+    <!-- <div *ngIf="action == 'update'">
+      <form action="">
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>{{ 'branch.branchName' | translate }}</mat-label>
+          <input [(ngModel)]="updateDetails.branchName" matInput type="text"
+            name="branchName">
+          <button mat-button *ngIf="branchName" matSuffix mat-icon-button
+            aria-label="Clear" (click)="branchName=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+  
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>{{ 'branch.contactEmail' | translate }}</mat-label>
+          <input [(ngModel)]="updateDetails.contactEmail" matInput type="text"
+            name="contactEmail">
+          <button mat-button *ngIf="contactEmail" matSuffix mat-icon-button
+            aria-label="Clear" (click)="contactEmail=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+  
+        <h4 class="col-md-12 col-sm-12 col-xs-12 font-weight-bold">{{ 'branch.openingHour' | translate }}</h4>
+  
+        <mat-form-field class="col-md-2 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>{{ 'branch.hours' | translate }}</mat-label>
+          <mat-select [(ngModel)]="hour" name="hour" (selectionChange)="changeHour($event.value)">
+            <mat-option *ngFor="let hour of hours" [value]="hour">
+              {{hour}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field class="col-md-2 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>{{ 'branch.minutes' | translate }}</mat-label>
+          <mat-select [(ngModel)]="minute" name="minute" (selectionChange)="changeMinute($event.value)">
+            <mat-option *ngFor="let minute of minutes" [value]="minute">
+              {{minute}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field class="col-md-2 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>{{ 'branch.am/pm' | translate }}</mat-label>
+          <mat-select [(ngModel)]="time" name="time" (selectionChange)="changeHourOfDay($event.value)">
+            <mat-option *ngFor="let time of timeOfTheDay" [value]="time">
+              {{time}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>{{ 'branch.closingHour' | translate }}</mat-label>
+          <input [(ngModel)]="updateDetails.openingHour" matInput type="text"
+            name="openingHour" disabled class="text-dark">
+          <button mat-button *ngIf="openingHour" matSuffix mat-icon-button
+            aria-label="Clear" (click)="openingHour=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+  
+        <h4 class="col-md-12 col-sm-12 col-xs-12 font-weight-bold">{{ 'branch.closingHour' | translate }}</h4>
+  
+        <mat-form-field class="col-md-2 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>{{ 'branch.hours' | translate }}</mat-label>
+          <mat-select [(ngModel)]="hour2" name="closingHour2" (selectionChange)="changeHour($event.value)">
+            <mat-option *ngFor="let hour2 of hours" [value]="hour2">
+              {{hour2}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field class="col-md-2 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>{{ 'branch.minutes' | translate }}</mat-label>
+          <mat-select [(ngModel)]="minute2" name="minute2" (selectionChange)="changeMinute($event.value)">
+            <mat-option *ngFor="let minute2 of minutes" [value]="minute2">
+              {{minute2}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field class="col-md-2 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>{{ 'branch.am/pm' | translate }}</mat-label>
+          <mat-select [(ngModel)]="time2" name="time2" (selectionChange)="changeHourOfDay($event.value)">
+            <mat-option *ngFor="let time2 of timeOfTheDay" [value]="time2">
+              {{time2}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field class="col-md-6 col-sm-6 col-xs-12" appearance="outline">
+          <mat-label>{{ 'branch.closingHour' | translate }}</mat-label>
+          <input [(ngModel)]="updateDetails.closingHour" matInput type="text"
+            name="closingHour" disabled class="text-dark">
+          <button mat-button *ngIf="closingHour" matSuffix mat-icon-button
+            aria-label="Clear" (click)="closingHour=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+  
+  
+      </form>
+    </div> -->
+  </mat-dialog-content>
+  <mat-dialog-actions class="d-flex justify-content-between">
+    <div>
+      <button style="color: white; background-color: rgb(45, 187, 45);" mat-raised-button
+        type="button" (click)="addFaq()">Add Faq</button>&nbsp;
+      <!-- <button *ngIf="add && action == 'create'" style="color: white; background-color: rgb(216, 60, 60);"
+        mat-raised-button type="button" (click)="removevalue()">{{ 'branch.removeBranch' | translate }}</button>&nbsp;
+      <button *ngIf="action == 'add' && isSubmitted == false" (click)="addBranch()" class="btn btn-sm text-white accion_sand">{{ 'branch.submit' | translate }}</button>
+      <button *ngIf="action == 'create' && isSubmitted == false" (click)="createBranch()"
+        class="btn btn-sm text-white accion_sand">{{ 'branch.submit' | translate }}</button>
+      <button *ngIf="action == 'update' && isSubmitted == false" (click)="updateBranch()"
+        class="btn btn-sm text-white accion_sand">{{ 'branch.submit' | translate }}</button> -->
+      <div *ngIf="isLoadingResult" class=" d-flex justify-content-center">
+        <mat-spinner [diameter]="25"></mat-spinner>
+      </div>
+    </div>
+    <!-- <div *ngIf="isLoadingResults" class=" d-flex justify-content-center">
+      <mat-spinner [diameter]="25"></mat-spinner>
+    </div> -->
+    <!-- <button mat-button mat-dialog-close (click)="close()">{{ 'branch.cancel' | translate }}</button> -->
+  </mat-dialog-actions>

@@ -42,7 +42,7 @@ export class SideMenuComponent implements OnInit, AfterViewInit {
 
   pages: any = [
     { name:  marker('menu.dashboard'), link: '/app/dashboard', icon: 'home' },
-    // { name: marker('menu.transactionListing'), link: '/app/transactions', icon: 'account_balance' },
+    { name: marker('menu.transactionListing'), link: '/app/transactions', icon: 'account_balance' },
     { name: marker('menu.customerManagement'), link: '/app/users', icon: 'person' },
     // { name: marker('menu.productManagement'), link: '/app/product/management', icon: 'business' },
     // { name: 'Dashboard', permission: 'transaction', link: '/app/dashboard', icon: 'home' },
@@ -336,6 +336,24 @@ export class SideMenuComponent implements OnInit, AfterViewInit {
       ]
 
     },
+    // {
+    //   title: 'Faq Management',
+    //   icon: 'table_chart',
+    //   list: [
+    //     {
+    //       name: 'Faq Management',
+    //       permission: 'referral',
+    //       link: "/app/faq/management",
+    //       icon: "assignment"
+    //     },
+    //     // {
+    //     //   name: marker('menu.insuranceManagement'),
+    //     //   permission: 'referral',
+    //     //   link: "/app/insurance/management",
+    //     //   icon: "build"
+    //     // },
+    //   ]
+    // },
   ]
 
 
